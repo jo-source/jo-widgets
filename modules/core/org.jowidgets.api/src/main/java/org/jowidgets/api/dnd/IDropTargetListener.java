@@ -30,16 +30,16 @@ package org.jowidgets.api.dnd;
 
 public interface IDropTargetListener {
 
-    void dragEnter(final IDropEvent event, IDropResponse response);
+    void dragEnter(IDropEvent event, IDropResponse response);
 
-    void dragOver(final IDropEvent event, IDropResponse response);
+    void dragOver(IDropEvent event, IDropResponse response);
 
-    void dragOperationChanged(final IDropEvent event, IDropResponse response);
+    void dragOperationChanged(IDropEvent event, IDropResponse response);
 
     void dragExit();
 
-    void dropAccept(final IDropEvent event, IDropResponse response);
+    void dropAccept(IDropEvent event, IDropResponse response);
 
-    void drop(final IDropEvent event);
+    void drop(IDropEvent event);
 
 }

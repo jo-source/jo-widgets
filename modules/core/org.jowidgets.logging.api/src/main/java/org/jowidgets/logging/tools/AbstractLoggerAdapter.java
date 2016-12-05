@@ -44,15 +44,15 @@ public abstract class AbstractLoggerAdapter implements ILogger {
         this.wrapperFQCN = wrapperFQCN != null ? wrapperFQCN : THIS_WRAPPER_FQCN;
     }
 
-    protected abstract void error(String wrapperFQCN, final String message, final Throwable throwable);
+    protected abstract void error(String wrapperFQCN, String message, Throwable throwable);
 
-    protected abstract void warn(String wrapperFQCN, final String message, final Throwable throwable);
+    protected abstract void warn(String wrapperFQCN, String message, Throwable throwable);
 
-    protected abstract void info(String wrapperFQCN, final String message, final Throwable throwable);
+    protected abstract void info(String wrapperFQCN, String message, Throwable throwable);
 
-    protected abstract void debug(String wrapperFQCN, final String message, final Throwable throwable);
+    protected abstract void debug(String wrapperFQCN, String message, Throwable throwable);
 
-    protected abstract void trace(String wrapperFQCN, final String message, final Throwable throwable);
+    protected abstract void trace(String wrapperFQCN, String message, Throwable throwable);
 
     @Override
     public final void error(final String message) {

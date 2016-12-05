@@ -128,7 +128,7 @@ public interface IBluePrintFactory {
      */
     @Deprecated
     <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-        final Class<BLUE_PRINT_TYPE> bluePrintType);
+        Class<BLUE_PRINT_TYPE> bluePrintType);
 
     /**
      * @deprecated Use {@link IBluePrintProxyFactory#setSetupBuilderConvenience(Class, ISetupBuilderConvenience)} instead
@@ -188,10 +188,10 @@ public interface IBluePrintFactory {
 
     IToggleButtonBluePrint toggleButton();
 
-    <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(IConverter<INPUT_TYPE> converter);
 
     <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
-        final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+        IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
     IActionMenuItemBluePrint menuItem();
 
@@ -245,29 +245,29 @@ public interface IBluePrintFactory {
     ////////////////////////some convenience methods starting here///////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    IFrameBluePrint frame(final String title);
+    IFrameBluePrint frame(String title);
 
-    IFrameBluePrint frame(final String title, final IImageConstant icon);
+    IFrameBluePrint frame(String title, IImageConstant icon);
 
-    IDialogBluePrint dialog(final String title);
+    IDialogBluePrint dialog(String title);
 
-    IDialogBluePrint dialog(final String title, final IImageConstant icon);
+    IDialogBluePrint dialog(String title, IImageConstant icon);
 
     ICompositeBluePrint compositeWithBorder();
 
-    ICompositeBluePrint composite(final String borderTitle);
+    ICompositeBluePrint composite(String borderTitle);
 
     IScrollCompositeBluePrint scrollCompositeWithBorder();
 
-    IScrollCompositeBluePrint scrollComposite(final String borderTitle);
+    IScrollCompositeBluePrint scrollComposite(String borderTitle);
 
     ISplitCompositeBluePrint splitHorizontal();
 
     ISplitCompositeBluePrint splitVertical();
 
-    IButtonBluePrint button(final String text);
+    IButtonBluePrint button(String text);
 
-    IButtonBluePrint button(final String text, final String toolTipText);
+    IButtonBluePrint button(String text, String toolTipText);
 
     IButtonBluePrint buttonOk();
 
@@ -279,11 +279,11 @@ public interface IBluePrintFactory {
 
     IButtonBluePrint buttonDetails();
 
-    IIconBluePrint icon(final IImageConstant icon);
+    IIconBluePrint icon(IImageConstant icon);
 
-    ITextLabelBluePrint textLabel(final String text);
+    ITextLabelBluePrint textLabel(String text);
 
-    ITextLabelBluePrint textLabel(final String text, final String tooltipText);
+    ITextLabelBluePrint textLabel(String text, String tooltipText);
 
     IComboBoxBluePrint<String> comboBox();
 
@@ -346,9 +346,9 @@ public interface IBluePrintFactory {
 
     <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField();
 
-    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(IConverter<INPUT_TYPE> converter);
 
-    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(IObjectStringConverter<INPUT_TYPE> converter);
 
     <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField();
 
@@ -371,9 +371,9 @@ public interface IBluePrintFactory {
 
     IProgressBarBluePrint progressBar();
 
-    <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
+    <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(IInputContentCreator<INPUT_TYPE> contentCreator);
 
-    <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
+    <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(IInputContentCreator<INPUT_TYPE> contentCreator);
 
     ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
 
@@ -434,15 +434,15 @@ public interface IBluePrintFactory {
     ////////////////////////some convenience methods starting here///////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    ILabelBluePrint label(final IImageConstant icon);
+    ILabelBluePrint label(IImageConstant icon);
 
-    ILabelBluePrint label(final IImageConstant icon, final String text);
+    ILabelBluePrint label(IImageConstant icon, String text);
 
-    ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext);
+    ILabelBluePrint label(IImageConstant icon, String text, String toolTiptext);
 
-    ITextSeparatorBluePrint textSeparator(final String text);
+    ITextSeparatorBluePrint textSeparator(String text);
 
-    ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText);
+    ITextSeparatorBluePrint textSeparator(String text, String tooltipText);
 
     IQuestionDialogBluePrint yesNoQuestion();
 

@@ -41,13 +41,13 @@ public interface IMapContext {
 
     boolean flyTo(double latitude, double longitude, double range);
 
-    boolean addFeature(final Feature feature);
+    boolean addFeature(Feature feature);
 
     boolean removeFeature(String featureId);
 
     boolean removeAllFeatures();
 
-    <T> boolean startDesignation(final Class<T> type, IDesignationListener<? super T> listener);
+    <T> boolean startDesignation(Class<T> type, IDesignationListener<? super T> listener);
 
     boolean endDesignation();
 

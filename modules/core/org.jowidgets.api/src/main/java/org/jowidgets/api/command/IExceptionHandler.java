@@ -38,6 +38,6 @@ public interface IExceptionHandler {
      * 
      * @throws Exception If the exception can not be handled
      */
-    void handleException(IExecutionContext executionContext, final Exception exception) throws Exception;
+    void handleException(IExecutionContext executionContext, Exception exception) throws Exception;
 
 }

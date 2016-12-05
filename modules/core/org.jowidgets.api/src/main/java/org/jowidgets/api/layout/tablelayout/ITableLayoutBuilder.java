@@ -42,33 +42,33 @@ public interface ITableLayoutBuilder {
         CENTER,
     }
 
-    ITableLayoutBuilder verticalGap(final int verticalGap);
+    ITableLayoutBuilder verticalGap(int verticalGap);
 
-    ITableLayoutBuilder layoutMinRows(final int layoutMinRows);
+    ITableLayoutBuilder layoutMinRows(int layoutMinRows);
 
-    ITableLayoutBuilder columnCount(final int columnCount);
+    ITableLayoutBuilder columnCount(int columnCount);
 
-    ITableLayoutBuilder widths(final int[] widths);
+    ITableLayoutBuilder widths(int[] widths);
 
-    ITableLayoutBuilder gaps(final int[] gaps);
+    ITableLayoutBuilder gaps(int[] gaps);
 
-    ITableLayoutBuilder modes(final ColumnMode[] modes);
+    ITableLayoutBuilder modes(ColumnMode[] modes);
 
-    ITableLayoutBuilder alignments(final Alignment[] alignments);
+    ITableLayoutBuilder alignments(Alignment[] alignments);
 
-    ITableLayoutBuilder fixedColumnWidth(final int column, final int width);
+    ITableLayoutBuilder fixedColumnWidth(int column, int width);
 
-    ITableLayoutBuilder columnMode(final int column, final ColumnMode mode);
+    ITableLayoutBuilder columnMode(int column, ColumnMode mode);
 
-    ITableLayoutBuilder columnAlignment(final int column, final Alignment alignment);
+    ITableLayoutBuilder columnAlignment(int column, Alignment alignment);
 
-    ITableLayoutBuilder gap(final int gap);
+    ITableLayoutBuilder gap(int gap);
 
-    ITableLayoutBuilder gapBeforeColumn(final int column, final int gap);
+    ITableLayoutBuilder gapBeforeColumn(int column, int gap);
 
-    ITableLayoutBuilder gapAfterColumn(final int column, final int gap);
+    ITableLayoutBuilder gapAfterColumn(int column, int gap);
 
-    ITableLayoutBuilder alignment(final int index, final Alignment alignment);
+    ITableLayoutBuilder alignment(int index, Alignment alignment);
 
     ITableLayout build();
 

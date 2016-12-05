@@ -51,7 +51,7 @@ public interface IBluePrintProxyFactory {
      * @return The blue print
      */
     <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-        final Class<BLUE_PRINT_TYPE> bluePrintType);
+        Class<BLUE_PRINT_TYPE> bluePrintType);
 
     /**
      * Sets an implementation for a convenience setter method

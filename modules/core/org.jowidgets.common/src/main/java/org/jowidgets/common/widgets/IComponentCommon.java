@@ -81,7 +81,7 @@ public interface IComponentCommon extends
      * 
      * @param colorValue The color to set, may be null
      */
-    void setForegroundColor(final IColorConstant colorValue);
+    void setForegroundColor(IColorConstant colorValue);
 
     /**
      * Sets the background color.
@@ -89,7 +89,7 @@ public interface IComponentCommon extends
      * 
      * @param colorValue The color to set, may be null
      */
-    void setBackgroundColor(final IColorConstant colorValue);
+    void setBackgroundColor(IColorConstant colorValue);
 
     /**
      * Gets the foreground color
@@ -110,14 +110,14 @@ public interface IComponentCommon extends
      * 
      * @param cursor The cursor to set
      */
-    void setCursor(final Cursor cursor);
+    void setCursor(Cursor cursor);
 
     /**
      * Sets the components visibility state.
      * 
      * @param visible The visibility state to set
      */
-    void setVisible(final boolean visible);
+    void setVisible(boolean visible);
 
     /**
      * Gets the visibility state.
@@ -138,7 +138,7 @@ public interface IComponentCommon extends
      * 
      * @param size The size to set, must not be null
      */
-    void setSize(final Dimension size);
+    void setSize(Dimension size);
 
     /**
      * Gets the position of the component
@@ -152,6 +152,6 @@ public interface IComponentCommon extends
      * 
      * @param position The position of the component, must not be null
      */
-    void setPosition(final Position position);
+    void setPosition(Position position);
 
 }

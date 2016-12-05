@@ -84,7 +84,7 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
      * 
      * @return The corresponding screen position, never null
      */
-    Position toScreen(final Position localPosition);
+    Position toScreen(Position localPosition);
 
     /**
      * Transforms a position in the screen coordinate system to this components coordinate system
@@ -93,7 +93,7 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
      * 
      * @return The corresponding local position, never null
      */
-    Position toLocal(final Position screenPosition);
+    Position toLocal(Position screenPosition);
 
     /**
      * Sets the size of the component defined by width and height
@@ -134,7 +134,7 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
      * 
      * @return The transformed position
      */
-    Position fromComponent(final IComponentCommon component, final Position componentPosition);
+    Position fromComponent(IComponentCommon component, Position componentPosition);
 
     /**
      * Transforms a position from this components coordinate system to another components
@@ -145,6 +145,6 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
      * 
      * @return The transformed position
      */
-    Position toComponent(final Position componentPosition, final IComponentCommon component);
+    Position toComponent(Position componentPosition, IComponentCommon component);
 
 }

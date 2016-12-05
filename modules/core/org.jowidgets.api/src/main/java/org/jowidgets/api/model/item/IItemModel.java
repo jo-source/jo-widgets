@@ -47,7 +47,7 @@ public interface IItemModel extends IItemModelObservable {
      * 
      * @param text The label text of the item, may be null
      */
-    void setText(final String text);
+    void setText(String text);
 
     /**
      * Gets the items label text
@@ -97,7 +97,7 @@ public interface IItemModel extends IItemModelObservable {
      * @param key The character to use
      * @param modifier The modifier to use
      */
-    void setAccelerator(final VirtualKey key, final Modifier... modifier);
+    void setAccelerator(VirtualKey key, Modifier... modifier);
 
     /**
      * Gets the key accelerator that should be used for the item

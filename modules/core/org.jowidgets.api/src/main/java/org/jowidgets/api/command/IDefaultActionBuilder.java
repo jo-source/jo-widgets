@@ -37,19 +37,19 @@ public interface IDefaultActionBuilder {
 
     IDefaultActionBuilder setText(String text);
 
-    IDefaultActionBuilder setToolTipText(final String toolTipText);
+    IDefaultActionBuilder setToolTipText(String toolTipText);
 
     IDefaultActionBuilder setIcon(IImageConstant icon);
 
-    IDefaultActionBuilder setMnemonic(final Character mnemonic);
+    IDefaultActionBuilder setMnemonic(Character mnemonic);
 
-    IDefaultActionBuilder setMnemonic(final char mnemonic);
+    IDefaultActionBuilder setMnemonic(char mnemonic);
 
     IDefaultActionBuilder setAccelerator(Accelerator accelerator);
 
-    IDefaultActionBuilder setAccelerator(final char key, final Modifier... modifier);
+    IDefaultActionBuilder setAccelerator(char key, Modifier... modifier);
 
-    IDefaultActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
+    IDefaultActionBuilder setAccelerator(VirtualKey virtualKey, Modifier... modifier);
 
     IAction build();
 

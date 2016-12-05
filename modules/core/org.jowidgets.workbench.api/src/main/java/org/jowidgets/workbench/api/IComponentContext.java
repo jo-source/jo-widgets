@@ -36,7 +36,7 @@ public interface IComponentContext {
      * 
      * @param layout The layout to set
      */
-    void setLayout(final ILayout layout);
+    void setLayout(ILayout layout);
 
     /**
      * Resets the layout for the component context.
@@ -46,7 +46,7 @@ public interface IComponentContext {
      * 
      * @param layout The layout to set / reset
      */
-    void resetLayout(final ILayout layout);
+    void resetLayout(ILayout layout);
 
     IComponentNodeContext getComponentNodeContext();
 

@@ -54,7 +54,7 @@ abstract class AbstractObservableBooleanComposite extends AbstractObservableValu
         }
     }
 
-    abstract boolean getValue(final Collection<IObservableValue<Boolean>> originals);
+    abstract boolean getValue(Collection<IObservableValue<Boolean>> originals);
 
     @Override
     public final void setValue(final Boolean value) {

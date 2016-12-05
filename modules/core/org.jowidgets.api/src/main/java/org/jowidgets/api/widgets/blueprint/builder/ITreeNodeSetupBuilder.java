@@ -44,6 +44,6 @@ public interface ITreeNodeSetupBuilder<INSTANCE_TYPE extends ITreeNodeSetupBuild
 
     INSTANCE_TYPE setForegroundColor(IColorConstant color);
 
-    INSTANCE_TYPE setBackgroundColor(final IColorConstant color);
+    INSTANCE_TYPE setBackgroundColor(IColorConstant color);
 
 }

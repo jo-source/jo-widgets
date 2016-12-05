@@ -39,11 +39,11 @@ import org.jowidgets.api.widgets.ISubMenu;
 @Deprecated
 public interface IJoMenu {
 
-    void addItem(final MenuItem<? extends IMenuItem, ?> item);
+    void addItem(MenuItem<? extends IMenuItem, ?> item);
 
-    void addItem(final int index, final MenuItem<? extends IMenuItem, ?> item);
+    void addItem(int index, MenuItem<? extends IMenuItem, ?> item);
 
-    void addItem(final SubMenu<? extends ISubMenu, ?> item);
+    void addItem(SubMenu<? extends ISubMenu, ?> item);
 
-    void addItem(final int index, final SubMenu<? extends ISubMenu, ?> item);
+    void addItem(int index, SubMenu<? extends ISubMenu, ?> item);
 }

@@ -42,7 +42,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      * 
      * @param item The item to add, must not be null
      */
-    void addItem(final IMenuItemModel item);
+    void addItem(IMenuItemModel item);
 
     /**
      * Adds an item at a given index
@@ -50,7 +50,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      * @param index The index to add the item at
      * @param item The item to add
      */
-    void addItem(final int index, final IMenuItemModel item);
+    void addItem(int index, IMenuItemModel item);
 
     /**
      * Adds an item defined by an builder and returns the build item
@@ -60,7 +60,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      * @return The added item
      */
     <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
-        final BUILDER_TYPE itemBuilder);
+        BUILDER_TYPE itemBuilder);
 
     /**
      * Adds an item at a given index defined by an builder and returns the build item
@@ -72,7 +72,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      */
     <MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
         int index,
-        final BUILDER_TYPE itemBuilder);
+        BUILDER_TYPE itemBuilder);
 
     /**
      * Adds an item after another item defined by an path of item id
@@ -115,7 +115,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      * 
      * @return The created action item
      */
-    IActionItemModel addAction(final int index, IAction action);
+    IActionItemModel addAction(int index, IAction action);
 
     /**
      * Creates and adds a action item
@@ -363,7 +363,7 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
      * 
      * @param item The item to remove, must not be null
      */
-    void removeItem(final IMenuItemModel item);
+    void removeItem(IMenuItemModel item);
 
     /**
      * Removes an item at a given index

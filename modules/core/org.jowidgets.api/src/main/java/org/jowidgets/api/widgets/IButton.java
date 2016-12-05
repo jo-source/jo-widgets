@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.IButtonCommon;
 
 public interface IButton extends ILabel, IActionWidget, IButtonCommon {
 
-    void setAction(final IAction action);
+    void setAction(IAction action);
 
 }

@@ -31,18 +31,18 @@ import org.jowidgets.api.types.QuestionResult;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
-public interface IQuestionDialogSetupBuilder<INSTANCE_TYPE extends IQuestionDialogSetupBuilder<?>> extends
-        ILabelSetupBuilder<INSTANCE_TYPE> {
+public interface IQuestionDialogSetupBuilder<INSTANCE_TYPE extends IQuestionDialogSetupBuilder<?>>
+        extends ILabelSetupBuilder<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setTitle(final String title);
+    INSTANCE_TYPE setTitle(String title);
 
-    INSTANCE_TYPE setTitleIcon(final IImageConstant titleIcon);
+    INSTANCE_TYPE setTitleIcon(IImageConstant titleIcon);
 
-    INSTANCE_TYPE setYesButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setYesButton(IButtonDescriptor buttonDescriptor);
 
-    INSTANCE_TYPE setNoButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setNoButton(IButtonDescriptor buttonDescriptor);
 
-    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(IButtonDescriptor buttonDescriptor);
 
     INSTANCE_TYPE setDefaultResult(QuestionResult defaultResult);
 

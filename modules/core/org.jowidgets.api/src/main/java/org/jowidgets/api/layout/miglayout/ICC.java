@@ -29,6 +29,8 @@
  */
 package org.jowidgets.api.layout.miglayout;
 
+import org.jowidgets.unit.tools.UnitValue;
+
 /**
  * A simple value holder for one component's constraint.
  */
@@ -43,7 +45,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC endGroupX(final String s);
+    ICC endGroupX(String s);
 
     /**
      * Specifies that the component should be put in the size group <code>s</code> and will thus share the same size
@@ -55,7 +57,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC sizeGroupX(final String s);
+    ICC sizeGroupX(String s);
 
     /**
      * The minimum size for the component. The value will override any value that is set on the component itself.
@@ -66,7 +68,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC minWidth(final String size);
+    ICC minWidth(String size);
 
     /**
      * The size for the component as a min and/or preferref and/or maximum size. The value will override any value that is set on
@@ -78,7 +80,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC width(final String size);
+    ICC width(String size);
 
     /**
      * The maximum size for the component. The value will override any value that is set on the component itself.
@@ -89,7 +91,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC maxWidth(final String size);
+    ICC maxWidth(String size);
 
     /**
      * The horizontal gap before and/or after the component. The gap is towards cell bounds and/or other component bounds.
@@ -101,7 +103,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC gapX(final String before, final String after);
+    ICC gapX(String before, String after);
 
     /**
      * Same functionality as <code>getHorizontal().setAlign(ConstraintParser.parseUnitValue(unitValue, true))</code> only this
@@ -114,7 +116,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC alignX(final String align);
+    ICC alignX(String align);
 
     /**
      * The grow priority compared to other components in the same cell.
@@ -125,7 +127,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC growPrioX(final int p);
+    ICC growPrioX(int p);
 
     /**
      * Grow priority for the component horizontally and optionally vertically.
@@ -137,7 +139,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC growPrio(final int... widthHeight);
+    ICC growPrio(int... widthHeight);
 
     /**
      * Grow weight for the component horizontally. It default to weight <code>100</code>.
@@ -159,7 +161,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC growX(final float w);
+    ICC growX(float w);
 
     /**
      * grow weight for the component horizontally and optionally vertically.
@@ -171,7 +173,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC grow(final float... widthHeight);
+    ICC grow(float... widthHeight);
 
     /**
      * The shrink priority compared to other components in the same cell.
@@ -182,7 +184,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC shrinkPrioX(final int p);
+    ICC shrinkPrioX(int p);
 
     /**
      * Shrink priority for the component horizontally and optionally vertically.
@@ -194,7 +196,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC shrinkPrio(final int... widthHeight);
+    ICC shrinkPrio(int... widthHeight);
 
     /**
      * Shrink weight for the component horizontally.
@@ -205,7 +207,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC shrinkX(final float w);
+    ICC shrinkX(float w);
 
     /**
      * Shrink weight for the component horizontally and optionally vertically.
@@ -217,7 +219,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC shrink(final float... widthHeight);
+    ICC shrink(float... widthHeight);
 
     /**
      * The end group that this component should be placed in.
@@ -228,7 +230,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC endGroupY(final String s);
+    ICC endGroupY(String s);
 
     /**
      * The end group(s) that this component should be placed in.
@@ -240,7 +242,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC endGroup(final String... xy);
+    ICC endGroup(String... xy);
 
     /**
      * The size group that this component should be placed in.
@@ -251,7 +253,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC sizeGroupY(final String s);
+    ICC sizeGroupY(String s);
 
     /**
      * The size group(s) that this component should be placed in.
@@ -263,7 +265,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC sizeGroup(final String... xy);
+    ICC sizeGroup(String... xy);
 
     /**
      * The minimum size for the component. The value will override any value that is set on the component itself.
@@ -274,7 +276,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC minHeight(final String size);
+    ICC minHeight(String size);
 
     /**
      * The size for the component as a min and/or preferred and/or maximum size. The value will override any value that is set on
@@ -286,7 +288,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC height(final String size);
+    ICC height(String size);
 
     /**
      * The maximum size for the component. The value will override any value that is set on the component itself.
@@ -297,7 +299,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC maxHeight(final String size);
+    ICC maxHeight(String size);
 
     /**
      * The vertical gap before (normally above) and/or after (normally below) the component. The gap is towards cell bounds and/or
@@ -310,7 +312,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC gapY(final String before, final String after);
+    ICC gapY(String before, String after);
 
     /**
      * Same functionality as <code>getVertical().setAlign(ConstraintParser.parseUnitValue(unitValue, true))</code> only this
@@ -323,7 +325,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC alignY(final String align);
+    ICC alignY(String align);
 
     /**
      * The grow priority compared to other components in the same cell.
@@ -334,7 +336,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC growPrioY(final int p);
+    ICC growPrioY(int p);
 
     /**
      * Grow weight for the component vertically. Defaults to <code>100</code>.
@@ -356,7 +358,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC growY(final Float w);
+    ICC growY(Float w);
 
     /**
      * The shrink priority compared to other components in the same cell.
@@ -367,7 +369,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC shrinkPrioY(final int p);
+    ICC shrinkPrioY(int p);
 
     /**
      * Shrink weight for the component horizontally.
@@ -378,7 +380,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC shrinkY(final float w);
+    ICC shrinkY(float w);
 
     /**
      * How this component, if hidden (not visible), should be treated.
@@ -393,7 +395,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC hideMode(final int mode);
+    ICC hideMode(int mode);
 
     /**
      * The id used to reference this component in some constraints.
@@ -406,7 +408,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g.
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      */
-    ICC id(final String s);
+    ICC id(String s);
 
     /**
      * Same functionality as {@link #setTag(String tag)} only this method returns <code>this</code> for chaining multiple calls.
@@ -417,7 +419,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setTag(String)
      */
-    ICC tag(final String tag);
+    ICC tag(String tag);
 
     /**
      * Set the cell(s) that the component should occupy in the grid. Same functionality as {@link #setCellX(int col)} and
@@ -434,7 +436,7 @@ public interface ICC {
      * @see #setSpanY(int)
      * @since 3.7.2. Replacing cell(int, int) and cell(int, int, int, int)
      */
-    ICC cell(final int... colRowWidthHeight);
+    ICC cell(int... colRowWidthHeight);
 
     /**
      * Same functionality as <code>spanX(cellsX).spanY(cellsY)</code> which means this cell will span cells in both x and y.
@@ -451,7 +453,7 @@ public interface ICC {
      * @see #spanX()
      * @since 3.7.2 Replaces span(int, int).
      */
-    ICC span(final int... cells);
+    ICC span(int... cells);
 
     /**
      * Corresponds exactly to the "gap left right top bottom" keyword.
@@ -460,7 +462,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gap(final String... args);
+    ICC gap(String... args);
 
     /**
      * Sets the horizontal gap before the component.
@@ -471,7 +473,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapBefore(final String boundsSize);
+    ICC gapBefore(String boundsSize);
 
     /**
      * Sets the horizontal gap after the component.
@@ -482,7 +484,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapAfter(final String boundsSize);
+    ICC gapAfter(String boundsSize);
 
     /**
      * Sets the gap above the component.
@@ -491,7 +493,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapTop(final String boundsSize);
+    ICC gapTop(String boundsSize);
 
     /**
      * Sets the gap to the left of the component.
@@ -500,7 +502,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapLeft(final String boundsSize);
+    ICC gapLeft(String boundsSize);
 
     /**
      * Sets the gap below the component.
@@ -509,7 +511,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapBottom(final String boundsSize);
+    ICC gapBottom(String boundsSize);
 
     /**
      * Sets the gap to the right of the component.
@@ -518,7 +520,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    ICC gapRight(final String boundsSize);
+    ICC gapRight(String boundsSize);
 
     /**
      * Same functionality as {@link #setSpanY(int)} which means this cell will span the rest of the column.
@@ -541,7 +543,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setSpanY(int)
      */
-    ICC spanY(final int cells);
+    ICC spanY(int cells);
 
     /**
      * Same functionality as {@link #setSpanX(int)} which means this cell will span the rest of the row.
@@ -564,7 +566,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setSpanY(int)
      */
-    ICC spanX(final int cells);
+    ICC spanX(int cells);
 
     /**
      * Same functionality as <code>pushX().pushY()</code> which means this cell will push in both x and y dimensions.
@@ -595,7 +597,7 @@ public interface ICC {
      * @see #pushY()
      * @see #pushX()
      */
-    ICC push(final Float weightX, final Float weightY);
+    ICC push(Float weightX, Float weightY);
 
     /**
      * Same functionality as {@link #setPushY(Float))} which means this cell will push the rest of the column.
@@ -618,7 +620,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setPushY(Float)
      */
-    ICC pushY(final Float weight);
+    ICC pushY(Float weight);
 
     /**
      * Same functionality as {@link #setPushX(Float)} which means this cell will push the rest of the row.
@@ -641,7 +643,7 @@ public interface ICC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setPushY(Float)
      */
-    ICC pushX(final Float weight);
+    ICC pushX(Float weight);
 
     /**
      * Same functionality as {@link #setSplit(int parts)} only this method returns <code>this</code> for chaining multiple calls.
@@ -653,7 +655,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setSplit(int)
      */
-    ICC split(final int parts);
+    ICC split(int parts);
 
     /**
      * Same functionality as split(LayoutUtil.INF), which means split until one of the keywords that breaks the split is found for
@@ -678,7 +680,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setSkip(int)
      */
-    ICC skip(final int cells);
+    ICC skip(int cells);
 
     /**
      * Same functionality as skip(1).
@@ -766,7 +768,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setNewlineGapSize(BoundSize)
      */
-    ICC newline(final String gapSize);
+    ICC newline(String gapSize);
 
     /**
      * Same functionality as {@link #setWrap(boolean true)} only this method returns <code>this</code> for chaining multiple
@@ -794,7 +796,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setWrapGapSize(BoundSize)
      */
-    ICC wrap(final String gapSize);
+    ICC wrap(String gapSize);
 
     /**
      * Same functionality as {@link #setDockSide(int 0)} only this method returns <code>this</code> for chaining multiple calls.
@@ -852,7 +854,7 @@ public interface ICC {
      * @see #setPos(UnitValue[])
      * @see #setBoundsInGrid(boolean)
      */
-    ICC x(final String x);
+    ICC x(String x);
 
     /**
      * Sets the y-coordinate for the component. This is used to set the y coordinate position to a specific value. The component
@@ -866,7 +868,7 @@ public interface ICC {
      * @see #setPos(UnitValue[])
      * @see #setBoundsInGrid(boolean)
      */
-    ICC y(final String y);
+    ICC y(String y);
 
     /**
      * Sets the x2-coordinate for the component (right side). This is used to set the x2 coordinate position to a specific value.
@@ -881,7 +883,7 @@ public interface ICC {
      * @see #setPos(UnitValue[])
      * @see #setBoundsInGrid(boolean)
      */
-    ICC x2(final String x2);
+    ICC x2(String x2);
 
     /**
      * Sets the y2-coordinate for the component (bottom side). This is used to set the y2 coordinate position to a specific value.
@@ -896,7 +898,7 @@ public interface ICC {
      * @see #setPos(UnitValue[])
      * @see #setBoundsInGrid(boolean)
      */
-    ICC y2(final String y2);
+    ICC y2(String y2);
 
     /**
      * Same functionality as {@link #x(String x)} and {@link #y(String y)} toghether.
@@ -909,7 +911,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setPos(UnitValue[])
      */
-    ICC pos(final String x, final String y);
+    ICC pos(String x, String y);
 
     /**
      * Same functionality as {@link #x(String x)}, {@link #y(String y)}, {@link #y2(String y)} and {@link #y2(String y)}
@@ -925,7 +927,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setPos(UnitValue[])
      */
-    ICC pos(final String x, final String y, final String x2, final String y2);
+    ICC pos(String x, String y, String x2, String y2);
 
     /**
      * Same functionality as {@link #setPadding(UnitValue[])} but the unit values as absolute pixels. This method returns
@@ -941,7 +943,7 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setTag(String)
      */
-    ICC pad(final int top, final int left, final int bottom, final int right);
+    ICC pad(int top, int left, int bottom, int right);
 
     /**
      * Same functionality as <code>setPadding(ConstraintParser.parseInsets(pad, false))}</code> only this method returns
@@ -954,5 +956,5 @@ public interface ICC {
      *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
      * @see #setTag(String)
      */
-    ICC pad(final String pad);
+    ICC pad(String pad);
 }

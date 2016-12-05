@@ -34,13 +34,13 @@ public interface IActionObservable {
      * 
      * @param actionListener The listener to add
      */
-    void addActionListener(final IActionListener actionListener);
+    void addActionListener(IActionListener actionListener);
 
     /**
      * Removes an action listener
      * 
      * @param actionListener The listener to remove
      */
-    void removeActionListener(final IActionListener actionListener);
+    void removeActionListener(IActionListener actionListener);
 
 }

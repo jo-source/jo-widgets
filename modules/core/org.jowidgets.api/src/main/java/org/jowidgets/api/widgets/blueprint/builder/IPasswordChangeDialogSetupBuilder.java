@@ -33,12 +33,12 @@ import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.validation.IValidator;
 
-public interface IPasswordChangeDialogSetupBuilder<INSTANCE_TYPE extends IPasswordChangeDialogSetupBuilder<?>> extends
-        ITitledWindowSetupBuilder<INSTANCE_TYPE> {
+public interface IPasswordChangeDialogSetupBuilder<INSTANCE_TYPE extends IPasswordChangeDialogSetupBuilder<?>>
+        extends ITitledWindowSetupBuilder<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setOkButton(IButtonDescriptor buttonDescriptor);
 
-    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(IButtonDescriptor buttonDescriptor);
 
     INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 

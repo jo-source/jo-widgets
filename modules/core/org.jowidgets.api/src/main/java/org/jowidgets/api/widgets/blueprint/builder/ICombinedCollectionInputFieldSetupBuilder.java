@@ -32,12 +32,12 @@ import java.util.Collection;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
-public interface ICombinedCollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICombinedCollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE> extends
-        IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
+public interface ICombinedCollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICombinedCollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE>
+        extends IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-    INSTANCE_TYPE setElementTypeControlCreator(final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> creator);
+    INSTANCE_TYPE setElementTypeControlCreator(ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> creator);
 
     INSTANCE_TYPE setCollectionTypeControlCreator(
-        final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> creator);
+        ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> creator);
 
 }

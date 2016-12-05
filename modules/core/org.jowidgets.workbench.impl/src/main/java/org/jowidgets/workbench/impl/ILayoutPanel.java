@@ -30,6 +30,6 @@ package org.jowidgets.workbench.impl;
 
 public interface ILayoutPanel {
 
-    void setComponent(final ComponentContext component);
+    void setComponent(ComponentContext component);
 
 }

@@ -35,6 +35,6 @@ public interface IComboBoxSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSetupBu
         ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
         IComboBoxSetupBuilderCommon<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setMask(final ITextMask textMask);
+    INSTANCE_TYPE setMask(ITextMask textMask);
 
 }

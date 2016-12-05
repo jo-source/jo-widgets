@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.validation.IValidator;
 
-public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE> extends
-        IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
+public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE>
+        extends IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-    INSTANCE_TYPE setCollectionInputDialogSetup(final ICollectionInputDialogSetup<ELEMENT_TYPE> setup);
+    INSTANCE_TYPE setCollectionInputDialogSetup(ICollectionInputDialogSetup<ELEMENT_TYPE> setup);
 
     INSTANCE_TYPE setEditButtonIcon(IImageConstant icon);
 

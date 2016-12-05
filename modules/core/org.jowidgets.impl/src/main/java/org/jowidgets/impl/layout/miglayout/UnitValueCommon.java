@@ -435,6 +435,11 @@ final class UnitValueCommon implements Serializable {
         return (int) (value * 12345) + (oper >>> 5) + unit >>> 17;
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        return super.equals(obj);
+    }
+
     static {
         final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
         if (layoutUtil.hasBeans()) {

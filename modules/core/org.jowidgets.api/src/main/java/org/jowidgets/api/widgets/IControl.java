@@ -73,7 +73,7 @@ public interface IControl extends IComponent, IControlCommon, IParentObservable<
      * 
      * @param minSize The minimum size to set or null for default min size
      */
-    void setMinSize(final Dimension minSize);
+    void setMinSize(Dimension minSize);
 
     /**
      * Sets the preferred size of this control.

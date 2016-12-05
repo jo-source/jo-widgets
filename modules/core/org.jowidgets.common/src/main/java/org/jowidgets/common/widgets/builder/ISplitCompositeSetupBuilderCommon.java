@@ -33,11 +33,10 @@ import org.jowidgets.common.types.SplitResizePolicy;
 import org.jowidgets.common.widgets.builder.convenience.ISplitCompositeSetupConvenience;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public interface ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE extends ISplitCompositeSetupBuilderCommon<?>> extends
-        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-        ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
+public interface ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE extends ISplitCompositeSetupBuilderCommon<?>>
+        extends IComponentSetupBuilderCommon<INSTANCE_TYPE>, ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setOrientation(final Orientation orientation);
+    INSTANCE_TYPE setOrientation(Orientation orientation);
 
     INSTANCE_TYPE setFirstBorder(Border border);
 

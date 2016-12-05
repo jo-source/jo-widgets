@@ -114,7 +114,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withMessage(final IValidationMessage message);
+    IValidationResult withMessage(IValidationMessage message);
 
     /**
      * Creates a new validation result based on this result with adding a error message.
@@ -126,7 +126,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withError(final String text);
+    IValidationResult withError(String text);
 
     /**
      * Creates a new validation result based on this result with adding a info error message.
@@ -138,7 +138,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withInfoError(final String text);
+    IValidationResult withInfoError(String text);
 
     /**
      * Creates a new validation result based on this result with adding a warning message.
@@ -150,7 +150,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withWarning(final String text);
+    IValidationResult withWarning(String text);
 
     /**
      * Creates a new validation result based on this result with adding a info message.
@@ -162,7 +162,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withInfo(final String text);
+    IValidationResult withInfo(String text);
 
     /**
      * Creates a new validation result based on this result with adding a error message for a given context.
@@ -175,7 +175,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withError(final String context, final String text);
+    IValidationResult withError(String context, String text);
 
     /**
      * Creates a new validation result based on this result with adding a info error message for a given context.
@@ -188,7 +188,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withInfoError(final String context, final String text);
+    IValidationResult withInfoError(String context, String text);
 
     /**
      * Creates a new validation result based on this result with adding a warning message for a given context.
@@ -201,7 +201,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withWarning(final String context, final String text);
+    IValidationResult withWarning(String context, String text);
 
     /**
      * Creates a new validation result based on this result with adding a info message for a given context.
@@ -214,7 +214,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withInfo(final String context, final String text);
+    IValidationResult withInfo(String context, String text);
 
     /**
      * Creates a new validation result based on this result with adding all messages of a given validation result
@@ -226,7 +226,7 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withResult(final IValidationResult result);
+    IValidationResult withResult(IValidationResult result);
 
     /**
      * Creates a new validation result based on this result with changing the context of all messages
@@ -238,6 +238,6 @@ public interface IValidationResult {
      * 
      * @return The new validation result, never null
      */
-    IValidationResult withContext(final String context);
+    IValidationResult withContext(String context);
 
 }

@@ -54,7 +54,7 @@ public interface IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
      * 
      * @return This builder
      */
-    INSTANCE_TYPE setText(final String text);
+    INSTANCE_TYPE setText(String text);
 
     /**
      * Sets the tooltip text
@@ -91,7 +91,7 @@ public interface IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
      * 
      * @return This builder
      */
-    INSTANCE_TYPE setAccelerator(final VirtualKey key, final Modifier... modifier);
+    INSTANCE_TYPE setAccelerator(VirtualKey key, Modifier... modifier);
 
     /**
      * Sets the key accelerator
@@ -101,7 +101,7 @@ public interface IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
      * 
      * @return This builder
      */
-    INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier);
+    INSTANCE_TYPE setAccelerator(char key, Modifier... modifier);
 
     /**
      * Sets the mnemonic

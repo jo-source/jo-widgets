@@ -38,7 +38,7 @@ public interface IDefaultsInitializerRegistry {
     void register(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
     @SuppressWarnings("rawtypes")
-    void setDefaultsInitializer(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultInitializer);
+    void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
     @SuppressWarnings("rawtypes")
     List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);

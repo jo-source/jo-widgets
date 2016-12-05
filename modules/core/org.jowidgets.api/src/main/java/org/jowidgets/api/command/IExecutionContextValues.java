@@ -39,6 +39,6 @@ public interface IExecutionContextValues {
      * 
      * @return The value for the key, may be null
      */
-    <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key);
+    <VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
 
 }

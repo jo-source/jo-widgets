@@ -58,7 +58,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC noGrid(final int... indexes);
+    IAC noGrid(int... indexes);
 
     /**
      * Sets the current row/column to <code>i</code>. If the current number of rows/columns is less than <code>i</code> a call
@@ -72,7 +72,7 @@ public interface IAC {
      * @param i The new current row/column.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC index(final int i);
+    IAC index(int i);
 
     /**
      * Specifies that the current row/column's component should grow by default. It does not affect the size of the row/column.
@@ -92,7 +92,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC fill(final int... indexes);
+    IAC fill(int... indexes);
 
     /**
      * Specifies that the current row/column should be put in the size group <code>s</code> and will thus share the same size
@@ -116,7 +116,7 @@ public interface IAC {
      * @param s A name to associate on the group that should be the same for other rows/columns in the same group.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC sizeGroup(final String s);
+    IAC sizeGroup(String s);
 
     /**
      * Specifies that the indicated rows/columns should be put in the size group <code>s</code> and will thus share the same size
@@ -128,7 +128,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC sizeGroup(final String s, final int... indexes);
+    IAC sizeGroup(String s, int... indexes);
 
     /**
      * Specifies the current row/column's min and/or preferred and/or max size. E.g. <code>"10px"</code> or
@@ -140,7 +140,7 @@ public interface IAC {
      *            as a <b>BoundSize</b>. For more info on how <b>BoundSize</b> is formatted see the documentation.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC size(final String s);
+    IAC size(String s);
 
     /**
      * Specifies the indicated rows'/columns' min and/or preferred and/or max size. E.g. <code>"10px"</code> or
@@ -153,7 +153,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC size(final String size, final int... indexes);
+    IAC size(String size, int... indexes);
 
     /**
      * Specifies the gap size to be the default one <b>AND</b> moves to the next column/row. The method is called
@@ -176,7 +176,7 @@ public interface IAC {
      *            documentation.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC gap(final String size);
+    IAC gap(String size);
 
     /**
      * Specifies the indicated rows'/columns' gap size to <code>size</code>.
@@ -189,7 +189,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC gap(final String size, final int... indexes);
+    IAC gap(String size, int... indexes);
 
     /**
      * Specifies the current row/column's columns default alignment <b>for its components</b>. It does not affect the positioning
@@ -202,7 +202,7 @@ public interface IAC {
      *            "right".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC align(final String side);
+    IAC align(String side);
 
     /**
      * Specifies the indicated rows'/columns' columns default alignment <b>for its components</b>. It does not affect the
@@ -216,7 +216,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC align(final String side, final int... indexes);
+    IAC align(String side, int... indexes);
 
     /**
      * Specifies the current row/column's grow priority.
@@ -226,7 +226,7 @@ public interface IAC {
      * @param p The new grow priority.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC growPrio(final int p);
+    IAC growPrio(int p);
 
     /**
      * Specifies the indicated rows'/columns' grow priority.
@@ -237,7 +237,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC growPrio(final int p, final int... indexes);
+    IAC growPrio(int p, int... indexes);
 
     /**
      * Specifies the current row/column's grow weight within columns/rows with the <code>grow priority</code> 100f.
@@ -259,7 +259,7 @@ public interface IAC {
      * @param w The new grow weight.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC grow(final float w);
+    IAC grow(float w);
 
     /**
      * Specifies the indicated rows'/columns' grow weight within columns/rows with the same <code>grow priority</code>.
@@ -270,7 +270,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC grow(final float w, final int... indexes);
+    IAC grow(float w, int... indexes);
 
     /**
      * Specifies the current row/column's shrink priority.
@@ -280,7 +280,7 @@ public interface IAC {
      * @param p The new shrink priority.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC shrinkPrio(final int p);
+    IAC shrinkPrio(int p);
 
     /**
      * Specifies the indicated rows'/columns' shrink priority.
@@ -291,7 +291,7 @@ public interface IAC {
      * @param indexes The index(es) (0-based) of the columns/rows that should be affected by this constraint.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      */
-    IAC shrinkPrio(final int p, final int... indexes);
+    IAC shrinkPrio(int p, int... indexes);
 
     /**
      * Specifies that the current row/column's shrink weight withing the columns/rows with the <code>shrink priority</code> 100f.
@@ -314,7 +314,7 @@ public interface IAC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    IAC shrink(final float w);
+    IAC shrink(float w);
 
     /**
      * Specifies the indicated rows'/columns' shrink weight withing the columns/rows with the same <code>shrink priority</code>.
@@ -326,7 +326,7 @@ public interface IAC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new AxisConstraint().noGrid().gap().fill()</code>.
      * @since 3.7.2
      */
-    IAC shrink(final float w, final int... indexes);
+    IAC shrink(float w, int... indexes);
 
     /**
      * Specifies that the current row/column's shrink weight withing the columns/rows with the same <code>shrink priority</code>.
@@ -338,7 +338,7 @@ public interface IAC {
      * @deprecated in 3.7.2. Use {@link #shrink(float)} instead.
      */
     @Deprecated
-    IAC shrinkWeight(final float w);
+    IAC shrinkWeight(float w);
 
     /**
      * Specifies the indicated rows'/columns' shrink weight withing the columns/rows with the same <code>shrink priority</code>.
@@ -351,6 +351,6 @@ public interface IAC {
      * @deprecated in 3.7.2. Use {@link #shrink(float, int...)} instead.
      */
     @Deprecated
-    IAC shrinkWeight(final float w, final int... indexes);
+    IAC shrinkWeight(float w, int... indexes);
 
 }

@@ -29,6 +29,8 @@
 
 package org.jowidgets.api.layout.miglayout;
 
+import org.jowidgets.unit.tools.UnitValue;
+
 public interface IPlatformDefaults {
     int WINDOWS_XP = 0;
     int MAC_OSX = 1;
@@ -102,7 +104,7 @@ public interface IPlatformDefaults {
      * 
      * @param dpi The base DPI. If null the default DPI is reset to the platform base DPI.
      */
-    void setDefaultDPI(final Integer dpi);
+    void setDefaultDPI(Integer dpi);
 
     /**
      * The forced scale factor that all screen relative units (e.g. millimeters, inches and logical pixels) will be multiplied
@@ -124,7 +126,7 @@ public interface IPlatformDefaults {
      * @see #getHorizontalScaleFactor()
      * @see ComponentWrapper#getHorizontalScreenDPI()
      */
-    void setHorizontalScaleFactor(final Float f);
+    void setHorizontalScaleFactor(Float f);
 
     /**
      * The forced scale factor that all screen relative units (e.g. millimeters, inches and logical pixels) will be multiplied
@@ -146,7 +148,7 @@ public interface IPlatformDefaults {
      * @see #getHorizontalScaleFactor()
      * @see ComponentWrapper#getVerticalScreenDPI()
      */
-    void setVerticalScaleFactor(final Float f);
+    void setVerticalScaleFactor(Float f);
 
     /**
      * What base value should be used to calculate logical pixel sizes.
@@ -166,7 +168,7 @@ public interface IPlatformDefaults {
      * @see # BASE_SCREEN_DPI_FACTOR
      * @see #BASE_REAL_PIXEL
      */
-    void setLogicalPixelBase(final int base);
+    void setLogicalPixelBase(int base);
 
     /**
      * Sets gap value for components that are "related".
@@ -299,7 +301,7 @@ public interface IPlatformDefaults {
      * 
      * @param order The new button order for the current platform.
      */
-    void setButtonOrder(final String order);
+    void setButtonOrder(String order);
 
     /**
      * Returns the platform recommended inter-cell gap in the horizontal (x) dimension..
@@ -401,7 +403,7 @@ public interface IPlatformDefaults {
      * @see UnitValue#PIXEL
      * @see UnitValue#LPX
      */
-    void setDefaultHorizontalUnit(final int unit);
+    void setDefaultHorizontalUnit(int unit);
 
     /**
      * Returns the current default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
@@ -419,7 +421,7 @@ public interface IPlatformDefaults {
      * @see UnitValue#PIXEL
      * @see UnitValue#LPY
      */
-    void setDefaultVerticalUnit(final int unit);
+    void setDefaultVerticalUnit(int unit);
 
     /**
      * The default alignment for rows. Pre v3.5 this was <code>false</code> but now it is <code>true</code>.
@@ -435,5 +437,5 @@ public interface IPlatformDefaults {
      * @param b The new value. Default is <code>true</code> from v3.5.
      * @since 3.5
      */
-    void setDefaultRowAlignmentBaseline(final boolean b);
+    void setDefaultRowAlignmentBaseline(boolean b);
 }

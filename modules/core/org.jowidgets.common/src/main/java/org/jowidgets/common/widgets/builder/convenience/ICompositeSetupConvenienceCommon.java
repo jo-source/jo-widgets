@@ -29,7 +29,7 @@ package org.jowidgets.common.widgets.builder.convenience;
 
 public interface ICompositeSetupConvenienceCommon<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setBorder(final String borderTitle);
+    INSTANCE_TYPE setBorder(String borderTitle);
 
     INSTANCE_TYPE setBorder();
 

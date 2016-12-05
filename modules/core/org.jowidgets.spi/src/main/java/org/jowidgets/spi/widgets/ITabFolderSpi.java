@@ -34,9 +34,9 @@ import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
 
 public interface ITabFolderSpi extends IControlSpi, ITabFolderCommon {
 
-    ITabItemSpi addItem(final ITabItemSetupSpi setup);
+    ITabItemSpi addItem(ITabItemSetupSpi setup);
 
-    ITabItemSpi addItem(int index, final ITabItemSetupSpi setup);
+    ITabItemSpi addItem(int index, ITabItemSetupSpi setup);
 
     void detachItem(ITabItemSpi item);
 

@@ -121,7 +121,7 @@ public interface IMenuBar extends IWidget, IMenuBarCommon {
      * 
      * @param index The index to remove the menu at
      */
-    void remove(final int index);
+    void remove(int index);
 
     /**
      * Removes all menus from the mneu bar

@@ -36,9 +36,9 @@ import org.jowidgets.common.widgets.ITabFolderCommon;
 
 public interface ITabFolder extends IControl, ITabFolderCommon, ITabFolderObservable {
 
-    ITabItem addItem(final ITabItemDescriptor descriptor);
+    ITabItem addItem(ITabItemDescriptor descriptor);
 
-    ITabItem addItem(int index, final ITabItemDescriptor descriptor);
+    ITabItem addItem(int index, ITabItemDescriptor descriptor);
 
     void removeItem(ITabItem item);
 

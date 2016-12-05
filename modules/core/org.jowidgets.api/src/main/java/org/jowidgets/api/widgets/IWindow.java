@@ -51,7 +51,7 @@ public interface IWindow extends IDisplay, IComponent, IWindowCommon {
      * @return The created window
      */
     <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-        final DESCRIPTOR_TYPE descriptor);
+        DESCRIPTOR_TYPE descriptor);
 
     /**
      * Gets the child windows of this window as a unmodifiable copy

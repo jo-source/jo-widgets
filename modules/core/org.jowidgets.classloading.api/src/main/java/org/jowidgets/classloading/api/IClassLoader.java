@@ -38,6 +38,6 @@ public interface IClassLoader {
 
     URL findResource(String name);
 
-    Enumeration<URL> findResources(final String name) throws IOException;
+    Enumeration<URL> findResources(String name) throws IOException;
 
 }

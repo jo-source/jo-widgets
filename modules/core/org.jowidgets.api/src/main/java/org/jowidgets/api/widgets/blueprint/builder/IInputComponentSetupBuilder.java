@@ -29,10 +29,10 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.validation.IValidator;
 
-public interface IInputComponentSetupBuilder<INSTANCE_TYPE extends IInputComponentSetupBuilder<?, ?>, INPUT_TYPE> extends
-        IComponentSetupBuilder<INSTANCE_TYPE> {
+public interface IInputComponentSetupBuilder<INSTANCE_TYPE extends IInputComponentSetupBuilder<?, ?>, INPUT_TYPE>
+        extends IComponentSetupBuilder<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setEditable(final boolean editable);
+    INSTANCE_TYPE setEditable(boolean editable);
 
     INSTANCE_TYPE setValidator(IValidator<INPUT_TYPE> validator);
 

@@ -150,7 +150,7 @@ public interface IMenuBarModel extends IListModelObservable {
      * 
      * @param item The menu to remove
      */
-    void removeMenu(final IMenuModel item);
+    void removeMenu(IMenuModel item);
 
     /**
      * Removes a menu at a given index

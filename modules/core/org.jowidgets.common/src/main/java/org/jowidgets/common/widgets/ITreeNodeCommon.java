@@ -37,9 +37,9 @@ public interface ITreeNodeCommon extends IItemCommon, ITreeNodeObservable, IPopu
 
     void setMarkup(Markup markup);
 
-    void setForegroundColor(final IColorConstant colorValue);
+    void setForegroundColor(IColorConstant colorValue);
 
-    void setBackgroundColor(final IColorConstant colorValue);
+    void setBackgroundColor(IColorConstant colorValue);
 
     void setExpanded(boolean expanded);
 

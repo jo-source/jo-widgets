@@ -81,7 +81,7 @@ public interface IWidgetsServiceProvider {
      * @param component The component
      * @return screen position
      */
-    Position toScreen(final Position localPosition, final IComponentCommon component);
+    Position toScreen(Position localPosition, IComponentCommon component);
 
     /**
      * Transforms a screen position to a local component position
@@ -90,7 +90,7 @@ public interface IWidgetsServiceProvider {
      * @param component The component
      * @return local position relative to the component
      */
-    Position toLocal(final Position screenPosition, final IComponentCommon component);
+    Position toLocal(Position screenPosition, IComponentCommon component);
 
     /**
      * @return The system clipboard

@@ -63,16 +63,16 @@ public interface IToolBarModel extends IListModelObservable {
      */
     void unbind(IToolBarModel model);
 
-    void addItem(final IToolBarItemModel item);
+    void addItem(IToolBarItemModel item);
 
-    void addItem(final int index, final IToolBarItemModel item);
+    void addItem(int index, IToolBarItemModel item);
 
     <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
-        final BUILDER_TYPE itemBuilder);
+        BUILDER_TYPE itemBuilder);
 
     <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
         int index,
-        final BUILDER_TYPE itemBuilder);
+        BUILDER_TYPE itemBuilder);
 
     void addAfter(IToolBarItemModel newItem, String id);
 
@@ -80,11 +80,11 @@ public interface IToolBarModel extends IListModelObservable {
 
     IActionItemModel addAction(IAction action);
 
-    IActionItemModel addAction(final int index, IAction action);
+    IActionItemModel addAction(int index, IAction action);
 
     IPopupActionItemModel addPopupAction(IAction action, IMenuModel popupMenu);
 
-    IPopupActionItemModel addPopupAction(final int index, IAction action, IMenuModel popupMenu);
+    IPopupActionItemModel addPopupAction(int index, IAction action, IMenuModel popupMenu);
 
     IActionItemModel addActionItem();
 
@@ -136,9 +136,9 @@ public interface IToolBarModel extends IListModelObservable {
 
     ISeparatorItemModel addSeparator(int index);
 
-    void removeItem(final IToolBarItemModel item);
+    void removeItem(IToolBarItemModel item);
 
-    void removeAction(final IAction action);
+    void removeAction(IAction action);
 
     void removeItem(int index);
 

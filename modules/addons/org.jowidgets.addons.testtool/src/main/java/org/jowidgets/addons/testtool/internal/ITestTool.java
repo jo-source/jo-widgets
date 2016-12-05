@@ -40,7 +40,7 @@ public interface ITestTool {
 
     void replay(List<TestDataObject> list, int delay);
 
-    void save(final List<TestDataObject> list, final String fileName);
+    void save(List<TestDataObject> list, String fileName);
 
     List<TestDataObject> load(String fileName);
 

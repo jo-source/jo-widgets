@@ -31,7 +31,7 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IFrameCommon extends IWindowCommon, IContainerCommon {
 
-    void setMinSize(final Dimension minSize);
+    void setMinSize(Dimension minSize);
 
     void setTitle(String title);
 

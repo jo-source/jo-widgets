@@ -91,7 +91,7 @@ public interface IConverterProvider {
 
     IConverter<Double> doubleNumber();
 
-    IConverter<Double> doubleNumber(final int minFractionDigits, final int maxFractionDigits);
+    IConverter<Double> doubleNumber(int minFractionDigits, int maxFractionDigits);
 
     IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
 

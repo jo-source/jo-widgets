@@ -33,12 +33,12 @@ import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 
-public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetupBuilder<?>> extends
-        ITitledWindowSetupBuilder<INSTANCE_TYPE> {
+public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetupBuilder<?>>
+        extends ITitledWindowSetupBuilder<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setLoginButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setLoginButton(IButtonDescriptor buttonDescriptor);
 
-    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(IButtonDescriptor buttonDescriptor);
 
     INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 

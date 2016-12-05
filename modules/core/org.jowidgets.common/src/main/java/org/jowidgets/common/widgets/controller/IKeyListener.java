@@ -35,12 +35,12 @@ public interface IKeyListener {
      * 
      * @param event The Key event
      */
-    void keyPressed(final IKeyEvent event);
+    void keyPressed(IKeyEvent event);
 
     /**
      * Will be invoked if a key was released
      * 
      * @param event The key event
      */
-    void keyReleased(final IKeyEvent event);
+    void keyReleased(IKeyEvent event);
 }

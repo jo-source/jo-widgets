@@ -84,26 +84,20 @@ public interface IGraphicContextCommon {
 
     void drawText(String text, int x, int y);
 
-    void copyArea(
-        final int sourceX,
-        final int sourceY,
-        final int sourceWidth,
-        final int sourceHeight,
-        final int destinationX,
-        final int destinationY);
+    void copyArea(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int destinationX, int destinationY);
 
     void drawImage(
         IImageConstant image,
-        final int sourceX,
-        final int sourceY,
-        final int sourceWidth,
-        final int sourceHeight,
-        final int destinationX,
-        final int destinationY,
-        final int destinationWidth,
-        final int destinationHeight);
+        int sourceX,
+        int sourceY,
+        int sourceWidth,
+        int sourceHeight,
+        int destinationX,
+        int destinationY,
+        int destinationWidth,
+        int destinationHeight);
 
-    void drawImage(final IImageConstant image, final int x, final int y);
+    void drawImage(IImageConstant image, int x, int y);
 
     Rectangle getBounds();
 

@@ -74,6 +74,6 @@ public abstract class AbstractDesignationCallback<T> implements IDesignationCall
 
     protected abstract String getJsEndFunctionName();
 
-    protected abstract T createResult(final Object[] arguments);
+    protected abstract T createResult(Object[] arguments);
 
 }

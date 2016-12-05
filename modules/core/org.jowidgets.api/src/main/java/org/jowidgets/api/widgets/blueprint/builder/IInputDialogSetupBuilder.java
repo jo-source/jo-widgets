@@ -36,9 +36,9 @@ public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetu
         IInputCompositeSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
         IInputDialogSetupConvenience<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setOkButton(IButtonDescriptor buttonDescriptor);
 
-    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(IButtonDescriptor buttonDescriptor);
 
     IButtonDescriptor getOkButton();
 

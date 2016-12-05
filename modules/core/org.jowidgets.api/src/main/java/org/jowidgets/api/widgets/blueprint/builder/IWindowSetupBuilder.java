@@ -40,11 +40,11 @@ public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?
         IWindowSetupConvenience<INSTANCE_TYPE>,
         IWindowSetupBuilderCommon<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);
+    INSTANCE_TYPE setAutoPackPolicy(AutoPackPolicy autoPackPolicy);
 
-    INSTANCE_TYPE setAutoCenterPolicy(final AutoCenterPolicy autoCenterPolicy);
+    INSTANCE_TYPE setAutoCenterPolicy(AutoCenterPolicy autoCenterPolicy);
 
-    INSTANCE_TYPE setAutoPositionCorrectionPolicy(final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
+    INSTANCE_TYPE setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
 
     INSTANCE_TYPE setMinPackSize(Dimension size);
 

@@ -39,7 +39,7 @@ public interface IWidgetWrapperFactory {
      * @param uiReference
      * @return True if convertible, false otherwise
      */
-    boolean isConvertibleToFrame(final Object uiReference);
+    boolean isConvertibleToFrame(Object uiReference);
 
     /**
      * Creates a IFrame from an ui-platform specific ui-reference
@@ -52,7 +52,7 @@ public interface IWidgetWrapperFactory {
      * @return The created IFrame
      * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IFrame.
      */
-    IFrame createFrame(final Object uiReference);
+    IFrame createFrame(Object uiReference);
 
     /**
      * Tests if the ui reference can be converted / wrapped to an IComposite
@@ -60,7 +60,7 @@ public interface IWidgetWrapperFactory {
      * @param uiReference
      * @return True if convertible, false otherwise
      */
-    boolean isConvertibleToComposite(final Object uiReference);
+    boolean isConvertibleToComposite(Object uiReference);
 
     /**
      * Creates a IComposite from an ui-platform specific ui-reference
@@ -72,6 +72,6 @@ public interface IWidgetWrapperFactory {
      * @return The created ICompositeCommon
      * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IComposite.
      */
-    IComposite createComposite(final Object uiReference);
+    IComposite createComposite(Object uiReference);
 
 }

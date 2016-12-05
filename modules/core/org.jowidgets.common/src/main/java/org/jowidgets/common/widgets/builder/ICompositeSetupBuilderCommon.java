@@ -30,10 +30,9 @@ package org.jowidgets.common.widgets.builder;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.builder.convenience.ICompositeSetupConvenienceCommon;
 
-public interface ICompositeSetupBuilderCommon<INSTANCE_TYPE extends ICompositeSetupBuilderCommon<?>> extends
-        IContainerSetupBuilderCommon<INSTANCE_TYPE>,
-        ICompositeSetupConvenienceCommon<INSTANCE_TYPE> {
+public interface ICompositeSetupBuilderCommon<INSTANCE_TYPE extends ICompositeSetupBuilderCommon<?>>
+        extends IContainerSetupBuilderCommon<INSTANCE_TYPE>, ICompositeSetupConvenienceCommon<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setBorder(final Border border);
+    INSTANCE_TYPE setBorder(Border border);
 
 }

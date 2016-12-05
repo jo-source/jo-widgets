@@ -156,7 +156,7 @@ public interface IImageRegistry {
      *             at first use
      */
     @Deprecated
-    <T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass);
+    <T extends Enum<?> & IImageUrlProvider> void registerImageEnum(Class<T> enumClass);
 
     /**
      * Registers an IImageStreamProvider

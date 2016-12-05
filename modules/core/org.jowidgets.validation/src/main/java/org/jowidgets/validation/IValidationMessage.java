@@ -70,7 +70,7 @@ public interface IValidationMessage {
      * @return True if the severity the of this message is equal or worse
      *         than the severity of the given message, false otherwise
      */
-    boolean equalOrWorse(final IValidationMessage message);
+    boolean equalOrWorse(IValidationMessage message);
 
     /**
      * Checks if the severity of this message is worse
@@ -81,6 +81,6 @@ public interface IValidationMessage {
      * @return True if the severity the of this message is worse
      *         than the severity of the given message, false otherwise
      */
-    boolean worse(final IValidationMessage message);
+    boolean worse(IValidationMessage message);
 
 }

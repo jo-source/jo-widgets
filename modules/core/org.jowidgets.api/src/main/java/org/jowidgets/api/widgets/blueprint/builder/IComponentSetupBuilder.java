@@ -31,14 +31,13 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IComponentSetupCo
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.widgets.builder.IComponentSetupBuilderCommon;
 
-public interface IComponentSetupBuilder<INSTANCE_TYPE extends IComponentSetupBuilder<?>> extends
-        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-        IComponentSetupConvenience<INSTANCE_TYPE> {
+public interface IComponentSetupBuilder<INSTANCE_TYPE extends IComponentSetupBuilder<?>>
+        extends IComponentSetupBuilderCommon<INSTANCE_TYPE>, IComponentSetupConvenience<INSTANCE_TYPE> {
 
     INSTANCE_TYPE setVisible(Boolean visible);
 
-    INSTANCE_TYPE setForegroundColor(final IColorConstant foregroundColor);
+    INSTANCE_TYPE setForegroundColor(IColorConstant foregroundColor);
 
-    INSTANCE_TYPE setBackgroundColor(final IColorConstant backgroundColor);
+    INSTANCE_TYPE setBackgroundColor(IColorConstant backgroundColor);
 
 }

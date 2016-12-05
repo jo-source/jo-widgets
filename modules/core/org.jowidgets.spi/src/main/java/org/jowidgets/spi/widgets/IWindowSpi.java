@@ -34,6 +34,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 public interface IWindowSpi extends IDisplaySpi, IComponentSpi, IWindowCommon {
 
     <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-        final DESCRIPTOR_TYPE descriptor);
+        DESCRIPTOR_TYPE descriptor);
 
 }

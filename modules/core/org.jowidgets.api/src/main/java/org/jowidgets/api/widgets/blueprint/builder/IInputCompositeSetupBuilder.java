@@ -33,23 +33,22 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputComponentValidationLabel
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
 
-public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE> extends
-        IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-        IInputCompositeSetupConvenience<INSTANCE_TYPE> {
+public interface IInputCompositeSetupBuilder<INSTANCE_TYPE extends IInputCompositeSetupBuilder<?, ?>, INPUT_TYPE>
+        extends IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>, IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
-    INSTANCE_TYPE setContentCreator(final IInputContentCreator<INPUT_TYPE> contentCreator);
+    INSTANCE_TYPE setContentCreator(IInputContentCreator<INPUT_TYPE> contentCreator);
 
-    INSTANCE_TYPE setContentScrolled(final boolean scrolledContent);
+    INSTANCE_TYPE setContentScrolled(boolean scrolledContent);
 
     INSTANCE_TYPE setBorder(Border border);
 
     INSTANCE_TYPE setContentBorder(Border border);
 
-    INSTANCE_TYPE setValidationLabel(final IInputComponentValidationLabelSetup validationLabel);
+    INSTANCE_TYPE setValidationLabel(IInputComponentValidationLabelSetup validationLabel);
 
     INSTANCE_TYPE setValidationLabelBackground(IColorConstant color);
 
-    INSTANCE_TYPE setValidationLabelHeight(final int height);
+    INSTANCE_TYPE setValidationLabelHeight(int height);
 
     INSTANCE_TYPE setMissingInputHint(String hint);
 

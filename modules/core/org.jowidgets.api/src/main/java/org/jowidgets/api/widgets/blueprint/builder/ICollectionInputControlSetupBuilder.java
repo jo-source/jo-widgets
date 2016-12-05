@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputComponentValidationLabel
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
-public interface ICollectionInputControlSetupBuilder<INSTANCE_TYPE extends ICollectionInputControlSetupBuilder<?, ?>, ELEMENT_TYPE> extends
-        IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
+public interface ICollectionInputControlSetupBuilder<INSTANCE_TYPE extends ICollectionInputControlSetupBuilder<?, ?>, ELEMENT_TYPE>
+        extends IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-    INSTANCE_TYPE setElementWidgetCreator(final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
+    INSTANCE_TYPE setElementWidgetCreator(ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
 
     INSTANCE_TYPE setRemoveButton(IButtonSetup button);
 

@@ -44,6 +44,6 @@ public interface IWidgetUtils {
      * @return the first found window ancestor for an widget or null if the ancestor can not be determined, e.g. cebause its
      *         native
      */
-    IWindow getWindowAncestor(final IWidget widget);
+    IWindow getWindowAncestor(IWidget widget);
 
 }

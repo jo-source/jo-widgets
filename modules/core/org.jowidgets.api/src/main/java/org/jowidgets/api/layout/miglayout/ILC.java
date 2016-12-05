@@ -29,6 +29,10 @@
  */
 package org.jowidgets.api.layout.miglayout;
 
+//CHECKSTYLE:OFF
+import org.jowidgets.unit.tools.UnitValue;
+//CHECKSTYLE:ON
+
 /**
  * Contains the constraints for an instance of the {@link ILC} layout manager.
  */
@@ -60,7 +64,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.5
      */
-    ILC pack(final String width, final String height);
+    ILC pack(String width, String height);
 
     /**
      * Sets the pack width and height alignment.
@@ -75,7 +79,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @since 3.5
      */
-    ILC packAlign(final float alignX, final float alignY);
+    ILC packAlign(float alignX, float alignY);
 
     /**
      * Sets a wrap after the number of columns/rows that is defined in the {@link net.miginfocom.layout.AC}.
@@ -96,7 +100,7 @@ public interface ILC {
      * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC wrapAfter(final int count);
+    ILC wrapAfter(int count);
 
     /**
      * Same functionality as {@link #setNoCache(boolean true)} only this method returns <code>this</code> for chaining multiple
@@ -167,7 +171,7 @@ public interface ILC {
      * @param b <code>true</code> for forcing left-to-right. <code>false</code> for forcing right-to-left.
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC leftToRight(final boolean b);
+    ILC leftToRight(boolean b);
 
     /**
      * Same functionality as setLeftToRight(false) only this method returns <code>this</code> for chaining multiple calls.
@@ -230,7 +234,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setInsets(UnitValue[])
      */
-    ILC insetsAll(final String allSides);
+    ILC insetsAll(String allSides);
 
     /**
      * Same functionality as <code>setInsets(ConstraintParser.parseInsets(s, true))</code>. This method returns <code>this</code>
@@ -242,7 +246,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setInsets(UnitValue[])
      */
-    ILC insets(final String s);
+    ILC insets(String s);
 
     /**
      * Sets the different insets (expressed as a <code>UnitValue</code>s, e.g. "10px" or "20mm") for the corresponding sides.
@@ -264,7 +268,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setInsets(UnitValue[])
      */
-    ILC insets(final String top, final String left, final String bottom, final String right);
+    ILC insets(String top, String left, String bottom, String right);
 
     /**
      * Same functionality as <code>setAlignX(ConstraintParser.parseUnitValueOrAlign(unitValue, true))</code> only this method
@@ -276,7 +280,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setAlignX(UnitValue)
      */
-    ILC alignX(final String align);
+    ILC alignX(String align);
 
     /**
      * Same functionality as <code>setAlignY(ConstraintParser.parseUnitValueOrAlign(align, false))</code> only this method returns
@@ -288,7 +292,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setAlignY(UnitValue)
      */
-    ILC alignY(final String align);
+    ILC alignY(String align);
 
     /**
      * Sets both the alignX and alignY as the same time.
@@ -301,7 +305,7 @@ public interface ILC {
      * @see #alignX(String)
      * @see #alignY(String)
      */
-    ILC align(final String ax, final String ay);
+    ILC align(String ax, String ay);
 
     /**
      * Same functionality as <code>setGridGapX(ConstraintParser.parseBoundSize(boundsSize, true, true))</code> only this method
@@ -314,7 +318,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setGridGapX(BoundSize)
      */
-    ILC gridGapX(final String boundsSize);
+    ILC gridGapX(String boundsSize);
 
     /**
      * Same functionality as <code>setGridGapY(ConstraintParser.parseBoundSize(boundsSize, true, false))</code> only this method
@@ -327,7 +331,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setGridGapY(BoundSize)
      */
-    ILC gridGapY(final String boundsSize);
+    ILC gridGapY(String boundsSize);
 
     /**
      * Sets both grid gaps at the same time. see {@link #gridGapX(String)} and {@link #gridGapY(String)}.
@@ -342,7 +346,7 @@ public interface ILC {
      * @see #gridGapX(String)
      * @see #gridGapY(String)
      */
-    ILC gridGap(final String gapx, final String gapy);
+    ILC gridGap(String gapx, String gapy);
 
     /**
      * Same functionality as {@link #setDebugMillis(int repaintMillis)} only this method returns <code>this</code> for chaining
@@ -354,7 +358,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setDebugMillis(int)
      */
-    ILC debug(final int repaintMillis);
+    ILC debug(int repaintMillis);
 
     /**
      * Same functionality as {@link #setHideMode(int mode)} only this method returns <code>this</code> for chaining multiple
@@ -370,7 +374,7 @@ public interface ILC {
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      * @see #setHideMode(int)
      */
-    ILC hideMode(final int mode);
+    ILC hideMode(int mode);
 
     /**
      * The minimum width for the container. The value will override any value that is set on the container itself.
@@ -380,7 +384,7 @@ public interface ILC {
      * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC minWidth(final String width);
+    ILC minWidth(String width);
 
     /**
      * The width for the container as a min and/or preferred and/or maximum width. The value will override any value that is set
@@ -391,7 +395,7 @@ public interface ILC {
      * @param width The width expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC width(final String width);
+    ILC width(String width);
 
     /**
      * The maximum width for the container. The value will override any value that is set on the container itself.
@@ -401,7 +405,7 @@ public interface ILC {
      * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC maxWidth(final String width);
+    ILC maxWidth(String width);
 
     /**
      * The minimum height for the container. The value will override any value that is set on the container itself.
@@ -411,7 +415,7 @@ public interface ILC {
      * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC minHeight(final String height);
+    ILC minHeight(String height);
 
     /**
      * The height for the container as a min and/or preferred and/or maximum height. The value will override any value that is set
@@ -422,7 +426,7 @@ public interface ILC {
      * @param height The height expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC height(final String height);
+    ILC height(String height);
 
     /**
      * The maximum height for the container. The value will override any value that is set on the container itself.
@@ -432,6 +436,6 @@ public interface ILC {
      * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
      * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
      */
-    ILC maxHeight(final String height);
+    ILC maxHeight(String height);
 
 }

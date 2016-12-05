@@ -33,7 +33,7 @@ import org.jowidgets.common.types.Accelerator;
 
 public interface IItemSpiInvoker {
 
-    void setText(final String text);
+    void setText(String text);
 
     void setToolTipText(String toolTipText);
 

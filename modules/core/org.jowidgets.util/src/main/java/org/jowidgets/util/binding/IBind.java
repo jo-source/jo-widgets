@@ -68,8 +68,8 @@ public interface IBind {
      * @return The binding reference for the created binding
      */
     <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
-        final IObservableValue<SOURCE_TYPE> source,
-        final IObservableValue<DESTINATION_TYPE> destination,
+        IObservableValue<SOURCE_TYPE> source,
+        IObservableValue<DESTINATION_TYPE> destination,
         IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter);
 
 }

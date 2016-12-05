@@ -311,7 +311,7 @@ public interface IToolkit {
      * @param component The component
      * @return screen position
      */
-    Position toScreen(final Position localPosition, final IComponent component);
+    Position toScreen(Position localPosition, IComponent component);
 
     /**
      * Transforms a screen position to a local component position
@@ -320,7 +320,7 @@ public interface IToolkit {
      * @param component The component
      * @return local position relative to the component
      */
-    Position toLocal(final Position screenPosition, final IComponent component);
+    Position toLocal(Position screenPosition, IComponent component);
 
     /**
      * Gets the supported widgets information

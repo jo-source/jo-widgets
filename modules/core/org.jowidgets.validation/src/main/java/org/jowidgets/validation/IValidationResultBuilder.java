@@ -37,7 +37,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addMessage(final IValidationMessage message);
+    IValidationResultBuilder addMessage(IValidationMessage message);
 
     /**
      * Adds a info message
@@ -46,7 +46,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addInfo(final String text);
+    IValidationResultBuilder addInfo(String text);
 
     /**
      * Adds a warning message
@@ -55,7 +55,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addWarning(final String text);
+    IValidationResultBuilder addWarning(String text);
 
     /**
      * Adds a info error message
@@ -64,7 +64,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addInfoError(final String text);
+    IValidationResultBuilder addInfoError(String text);
 
     /**
      * Adds a error message
@@ -73,7 +73,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addError(final String text);
+    IValidationResultBuilder addError(String text);
 
     /**
      * Adds a info message
@@ -83,7 +83,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addInfo(final String context, final String text);
+    IValidationResultBuilder addInfo(String context, String text);
 
     /**
      * Adds a warning message
@@ -93,7 +93,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addWarning(final String context, final String text);
+    IValidationResultBuilder addWarning(String context, String text);
 
     /**
      * Adds a info error message
@@ -103,7 +103,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addInfoError(final String context, final String text);
+    IValidationResultBuilder addInfoError(String context, String text);
 
     /**
      * Adds a error message
@@ -113,7 +113,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addError(final String context, final String text);
+    IValidationResultBuilder addError(String context, String text);
 
     /**
      * Adds all messages of a result the new result
@@ -122,7 +122,7 @@ public interface IValidationResultBuilder {
      * 
      * @return This builder
      */
-    IValidationResultBuilder addResult(final IValidationResult result);
+    IValidationResultBuilder addResult(IValidationResult result);
 
     /**
      * Creates a new validation result

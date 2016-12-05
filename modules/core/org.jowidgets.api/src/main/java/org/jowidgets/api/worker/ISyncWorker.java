@@ -40,6 +40,6 @@ public interface ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> {
      * 
      * @return The result
      */
-    RESULT_TYPE work(IWorkerProgressCallback<PROGRESS_TYPE> progressCallback, final ICancelCallback cancelCallback);
+    RESULT_TYPE work(IWorkerProgressCallback<PROGRESS_TYPE> progressCallback, ICancelCallback cancelCallback);
 
 }

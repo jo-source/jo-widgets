@@ -40,7 +40,7 @@ public interface IGraphicContext extends IGraphicContextCommon {
 
     void setSolidLine();
 
-    void drawImage(IImageConstant image, final int x, final int y, final int width, final int height);
+    void drawImage(IImageConstant image, int x, int y, int width, int height);
 
     void drawImage(IImageConstant image);
 

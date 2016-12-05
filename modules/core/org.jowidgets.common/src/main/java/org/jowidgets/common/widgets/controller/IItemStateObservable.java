@@ -35,13 +35,13 @@ public interface IItemStateObservable {
      * 
      * @param listener The listener to add
      */
-    void addItemListener(final IItemStateListener listener);
+    void addItemListener(IItemStateListener listener);
 
     /**
      * Removes an item state listener
      * 
      * @param listener The listener to remove
      */
-    void removeItemListener(final IItemStateListener listener);
+    void removeItemListener(IItemStateListener listener);
 
 }

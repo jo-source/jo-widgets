@@ -44,7 +44,7 @@ public interface ICommandAction extends IAction {
      * 
      * @param toolTipText The text to set
      */
-    void setToolTipText(final String toolTipText);
+    void setToolTipText(String toolTipText);
 
     /**
      * Sets the actions icon
