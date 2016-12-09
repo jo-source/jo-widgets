@@ -288,7 +288,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
             child.dispose();
 
             if (wasExpanded && item.getItemCount() == 0) {
-                item.setExpanded(expanded);
+                item.setExpanded(false);
                 fireExpandedChanged(false);
             }
         }
