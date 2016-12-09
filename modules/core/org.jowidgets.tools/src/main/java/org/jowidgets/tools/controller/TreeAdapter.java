@@ -45,4 +45,10 @@ public class TreeAdapter implements ITreeListener {
     @Override
     public void nodeUnchecked(final ITreeNode node) {}
 
+    @Override
+    public void afterNodeAdded(final ITreeNode node) {}
+
+    @Override
+    public void beforeNodeRemove(final ITreeNode node) {}
+
 }

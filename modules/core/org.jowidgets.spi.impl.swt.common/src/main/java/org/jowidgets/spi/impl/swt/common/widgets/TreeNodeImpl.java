@@ -283,8 +283,14 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
                     parentTree.setSelected(treeNode, false);
                 }
             }
+            final boolean wasExpanded = isExpanded();
             parentTree.unRegisterItem(child);
             child.dispose();
+
+            if (wasExpanded && item.getItemCount() == 0) {
+                item.setExpanded(expanded);
+                fireExpandedChanged(false);
+            }
         }
     }
 

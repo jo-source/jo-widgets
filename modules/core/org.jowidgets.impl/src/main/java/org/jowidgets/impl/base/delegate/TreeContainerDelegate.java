@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class TreeContainerDelegate implements ITreeContainer {
         final ITreeNodeSpi treeNodeSpi) {
         Assert.paramNotNull(treeNodeSpi, "treeNodeSpi");
 
-        this.children = new LinkedList<ITreeNode>();
+        this.children = new ArrayList<ITreeNode>();
         this.childrenView = Collections.unmodifiableList(children);
 
         this.parentTree = parentTree;
@@ -83,6 +84,7 @@ public class TreeContainerDelegate implements ITreeContainer {
         final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
         children.add(result);
         parentTree.registerNode(result);
+        parentTree.getTreeObservable().fireAfterNodeAdded(result);
         return result;
     }
 
@@ -92,6 +94,7 @@ public class TreeContainerDelegate implements ITreeContainer {
         final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi);
         children.add(index, result);
         parentTree.registerNode(result);
+        parentTree.getTreeObservable().fireAfterNodeAdded(result);
         return result;
     }
 
@@ -101,6 +104,7 @@ public class TreeContainerDelegate implements ITreeContainer {
         final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
         children.add(result);
         parentTree.registerNode(result);
+        parentTree.getTreeObservable().fireAfterNodeAdded(result);
         return result;
     }
 
@@ -110,12 +114,14 @@ public class TreeContainerDelegate implements ITreeContainer {
         final TreeNodeImpl result = new TreeNodeImpl(parentTree, treeNode, childTreeNodeSpi, descriptor);
         children.add(index, result);
         parentTree.registerNode(result);
+        parentTree.getTreeObservable().fireAfterNodeAdded(result);
         return result;
     }
 
     @Override
     public void removeNode(final int index) {
         final ITreeNode node = children.remove(index);
+        parentTree.getTreeObservable().fireBeforeNodeRemove(node);
         node.dispose();
         treeNodeSpi.removeNode(index);
         parentTree.unRegisterNode((TreeNodeImpl) node);

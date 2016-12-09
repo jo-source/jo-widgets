@@ -42,10 +42,10 @@ import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.TreeAdapter;
+import org.jowidgets.tools.controller.TreeNodeAdapter;
 
 public final class DemoTreeComposite {
 
@@ -128,7 +128,7 @@ public final class DemoTreeComposite {
     }
 
     private void registerListners(final ITreeNode node) {
-        node.addTreeNodeListener(new ITreeNodeListener() {
+        node.addTreeNodeListener(new TreeNodeAdapter() {
 
             @Override
             public void selectionChanged(final boolean selected) {
@@ -150,6 +150,7 @@ public final class DemoTreeComposite {
                 System.out.println(node.getText() + " checked = " + checked);
                 // CHECKSTYLE:ON
             }
+
         });
 
         final IPopupMenu popupMenu = node.createPopupMenu();

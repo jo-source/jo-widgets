@@ -410,7 +410,7 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
         return defaultLeafIcon;
     }
 
-    protected TreeObservable getTreeObservable() {
+    public TreeObservable getTreeObservable() {
         return treeObservable;
     }
 

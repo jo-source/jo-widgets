@@ -31,21 +31,23 @@ package org.jowidgets.impl.command;
 import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.command.AbstractEnabledChecker;
-import org.jowidgets.tools.controller.TreeAdapter;
 import org.jowidgets.util.IFilter;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.util.ValueHolder;
 
 final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
 
-    private static final IMessage NODES_ALREADY_EXPANDED = Messages.getMessage("TreeExpansionEnabledChecker.nodesAlreadyExpanded");
-    private static final IMessage NODES_ALREADY_COLLAPSED = Messages.getMessage("TreeExpansionEnabledChecker.nodesAlreadyCollapsed");
+    private static final IMessage NODES_ALREADY_EXPANDED = Messages
+            .getMessage("TreeExpansionEnabledChecker.nodesAlreadyExpanded");
+    private static final IMessage NODES_ALREADY_COLLAPSED = Messages
+            .getMessage("TreeExpansionEnabledChecker.nodesAlreadyCollapsed");
 
     private final ITreeContainer treeContainer;
     private final ExpansionMode expansionMode;
@@ -64,7 +66,7 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
         this.filter = filter;
         this.pivotLevel = pivotLevel;
 
-        getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
+        getParentTree(treeContainer).addTreeListener(new ITreeListener() {
 
             @Override
             public void nodeExpanded(final ITreeNode node) {
@@ -83,6 +85,16 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
             @Override
             public void nodeUnchecked(final ITreeNode node) {
+                fireChangedEvent();
+            }
+
+            @Override
+            public void afterNodeAdded(final ITreeNode node) {
+                fireChangedEvent();
+            }
+
+            @Override
+            public void beforeNodeRemove(final ITreeNode node) {
                 fireChangedEvent();
             }
 

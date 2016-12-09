@@ -389,7 +389,7 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
             }
         }
 
-        private final class TreeNodeListener implements ITreeNodeListener {
+        private final class TreeNodeListener extends TreeNodeAdapter {
 
             @Override
             public void selectionChanged(final boolean selected) {

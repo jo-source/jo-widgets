@@ -40,4 +40,8 @@ public interface ITreeListener {
 
     void nodeUnchecked(ITreeNode node);
 
+    void afterNodeAdded(ITreeNode node);
+
+    void beforeNodeRemove(ITreeNode node);
+
 }

@@ -85,4 +85,18 @@ public class TreeObservable implements ITreeObservable {
         }
     }
 
+    public void fireAfterNodeAdded(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.afterNodeAdded(node);
+        }
+    }
+
+    public void fireBeforeNodeRemove(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.beforeNodeRemove(node);
+        }
+    }
+
 }

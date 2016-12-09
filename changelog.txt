@@ -132,5 +132,18 @@ Bugfixes:
 * Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/52 Verify of double values is to strict
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.67.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixes issue #56 https://github.com/jo-source/jo-widgets/issues/#56  TreeExpansionAction does not consider all enabled changes
+
+
+
 
 
