@@ -19,3 +19,4 @@ Require-Bundle:
  org.eclipse.nebula.widgets.nattable.core
 Import-Package: org.osgi.framework
 Shared-Classloader-Contribution: true
+Export-Package: org.jowidgets.nattable.plugin

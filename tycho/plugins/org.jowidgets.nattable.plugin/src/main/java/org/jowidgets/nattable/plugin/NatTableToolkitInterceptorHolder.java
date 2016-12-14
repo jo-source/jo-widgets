@@ -33,31 +33,31 @@ import org.jowidgets.api.toolkit.IToolkitInterceptorHolder;
 
 public final class NatTableToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-	public static final int DEFAULT_ORDER = 1;
+    public static final int DEFAULT_ORDER = 1;
 
-	private final int order;
+    private final int order;
 
-	private IToolkitInterceptor interceptor;
+    private IToolkitInterceptor interceptor;
 
-	public NatTableToolkitInterceptorHolder() {
-		this(DEFAULT_ORDER);
-	}
+    public NatTableToolkitInterceptorHolder() {
+        this(DEFAULT_ORDER);
+    }
 
-	public NatTableToolkitInterceptorHolder(final int order) {
-		this.order = order;
-	}
+    public NatTableToolkitInterceptorHolder(final int order) {
+        this.order = order;
+    }
 
-	@Override
-	public IToolkitInterceptor getToolkitInterceptor() {
-		if (interceptor == null) {
-			interceptor = new NatTableToolkitInterceptor();
-		}
-		return interceptor;
-	}
+    @Override
+    public IToolkitInterceptor getToolkitInterceptor() {
+        if (interceptor == null) {
+            interceptor = new NatTableToolkitInterceptor();
+        }
+        return interceptor;
+    }
 
-	@Override
-	public int getOrder() {
-		return order;
-	}
+    @Override
+    public int getOrder() {
+        return order;
+    }
 
 }

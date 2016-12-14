@@ -30,19 +30,19 @@ package org.jowidgets.nattable.plugin;
 
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
-import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 
 final class NatTableToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory factory = toolkit.getWidgetFactory();
-		final SwtImageRegistry imageRegistry = (SwtImageRegistry) toolkit.getImageRegistry();
-		factory.unRegister(ITableDescriptor.class);
-		factory.register(ITableDescriptor.class, new NatTableFactory(imageRegistry, factory, new SpiBluePrintFactory()));
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory factory = toolkit.getWidgetFactory();
+        final SwtImageRegistry imageRegistry = (SwtImageRegistry) toolkit.getImageRegistry();
+        factory.register(
+                INatTableDescriptor.class,
+                new NatTableFactory<INatTableDescriptor>(imageRegistry, factory, new SpiBluePrintFactory()));
+    }
 
 }

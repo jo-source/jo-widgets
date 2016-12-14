@@ -26,18 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.basic.blueprint;
+package org.jowidgets.nattable.plugin;
 
+import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
-import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
-import org.jowidgets.api.widgets.blueprint.ITableBluePrintFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.util.Assert;
 
-public class DefaultTableBluePrintFactory implements ITableBluePrintFactory<ITableBluePrint> {
+/**
+ * Accessor to nat table blue prints
+ */
+public final class NatTable {
 
-    @Override
-    public ITableBluePrint create(final ITableModel tableModel) {
-        // TODO Auto-generated method stub
-        return null;
+    private NatTable() {}
+
+    /**
+     * Creates a INatTableBluePrint for a given table model
+     * 
+     * @param model The model to use, must not be null
+     * 
+     * @return A new blue print
+     */
+    public static INatTableBluePrint bluePrint(final ITableModel model) {
+        Assert.paramNotNull(model, "model");
+        return bluePrint(model, model);
+    }
+
+    /**
+     * Creates a INatTableBluePrint for a given column a data model
+     * 
+     * @param columnModel The column model to use, must not be null
+     * @param dataModel The data model to use, must not be null
+     * 
+     * @return A new blue print
+     */
+    public static INatTableBluePrint bluePrint(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+        Assert.paramNotNull(columnModel, "columnModel");
+        Assert.paramNotNull(dataModel, "dataModel");
+        final INatTableBluePrint result = Toolkit.getBluePrintProxyFactory().bluePrint(INatTableBluePrint.class);
+        result.setColumnModel(columnModel).setDataModel(dataModel);
+        return result;
     }
 
 }
