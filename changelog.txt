@@ -136,6 +136,11 @@ Bugfixes:
 
 0.67.0
 
+Changes:
+
+Preliminaries for issue #58 https://github.com/jo-source/jo-widgets/issues/58 Nattatble support
+
+
 Features:
 
 
