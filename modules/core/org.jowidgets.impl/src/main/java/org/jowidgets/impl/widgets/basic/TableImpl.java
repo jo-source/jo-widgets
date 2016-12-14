@@ -39,7 +39,7 @@ import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
-import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
+import org.jowidgets.api.widgets.descriptor.setup.ITableSetup;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -86,7 +86,7 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
     private ArrayList<Integer> lastSelection;
 
-    public TableImpl(final ITableSpi widgetSpi, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
+    public TableImpl(final ITableSpi widgetSpi, final ITableSetup setup, final TableModelSpiAdapter modelSpiAdapter) {
         super(widgetSpi);
 
         this.controlDelegate = new ControlDelegate(widgetSpi, this);

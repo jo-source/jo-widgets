@@ -44,6 +44,7 @@ import org.jowidgets.spi.widgets.ISliderSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.spi.widgets.ITableSpiFactory;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
@@ -74,7 +75,7 @@ import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
-public interface IWidgetFactorySpi {
+public interface IWidgetFactorySpi extends ITableSpiFactory {
 
     boolean hasMigLayoutSupport();
 
@@ -98,7 +99,10 @@ public interface IWidgetFactorySpi {
 
     ICompositeSpi createComposite(IGenericWidgetFactory factory, Object parentUiReference, ICompositeSetupSpi setup);
 
-    ISplitCompositeSpi createSplitComposite(IGenericWidgetFactory factory, Object parentUiReference, ISplitCompositeSetupSpi setup);
+    ISplitCompositeSpi createSplitComposite(
+        IGenericWidgetFactory factory,
+        Object parentUiReference,
+        ISplitCompositeSetupSpi setup);
 
     IScrollCompositeSpi createScrollComposite(
         IGenericWidgetFactory factory,
@@ -133,6 +137,7 @@ public interface IWidgetFactorySpi {
 
     ITreeSpi createTree(Object parentUiReference, ITreeSetupSpi setup);
 
+    @Override
     ITableSpi createTable(IGenericWidgetFactory factory, Object parentUiReference, ITableSetupSpi setup);
 
     ISliderSpi createSlider(Object parentUiReference, ISliderSetupSpi setup);

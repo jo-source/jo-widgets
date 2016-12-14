@@ -28,129 +28,19 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.model.table.ITableColumnModel;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
-import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableDataModel;
-import org.jowidgets.common.widgets.editor.EditActivation;
-import org.jowidgets.common.widgets.editor.ITableCellEditor;
-import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
-import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.spi.blueprint.ITableBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.TableImpl;
-import org.jowidgets.impl.widgets.basic.TableModelSpiAdapter;
 import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.ITableSpi;
-import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
-public class TableFactory extends AbstractWidgetFactory implements IWidgetFactory<ITable, ITableDescriptor> {
+public class TableFactory extends GenericTableFactory<ITableDescriptor> {
 
     public TableFactory(
         final IGenericWidgetFactory genericWidgetFactory,
         final IWidgetsServiceProvider widgetsServiceProvider,
         final ISpiBluePrintFactory bpF) {
 
-        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+        super(genericWidgetFactory, widgetsServiceProvider.getWidgetFactory(), bpF);
     }
 
-    @Override
-    public ITable create(final Object parentUiReference, final ITableDescriptor descriptor) {
-        final ITableBluePrintSpi tableBpSpi = getSpiBluePrintFactory().table();
-        tableBpSpi.setSetup(descriptor);
-
-        final ITableColumnModel columnModel = descriptor.getColumnModel();
-        final ITableDataModel dataModel = descriptor.getDataModel();
-        final TableModelSpiAdapter modelSpiAdapter = new TableModelSpiAdapter(columnModel, dataModel);
-
-        tableBpSpi.setColumnModel(modelSpiAdapter);
-        tableBpSpi.setDataModel(modelSpiAdapter);
-
-        final ITableCellEditorFactory<? extends ITableCellEditor> editor = tableBpSpi.getEditor();
-        if (editor != null) {
-            tableBpSpi.setEditor(new TableCellEditorFactoryDecorator(editor, modelSpiAdapter));
-        }
-
-        final ITableSpi tableSpi = getSpiWidgetFactory().createTable(getGenericWidgetFactory(), parentUiReference, tableBpSpi);
-
-        // TODO MG, NM review, avoid setter
-        modelSpiAdapter.setTable(tableSpi);
-        return new TableImpl(tableSpi, descriptor, modelSpiAdapter);
-    }
-
-    private final class TableCellEditorFactoryDecorator implements ITableCellEditorFactory<ITableCellEditor> {
-
-        private final TableModelSpiAdapter modelSpiAdapter;
-        private final ITableCellEditorFactory<? extends ITableCellEditor> original;
-
-        TableCellEditorFactoryDecorator(
-            final ITableCellEditorFactory<? extends ITableCellEditor> original,
-            final TableModelSpiAdapter modelSpiAdapter) {
-            this.modelSpiAdapter = modelSpiAdapter;
-            this.original = original;
-        }
-
-        @Override
-        public ITableCellEditor create(
-            final ITableCell cell,
-            final int row,
-            final int column,
-            final ICustomWidgetFactory widgetFactory) {
-            final ITableCellEditor result = original.create(cell, row, modelSpiAdapter.convertViewToModel(column), widgetFactory);
-            if (result instanceof IControl) {
-                return new DecoratedTableCellEditor((IControl) result, result, modelSpiAdapter);
-            }
-            else {
-                return result;
-            }
-        }
-
-        @Override
-        public EditActivation getActivation(
-            final ITableCell cell,
-            final int row,
-            final int column,
-            final boolean editMode,
-            final long editModeStopped) {
-            return original.getActivation(cell, row, modelSpiAdapter.convertViewToModel(column), editMode, editModeStopped);
-        }
-
-    }
-
-    private final class DecoratedTableCellEditor extends ControlWrapper implements ITableCellEditor {
-
-        private final TableModelSpiAdapter modelSpiAdapter;
-        private final ITableCellEditor original;
-
-        private DecoratedTableCellEditor(
-            final IControl widget,
-            final ITableCellEditor original,
-            final TableModelSpiAdapter modelSpiAdapter) {
-            super(widget);
-            this.modelSpiAdapter = modelSpiAdapter;
-            this.original = original;
-        }
-
-        @Override
-        public void startEditing(final ITableCell cell, final int row, final int column) {
-            original.startEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
-        }
-
-        @Override
-        public void stopEditing(final ITableCell cell, final int row, final int column) {
-            original.stopEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
-            getWidget().dispose();
-        }
-
-        @Override
-        public void cancelEditing(final ITableCell cell, final int row, final int column) {
-            original.cancelEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
-            getWidget().dispose();
-        }
-
-    }
 }
