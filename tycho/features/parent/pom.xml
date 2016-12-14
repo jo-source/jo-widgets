@@ -27,6 +27,7 @@
 		<module>../org.jowidgets.impl.swing.feature</module>
 		<module>../org.jowidgets.test.tools.feature</module>
 		<module>../org.jowidgets.nattable.feature</module>	
+		<module>../org.jowidgets.nattable.decoration.feature</module>	
 	</modules>
 
 </project>

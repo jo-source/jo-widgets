@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jowidgets.nattable.decoration.feature"
+      label="org.jowidgets.nattable.decoration.feature"
+      version="0.67.0.qualifier">
+
+   <description url="http://www.example.com/description">
+      Feature that decorates all tables with nattable
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      org.jowidgets Michael Grossmann 2016
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      BSD Licence
+   </license>
+
+   <includes
+         id="org.jowidgets.nattable.feature"
+         version="0.0.0"/>
+   
+   <plugin
+         id="org.jowidgets.nattable.decoration.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

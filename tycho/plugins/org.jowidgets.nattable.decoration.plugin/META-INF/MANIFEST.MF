@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.nattable.decoration.plugin
+Bundle-SymbolicName: org.jowidgets.nattable.decoration.plugin;singleton:=true
+Bundle-Version: 0.67.0.qualifier
+Bundle-Vendor: jowidgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: 
+ org.jowidgets.api.bundle,
+ org.jowidgets.tools.bundle,
+ org.jowidgets.common.bundle,
+ org.jowidgets.spi.impl.common.bundle,
+ org.jowidgets.spi.impl.swt.common.bundle,
+ org.jowidgets.impl.bundle,
+ org.jowidgets.nattable.api.plugin,
+ org.jowidgets.nattable.impl.plugin
+Shared-Classloader-Contribution: true

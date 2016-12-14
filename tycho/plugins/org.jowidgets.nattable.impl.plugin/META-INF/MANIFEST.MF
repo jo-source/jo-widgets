@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.nattable.impl.plugin
+Bundle-SymbolicName: org.jowidgets.nattable.impl.plugin;singleton:=true
+Bundle-Version: 0.67.0.qualifier
+Bundle-Vendor: jowidgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: 
+ org.jowidgets.nattable.api.plugin,
+ org.jowidgets.nattable.impl.plugin,
+ org.jowidgets.util.bundle,
+ org.jowidgets.common.bundle,
+ org.jowidgets.spi.impl.common.bundle,
+ org.jowidgets.spi.impl.swt.common.bundle,
+ org.jowidgets.spi.bundle,
+ org.jowidgets.api.bundle,
+ org.jowidgets.impl.bundle,
+ org.jowidgets.tools.bundle,
+ org.eclipse.nebula.widgets.nattable.core,
+ org.eclipse.swt
+Shared-Classloader-Contribution: true
+Export-Package: org.jowidgets.nattable.impl.plugin
