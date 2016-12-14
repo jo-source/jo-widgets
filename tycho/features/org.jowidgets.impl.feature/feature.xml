@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.impl.feature"
     label="jowidgets implementation feature"
-    version="0.67.0.qualifier">
+    version="0.68.0.qualifier">
 
 	<description url="http://www.example.com/description">
 		Holds the implementation bundles 
