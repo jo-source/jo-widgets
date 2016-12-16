@@ -33,7 +33,7 @@ import org.eclipse.nebula.widgets.nattable.ui.binding.UiBindingRegistry;
 
 final class SelectionBindings extends DefaultSelectionBindings {
 
-	@Override
-	protected void configureColumnHeaderMouseClickBindings(final UiBindingRegistry uiBindingRegistry) {}
+    @Override
+    protected void configureColumnHeaderMouseClickBindings(final UiBindingRegistry uiBindingRegistry) {}
 
 }

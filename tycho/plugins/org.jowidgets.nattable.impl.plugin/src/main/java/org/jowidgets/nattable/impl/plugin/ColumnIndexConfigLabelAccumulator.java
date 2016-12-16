@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, herrg
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,48 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin.layer;
+package org.jowidgets.nattable.impl.plugin;
 
-import org.eclipse.nebula.widgets.nattable.selection.config.DefaultSelectionLayerConfiguration;
+import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
+import org.eclipse.nebula.widgets.nattable.layer.cell.IConfigLabelAccumulator;
+import org.jowidgets.util.Assert;
 
-final class SelectionLayerConfiguration extends DefaultSelectionLayerConfiguration {
+class ColumnIndexConfigLabelAccumulator implements IConfigLabelAccumulator {
+
+    private final String label;
+
+    private Integer columnIndex;
+
+    ColumnIndexConfigLabelAccumulator(final String label) {
+        Assert.paramNotEmpty(label, "label");
+        this.label = label;
+    }
 
     @Override
-    protected void addSelectionUIBindings() {
-        addConfiguration(new SelectionBindings());
+    public final void accumulateConfigLabels(final LabelStack configLabels, final int columnPosition, final int rowPosition) {
+        if (columnIndex != null && columnIndex.intValue() == columnPosition) {
+            configLabels.addLabel(label);
+        }
+    }
+
+    final boolean setColumnIndex(final int hoveredColumnIndex) {
+        if (this.columnIndex == null || this.columnIndex != hoveredColumnIndex) {
+            this.columnIndex = Integer.valueOf(hoveredColumnIndex);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    final boolean clearColumnIndex() {
+        if (this.columnIndex != null) {
+            this.columnIndex = null;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }

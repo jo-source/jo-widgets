@@ -32,6 +32,7 @@ import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
 import org.eclipse.nebula.widgets.nattable.grid.data.DefaultCornerDataProvider;
 import org.eclipse.nebula.widgets.nattable.grid.layer.CornerLayer;
 import org.eclipse.nebula.widgets.nattable.grid.layer.GridLayer;
+import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
@@ -42,46 +43,51 @@ import org.jowidgets.util.Assert;
 
 public final class NatTableLayers {
 
-	private final GridLayer gridLayer;
-	private final SelectionLayer selectionLayer;
-	private final IRowSelectionModel<Integer> selectionModel;
+    private final GridLayer gridLayer;
+    private final SelectionLayer selectionLayer;
+    private final IRowSelectionModel<Integer> selectionModel;
+    private final ColumnHeaderLayerStack columnHeaderLayer;
 
-	public NatTableLayers(
-		final ITableDataModel dataModel,
-		final ITableColumnModelSpi columnModel,
-		final TableSelectionPolicy selectionPolicy) {
+    public NatTableLayers(
+        final ITableDataModel dataModel,
+        final ITableColumnModelSpi columnModel,
+        final TableSelectionPolicy selectionPolicy) {
 
-		Assert.paramNotNull(dataModel, "dataModel");
-		Assert.paramNotNull(columnModel, "columnModel");
-		Assert.paramNotNull(selectionPolicy, "selectionPolicy");
+        Assert.paramNotNull(dataModel, "dataModel");
+        Assert.paramNotNull(columnModel, "columnModel");
+        Assert.paramNotNull(selectionPolicy, "selectionPolicy");
 
-		final IDataProvider dataProvider = new DefaultDataProvider(dataModel, columnModel);
-		final IDataProvider rowDataProvider = new DefaultRowDataProvider();
-		final IDataProvider columnDataProvider = new DefaultColumnDataProvider(columnModel);
+        final IDataProvider dataProvider = new DefaultDataProvider(dataModel, columnModel);
+        final IDataProvider rowDataProvider = new DefaultRowDataProvider();
+        final IDataProvider columnDataProvider = new DefaultColumnDataProvider(columnModel);
 
-		final BodyLayerStack bodyLayer = new BodyLayerStack(dataProvider, selectionPolicy);
-		this.selectionModel = bodyLayer.getSelectionModel();
-		this.selectionLayer = bodyLayer.getSelectionLayer();
+        final BodyLayerStack bodyLayer = new BodyLayerStack(dataProvider, selectionPolicy);
+        this.selectionModel = bodyLayer.getSelectionModel();
+        this.selectionLayer = bodyLayer.getSelectionLayer();
 
-		final ColumnHeaderLayerStack columnHeaderLayer = new ColumnHeaderLayerStack(columnDataProvider, bodyLayer);
-		final RowHeaderLayerStack rowHeaderLayer = new RowHeaderLayerStack(rowDataProvider, bodyLayer);
+        this.columnHeaderLayer = new ColumnHeaderLayerStack(columnDataProvider, bodyLayer);
+        final RowHeaderLayerStack rowHeaderLayer = new RowHeaderLayerStack(rowDataProvider, bodyLayer);
 
-		final DefaultCornerDataProvider cornerDataProvider = new DefaultCornerDataProvider(columnDataProvider, rowDataProvider);
-		final CornerLayer cornerLayer = new CornerLayer(new DataLayer(cornerDataProvider), rowHeaderLayer, columnHeaderLayer);
+        final DefaultCornerDataProvider cornerDataProvider = new DefaultCornerDataProvider(columnDataProvider, rowDataProvider);
+        final CornerLayer cornerLayer = new CornerLayer(new DataLayer(cornerDataProvider), rowHeaderLayer, columnHeaderLayer);
 
-		this.gridLayer = new GridLayer(bodyLayer, columnHeaderLayer, rowHeaderLayer, cornerLayer);
-	}
+        this.gridLayer = new GridLayer(bodyLayer, columnHeaderLayer, rowHeaderLayer, cornerLayer);
+    }
 
-	public GridLayer getGridLayer() {
-		return gridLayer;
-	}
+    public GridLayer getGridLayer() {
+        return gridLayer;
+    }
 
-	public SelectionLayer getSelectionLayer() {
-		return selectionLayer;
-	}
+    public AbstractLayerTransform getColumnHeaderLayer() {
+        return columnHeaderLayer;
+    }
 
-	public IRowSelectionModel<Integer> getSelectionModel() {
-		return selectionModel;
-	}
+    public SelectionLayer getSelectionLayer() {
+        return selectionLayer;
+    }
+
+    public IRowSelectionModel<Integer> getSelectionModel() {
+        return selectionModel;
+    }
 
 }

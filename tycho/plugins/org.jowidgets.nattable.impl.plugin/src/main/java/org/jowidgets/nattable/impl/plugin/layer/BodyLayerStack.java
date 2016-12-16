@@ -29,7 +29,6 @@
 package org.jowidgets.nattable.impl.plugin.layer;
 
 import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
-import org.eclipse.nebula.widgets.nattable.hideshow.ColumnHideShowLayer;
 import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
@@ -41,57 +40,56 @@ import org.jowidgets.common.types.TableSelectionPolicy;
 
 final class BodyLayerStack extends AbstractLayerTransform {
 
-	private final SelectionLayer selectionLayer;
-	private final IRowSelectionModel<Integer> selectionModel;
+    private final SelectionLayer selectionLayer;
+    private final IRowSelectionModel<Integer> selectionModel;
 
-	BodyLayerStack(final IDataProvider dataProvider, final TableSelectionPolicy selectionPolicy) {
-		final DataLayer bodyDataLayer = new DataLayer(dataProvider);
-		final ColumnReorderLayer columnReorderLayer = new ColumnReorderLayer(bodyDataLayer);
-		final ColumnHideShowLayer columnHideShowLayer = new ColumnHideShowLayer(columnReorderLayer);
-		this.selectionLayer = new SelectionLayer(columnHideShowLayer);
+    BodyLayerStack(final IDataProvider dataProvider, final TableSelectionPolicy selectionPolicy) {
+        final DataLayer bodyDataLayer = new DataLayer(dataProvider);
+        final ColumnReorderLayer columnReorderLayer = new ColumnReorderLayer(bodyDataLayer);
+        this.selectionLayer = new SelectionLayer(columnReorderLayer);
 
-		if (TableSelectionPolicy.NO_SELECTION.equals(selectionPolicy)) {
-			this.selectionModel = new NoSelectionRowSelectionModel();
-		}
-		else {
-			this.selectionModel = new RowSelectionModel<Integer>(
-				selectionLayer,
-				new RowIndexDataProvider(dataProvider),
-				new RowIndexAccessor()) {
+        if (TableSelectionPolicy.NO_SELECTION.equals(selectionPolicy)) {
+            this.selectionModel = new NoSelectionRowSelectionModel();
+        }
+        else {
+            this.selectionModel = new RowSelectionModel<Integer>(
+                selectionLayer,
+                new RowIndexDataProvider(dataProvider),
+                new RowIndexAccessor()) {
 
-				@Override
-				public boolean isColumnPositionSelected(final int columnPosition) {
-					return false;
-				}
+                @Override
+                public boolean isColumnPositionSelected(final int columnPosition) {
+                    return false;
+                }
 
-				@Override
-				public int[] getFullySelectedColumnPositions(final int fullySelectedColumnRowCount) {
-					return new int[0];
-				}
+                @Override
+                public int[] getFullySelectedColumnPositions(final int fullySelectedColumnRowCount) {
+                    return new int[0];
+                }
 
-				@Override
-				public boolean isColumnPositionFullySelected(final int columnPosition, final int fullySelectedColumnRowCount) {
-					return false;
-				}
-			};
-			if (TableSelectionPolicy.SINGLE_ROW_SELECTION.equals(selectionPolicy)) {
-				selectionModel.setMultipleSelectionAllowed(false);
-			}
-		}
-		selectionLayer.setSelectionModel(selectionModel);
-		selectionLayer.clearConfiguration();
-		selectionLayer.addConfiguration(new SelectionLayerConfiguration());
+                @Override
+                public boolean isColumnPositionFullySelected(final int columnPosition, final int fullySelectedColumnRowCount) {
+                    return false;
+                }
+            };
+            if (TableSelectionPolicy.SINGLE_ROW_SELECTION.equals(selectionPolicy)) {
+                selectionModel.setMultipleSelectionAllowed(false);
+            }
+        }
+        selectionLayer.setSelectionModel(selectionModel);
+        selectionLayer.clearConfiguration();
+        selectionLayer.addConfiguration(new SelectionLayerConfiguration());
 
-		final ViewportLayer viewportLayer = new ViewportLayer(selectionLayer);
-		setUnderlyingLayer(viewportLayer);
-	}
+        final ViewportLayer viewportLayer = new ViewportLayer(selectionLayer);
+        setUnderlyingLayer(viewportLayer);
+    }
 
-	SelectionLayer getSelectionLayer() {
-		return selectionLayer;
-	}
+    SelectionLayer getSelectionLayer() {
+        return selectionLayer;
+    }
 
-	IRowSelectionModel<Integer> getSelectionModel() {
-		return selectionModel;
-	}
+    IRowSelectionModel<Integer> getSelectionModel() {
+        return selectionModel;
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, herrg
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin.layer;
+package org.jowidgets.nattable.impl.plugin;
 
-import org.eclipse.nebula.widgets.nattable.selection.config.DefaultSelectionLayerConfiguration;
+class HoveredColumnConfigLabelAccumulator extends ColumnIndexConfigLabelAccumulator {
 
-final class SelectionLayerConfiguration extends DefaultSelectionLayerConfiguration {
+    static final String HOVERED_COLUMN_LABEL = "HOVERED_COLUMN";
 
-    @Override
-    protected void addSelectionUIBindings() {
-        addConfiguration(new SelectionBindings());
+    HoveredColumnConfigLabelAccumulator() {
+        super(HOVERED_COLUMN_LABEL);
     }
 
 }

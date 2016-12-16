@@ -33,12 +33,33 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.nebula.widgets.nattable.command.VisualRefreshCommand;
+import org.eclipse.nebula.widgets.nattable.config.CellConfigAttributes;
+import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
+import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
+import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
+import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
+import org.eclipse.nebula.widgets.nattable.layer.cell.AggregateConfigLabelAccumulator;
 import org.eclipse.nebula.widgets.nattable.layer.event.ILayerEvent;
+import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
+import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.CellPainterDecorator;
+import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.PaddingDecorator;
+import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
+import org.eclipse.nebula.widgets.nattable.selection.SelectionConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
+import org.eclipse.nebula.widgets.nattable.style.BorderStyle;
+import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
+import org.eclipse.nebula.widgets.nattable.style.CellStyleAttributes;
+import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
+import org.eclipse.nebula.widgets.nattable.style.Style;
+import org.eclipse.nebula.widgets.nattable.style.VerticalAlignmentEnum;
 import org.eclipse.nebula.widgets.nattable.style.theme.ModernNatTableThemeConfiguration;
 import org.eclipse.nebula.widgets.nattable.style.theme.ThemeConfiguration;
+import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
+import org.eclipse.nebula.widgets.nattable.ui.matcher.IMouseEventMatcher;
+import org.eclipse.nebula.widgets.nattable.ui.util.CellEdgeEnum;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.DisposeEvent;
@@ -47,6 +68,9 @@ import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -54,6 +78,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelListener;
@@ -90,6 +116,7 @@ import org.jowidgets.spi.impl.controller.TableColumnObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
+import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
@@ -102,6 +129,9 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 @SuppressWarnings(value = {"all"})
 public class NatTableImplSpi extends SwtControl implements ITableSpi {
+
+    private static final int PADDING = 5;
+    private static final int COLUMN_VERTICAL_PADDING = 4;
 
     private final SwtImageRegistry imageRegistry;
 
@@ -130,6 +160,9 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
     private final SelectionLayer selectionLayer;
     private final IRowSelectionModel<Integer> rowSelectionModel;
 
+    private final HoveredColumnConfigLabelAccumulator hoveredColumnLabelAccumulator;
+    private final ClickedColumnConfigLabelAccumulator clickedColumnLabelAccumulator;
+
     private int[] lastColumnOrder;
     private ToolTip toolTip;
     private boolean editable;
@@ -156,6 +189,40 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
         table.setTheme(modernTheme);
+
+        table.setBackground(ColorCache.getInstance().getColor(Colors.WHITE));
+
+        final Color gridColor = ColorCache.getInstance().getColor(new ColorValue(240, 240, 240));
+        final NatGridLayerPainter gridPainter = new NatGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
+        table.setLayerPainter(gridPainter);
+
+        final IConfigRegistry config = table.getConfigRegistry();
+        final ICellPainter cellPainter = createCellPainter(setup.getColumnModel(), imageRegistry);
+        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
+
+        final ICellPainter headerPainter = createHeaderPainter(imageRegistry);
+        config.registerConfigAttribute(
+                CellConfigAttributes.CELL_PAINTER,
+                headerPainter,
+                DisplayMode.NORMAL,
+                GridRegion.COLUMN_HEADER);
+
+        final Style style = new Style();
+        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
+        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
+
+        config.registerConfigAttribute(
+                CellConfigAttributes.RENDER_GRID_LINES,
+                false,
+                DisplayMode.NORMAL,
+                GridRegion.COLUMN_HEADER);
+
+        config.registerConfigAttribute(
+                SelectionConfigAttributes.SELECTION_GRID_LINE_STYLE,
+                new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
+                DisplayMode.SELECT);
+
+        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
 
         this.rowSelectionModel = natTableLayers.getSelectionModel();
         this.selectionLayer = natTableLayers.getSelectionLayer();
@@ -192,7 +259,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         selectionLayer.addLayerListener(new TableSelectionListener());
 
         table.addMouseListener(new TableCellListener());
-        table.addMouseListener(new TableHeaderClickListener());
+        table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
         setMenuDetectListener(new TableMenuDetectListener());
 
         // ToolTip support
@@ -211,7 +278,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             table.addListener(SWT.MouseHover, toolTipListener);
             table.addListener(SWT.MouseMove, toolTipListener);
         }
-        //
+
         table.addDisposeListener(new DisposeListener() {
             @Override
             public void widgetDisposed(final DisposeEvent arg0) {
@@ -226,6 +293,104 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             }
         });
 
+        this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
+        this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
+
+        final AggregateConfigLabelAccumulator columnLabelAccumulator = new AggregateConfigLabelAccumulator();
+        columnLabelAccumulator.add(hoveredColumnLabelAccumulator, clickedColumnLabelAccumulator);
+        natTableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
+
+        final MouseMoveListener mouseMoveListener = new MouseMoveListener() {
+
+            @Override
+            public void mouseMove(final MouseEvent event) {
+                final int x = event.x;
+                final int y = event.y;
+
+                final int col = table.getColumnPositionByX(event.x);
+                final int row = table.getRowPositionByY(event.y);
+
+                final boolean changed;
+                if (row == 0 && col >= 0) {
+                    changed = hoveredColumnLabelAccumulator.setColumnIndex(col);
+                }
+                else {
+                    changed = hoveredColumnLabelAccumulator.clearColumnIndex();
+                }
+
+                if (changed) {
+                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                }
+            }
+        };
+
+        table.addMouseMoveListener(mouseMoveListener);
+        table.addMouseTrackListener(new MouseTrackAdapter() {
+            @Override
+            public void mouseExit(final MouseEvent e) {
+                final boolean changed = hoveredColumnLabelAccumulator.clearColumnIndex();
+                if (changed) {
+                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                }
+            }
+        });
+
+        table.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseUp(final MouseEvent e) {
+                final boolean changed = clickedColumnLabelAccumulator.clearColumnIndex();
+                if (changed) {
+                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                }
+            }
+
+            @Override
+            public void mouseDown(final MouseEvent event) {
+                final int col = table.getColumnPositionByX(event.x);
+                final int row = table.getRowPositionByY(event.y);
+
+                final boolean changed;
+                if (row == 0 && col >= 0 && event.button == 1) {
+                    changed = clickedColumnLabelAccumulator.setColumnIndex(col);
+                }
+                else {
+                    changed = clickedColumnLabelAccumulator.clearColumnIndex();
+                }
+
+                if (changed) {
+                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                }
+            }
+
+        });
+
+    }
+
+    private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {
+        final JoCellImagePainter imagePainter = new JoCellImagePainter(imageRegistry);
+        final JoCellTextPainter textPainter = new JoCellTextPainter(columnModel);
+        final CellPainterDecorator contentPainter = new CellPainterDecorator(textPainter, CellEdgeEnum.LEFT, imagePainter);
+        contentPainter.setPaintBackground(false);
+        final PaddingDecorator paddingPainter = new PaddingDecorator(contentPainter, 0, PADDING, 0, PADDING, false);
+        return new JoCellBackgroundPainter(paddingPainter);
+    }
+
+    private ICellPainter createHeaderPainter(final SwtImageRegistry imageRegistry) {
+        final ICellPainter imagePainter = new JoColumnImagePainter(imageRegistry);
+        final ICellPainter textPainter = new JoColumnTextPainter();
+        final CellPainterDecorator contentPainter = new CellPainterDecorator(textPainter, CellEdgeEnum.LEFT, imagePainter);
+        contentPainter.setSpacing(PADDING);
+        contentPainter.setPaintBackground(false);
+        final PaddingDecorator paddingPainter = new PaddingDecorator(
+            contentPainter,
+            COLUMN_VERTICAL_PADDING,
+            PADDING,
+            0,
+            PADDING,
+            false);
+        final JoClickMovePaintDecorator klickMovePainter = new JoClickMovePaintDecorator(paddingPainter);
+        return new JoColumnBackgroundPainter(klickMovePainter);
     }
 
     @Override
@@ -309,7 +474,8 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     @Override
     public void pack(final TablePackPolicy policy) {
-        table.pack();
+        //TODO must be implemented
+        //table.pack();
     }
 
     @Override
@@ -588,15 +754,26 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         }
     }
 
-    private final class TableHeaderClickListener extends MouseAdapter {
+    private final class TableHeaderClickAction implements IMouseAction {
         @Override
-        public void mouseUp(final MouseEvent e) {
-            final int rowPositionByY = table.getRowPositionByY(e.y);
-            if (rowPositionByY == 0) {
+        public void run(final NatTable natTable, final MouseEvent e) {
+            if (e.button == 1) {
                 final int columnPositionByX = table.getColumnPositionByX(e.x);
                 final int columnIndex = table.getColumnIndexByPosition(columnPositionByX);
                 final Set<Modifier> modifier = MouseUtil.getModifier(e.stateMask);
                 tableColumnObservable.fireMouseClicked(new TableColumnMouseEvent(columnIndex, modifier));
+            }
+        }
+    }
+
+    private final class TableHeaderMouseEventMatcher implements IMouseEventMatcher {
+        @Override
+        public boolean matches(final NatTable natTable, final MouseEvent event, final LabelStack regionLabels) {
+            if (regionLabels != null && regionLabels.hasLabel(GridRegion.COLUMN_HEADER)) {
+                return true;
+            }
+            else {
+                return false;
             }
         }
     }
@@ -734,10 +911,10 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
                 final int rowIndex = table.getRowIndexByPosition(rowPositionByY);
                 final int columnIndex = table.getColumnIndexByPosition(columnPositionByX);
 
-                if (rowPositionByY == 0) {
+                if (rowPositionByY == 0 && rowIndex >= 0 && columnIndex >= 0) {
                     showToolTip(getColumnToolTipText(columnIndex));
                 }
-                else {
+                else if (rowIndex >= 0 && columnIndex >= 0) {
                     showToolTip(getCellToolTipText(rowIndex, columnIndex));
                 }
             }

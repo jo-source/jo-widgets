@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, herrg
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin.layer;
+package org.jowidgets.nattable.impl.plugin;
 
-import org.eclipse.nebula.widgets.nattable.selection.config.DefaultSelectionLayerConfiguration;
+import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
+import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
+import org.eclipse.nebula.widgets.nattable.painter.cell.ImagePainter;
+import org.eclipse.swt.graphics.Image;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.model.ITableColumnSpi;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import org.jowidgets.util.Assert;
 
-final class SelectionLayerConfiguration extends DefaultSelectionLayerConfiguration {
+final class JoColumnImagePainter extends ImagePainter {
+
+    private final SwtImageRegistry imageRegistry;
+
+    JoColumnImagePainter(final SwtImageRegistry imageRegistry) {
+        super(false);
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
+        this.imageRegistry = imageRegistry;
+    }
 
     @Override
-    protected void addSelectionUIBindings() {
-        addConfiguration(new SelectionBindings());
+    protected Image getImage(final ILayerCell cell, final IConfigRegistry configRegistry) {
+        final ITableColumnSpi tableColumn = (ITableColumnSpi) cell.getDataValue();
+        final IImageConstant icon = tableColumn.getIcon();
+        if (icon != null) {
+            return imageRegistry.getImage(icon);
+        }
+        else {
+            return null;
+        }
     }
 
 }

@@ -35,32 +35,32 @@ import org.jowidgets.util.Assert;
 
 final class DefaultDataProvider implements IDataProvider {
 
-	private final ITableDataModel dataModel;
-	private final ITableColumnModelSpi columnModel;
+    private final ITableDataModel dataModel;
+    private final ITableColumnModelSpi columnModel;
 
-	DefaultDataProvider(final ITableDataModel dataModel, final ITableColumnModelSpi columnModel) {
-		Assert.paramNotNull(dataModel, "dataModel");
-		Assert.paramNotNull(columnModel, "columnModel");
-		this.dataModel = dataModel;
-		this.columnModel = columnModel;
-	}
+    DefaultDataProvider(final ITableDataModel dataModel, final ITableColumnModelSpi columnModel) {
+        Assert.paramNotNull(dataModel, "dataModel");
+        Assert.paramNotNull(columnModel, "columnModel");
+        this.dataModel = dataModel;
+        this.columnModel = columnModel;
+    }
 
-	@Override
-	public Object getDataValue(final int columnIndex, final int rowIndex) {
-		return dataModel.getCell(rowIndex, columnIndex).getText();
-	}
+    @Override
+    public Object getDataValue(final int columnIndex, final int rowIndex) {
+        return dataModel.getCell(rowIndex, columnIndex);
+    }
 
-	@Override
-	public void setDataValue(final int columnIndex, final int rowIndex, final Object newValue) {}
+    @Override
+    public void setDataValue(final int columnIndex, final int rowIndex, final Object newValue) {}
 
-	@Override
-	public int getColumnCount() {
-		return columnModel.getColumnCount();
-	}
+    @Override
+    public int getColumnCount() {
+        return columnModel.getColumnCount();
+    }
 
-	@Override
-	public int getRowCount() {
-		return dataModel.getRowCount();
-	}
+    @Override
+    public int getRowCount() {
+        return dataModel.getRowCount();
+    }
 
 }
