@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann, Nikolaus Moll
+ * Copyright (c) 2016, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -187,6 +187,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         this.table = getUiReference();
 
+        //TODO move the nattable config to separate methods
         final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
         table.setTheme(modernTheme);
 
@@ -262,6 +263,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
         setMenuDetectListener(new TableMenuDetectListener());
 
+        //TODO extract to method
         // ToolTip support
         try {
             this.toolTip = new ToolTip(table.getShell(), SWT.NONE);
@@ -293,6 +295,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             }
         });
 
+        //TODO extract these listeners and fix columns get clicked on drag and resize
         this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
         this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
 
@@ -365,6 +368,14 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         });
 
+    }
+
+    private static int getStyle(final ITableSetupSpi setup) {
+        int result = SWT.NO_BACKGROUND | SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED | SWT.V_SCROLL | SWT.H_SCROLL;
+        if (setup.hasBorder()) {
+            result = result | SWT.BORDER;
+        }
+        return result;
     }
 
     private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {
@@ -684,16 +695,6 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         return getColumnPermutation().get(viewIndex).intValue();
     }
 
-    private static int getStyle(final ITableSetupSpi setup) {
-        int result = SWT.NO_BACKGROUND | SWT.NO_REDRAW_RESIZE | SWT.DOUBLE_BUFFERED | SWT.V_SCROLL | SWT.H_SCROLL;
-
-        if (setup.hasBorder()) {
-            result = result | SWT.BORDER;
-        }
-
-        return result;
-    }
-
     private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
         @Override
         public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
@@ -813,7 +814,6 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
     }
 
     private final class TableSelectionListener implements ILayerListener {
-
         @Override
         public void handleLayerEvent(final ILayerEvent event) {
             fireSelectionChangedIfNeccessary();

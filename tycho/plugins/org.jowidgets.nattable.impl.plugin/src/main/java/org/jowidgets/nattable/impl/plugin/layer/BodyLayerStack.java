@@ -52,6 +52,7 @@ final class BodyLayerStack extends AbstractLayerTransform {
             this.selectionModel = new NoSelectionRowSelectionModel();
         }
         else {
+            //TODO extract to class
             this.selectionModel = new RowSelectionModel<Integer>(
                 selectionLayer,
                 new RowIndexDataProvider(dataProvider),
