@@ -57,10 +57,7 @@ import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
-import org.eclipse.nebula.widgets.nattable.style.CellStyleAttributes;
 import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
-import org.eclipse.nebula.widgets.nattable.style.Style;
-import org.eclipse.nebula.widgets.nattable.style.VerticalAlignmentEnum;
 import org.eclipse.nebula.widgets.nattable.style.theme.ModernNatTableThemeConfiguration;
 import org.eclipse.nebula.widgets.nattable.style.theme.ThemeConfiguration;
 import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
@@ -371,9 +368,9 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 DisplayMode.NORMAL,
                 GridRegion.COLUMN_HEADER);
 
-        final Style style = new Style();
-        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
-        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
+        //        final Style style = new Style();
+        //        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
+        //        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
 
         config.registerConfigAttribute(
                 CellConfigAttributes.RENDER_GRID_LINES,
@@ -404,13 +401,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         final CellPainterDecorator contentPainter = new CellPainterDecorator(textPainter, CellEdgeEnum.LEFT, imagePainter);
         contentPainter.setSpacing(PADDING);
         contentPainter.setPaintBackground(false);
-        final PaddingDecorator paddingPainter = new PaddingDecorator(
-            contentPainter,
-            COLUMN_VERTICAL_PADDING,
-            PADDING,
-            0,
-            PADDING,
-            false);
+        final PaddingDecorator paddingPainter = new PaddingDecorator(contentPainter, 0, PADDING, 0, PADDING, false);
         final JoClickMovePaintDecorator klickMovePainter = new JoClickMovePaintDecorator(paddingPainter);
         return new JoColumnBackgroundPainter(klickMovePainter);
     }
