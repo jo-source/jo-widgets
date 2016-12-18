@@ -144,4 +144,9 @@ class DefaultTableColumn implements IDefaultTableColumn {
         changeObservable.removeChangeListener(listener);
     }
 
+    @Override
+    public String toString() {
+        return text;
+    }
+
 }

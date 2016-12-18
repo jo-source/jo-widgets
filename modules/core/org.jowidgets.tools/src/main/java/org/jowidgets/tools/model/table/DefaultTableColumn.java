@@ -135,6 +135,11 @@ public class DefaultTableColumn implements IDefaultTableColumn {
         column.removeChangeListener(listener);
     }
 
+    @Override
+    public String toString() {
+        return column.toString();
+    }
+
     public static IDefaultTableColumnBuilder builder() {
         return Toolkit.getModelFactoryProvider().getTableModelFactory().columnBuilder();
     }
