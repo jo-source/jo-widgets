@@ -35,11 +35,11 @@ import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 
 final class ColumnHeaderLayerStack extends AbstractLayerTransform {
 
-    private static final int DEFAULT_COLUMN_HEIGHT = 24;
+    private static final int COLUMN_HEADER_HEIGHT = 24;
 
     ColumnHeaderLayerStack(final IDataProvider dataProvider, final BodyLayerStack bodyLayer) {
         final DataLayer dataLayer = new DataLayer(dataProvider);
-        dataLayer.setDefaultRowHeight(DEFAULT_COLUMN_HEIGHT);
+        dataLayer.setDefaultRowHeight(COLUMN_HEADER_HEIGHT);
         final ColumnHeaderLayer colHeaderLayer = new ColumnHeaderLayer(dataLayer, bodyLayer, bodyLayer.getSelectionLayer());
         setUnderlyingLayer(colHeaderLayer);
     }

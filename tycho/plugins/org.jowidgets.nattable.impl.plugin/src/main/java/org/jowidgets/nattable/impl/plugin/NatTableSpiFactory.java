@@ -53,6 +53,8 @@ public final class NatTableSpiFactory implements ITableSpiFactory {
         final NatTableLayers layers = new NatTableLayers(
             setup.getDataModel(),
             setup.getColumnModel(),
+            setup.getColumnsResizeable(),
+            setup.getColumnsMoveable(),
             setup.getSelectionPolicy());
         return new NatTableImplSpi(layers, genericWidgetFactory, parentUiReference, setup, imageRegistry);
     }

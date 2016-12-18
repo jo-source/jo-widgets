@@ -32,27 +32,18 @@ import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.nebula.widgets.nattable.painter.cell.CellPainterWrapper;
 import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
-import org.eclipse.nebula.widgets.nattable.style.CellStyleAttributes;
-import org.eclipse.nebula.widgets.nattable.style.CellStyleUtil;
-import org.eclipse.nebula.widgets.nattable.style.HorizontalAlignmentEnum;
-import org.eclipse.nebula.widgets.nattable.style.IStyle;
-import org.eclipse.nebula.widgets.nattable.style.VerticalAlignmentEnum;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 
-final class JoClickMovePaintDecorator extends CellPainterWrapper {
+/**
+ * Decorator that moves the content on mouse click by offset pixel in x and y direction
+ */
+final class JoMoveOnMouseClickPaintDecorator extends CellPainterWrapper {
 
-    JoClickMovePaintDecorator(final ICellPainter interiorPainter) {
+    private static final int OFFSET = 1;
+
+    JoMoveOnMouseClickPaintDecorator(final ICellPainter interiorPainter) {
         super(interiorPainter);
-    }
-
-    private int getKlickOffset(final ILayerCell cell) {
-        if (cell.getConfigLabels().hasLabel(ClickedColumnConfigLabelAccumulator.CLICKED_COLUMN_LABEL)) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
     }
 
     @Override
@@ -72,10 +63,21 @@ final class JoClickMovePaintDecorator extends CellPainterWrapper {
         final Rectangle adjustedCellBounds,
         final IConfigRegistry configRegistry) {
         final Rectangle interiorBounds = getInteriorBounds(cell, adjustedCellBounds);
-
         if (interiorBounds.width > 0 && interiorBounds.height > 0) {
             super.paintCell(cell, gc, interiorBounds, configRegistry);
         }
+    }
+
+    @Override
+    public ICellPainter getCellPainterAt(
+        final int x,
+        final int y,
+        final ILayerCell cell,
+        final GC gc,
+        final Rectangle adjustedCellBounds,
+        final IConfigRegistry configRegistry) {
+        final int klickOffset = getKlickOffset(cell);
+        return super.getCellPainterAt(x - klickOffset, y - klickOffset, cell, gc, adjustedCellBounds, configRegistry);
     }
 
     private Rectangle getInteriorBounds(final ILayerCell cell, final Rectangle adjustedCellBounds) {
@@ -87,57 +89,13 @@ final class JoClickMovePaintDecorator extends CellPainterWrapper {
             adjustedCellBounds.height - klickOffset);
     }
 
-    @Override
-    public ICellPainter getCellPainterAt(
-        final int x,
-        final int y,
-        final ILayerCell cell,
-        final GC gc,
-        final Rectangle adjustedCellBounds,
-        final IConfigRegistry configRegistry) {
-
-        final int klickOffset = getKlickOffset(cell);
-
-        // need to take the alignment into account
-        final IStyle cellStyle = CellStyleUtil.getCellStyle(cell, configRegistry);
-
-        final HorizontalAlignmentEnum horizontalAlignment = cellStyle.getAttributeValue(CellStyleAttributes.HORIZONTAL_ALIGNMENT);
-        int horizontalAlignmentPadding = 0;
-        switch (horizontalAlignment) {
-            case LEFT:
-                horizontalAlignmentPadding = klickOffset;
-                break;
-            case CENTER:
-                horizontalAlignmentPadding = klickOffset;
-                break;
-            case RIGHT:
-                break;
-            default:
-                break;
+    private int getKlickOffset(final ILayerCell cell) {
+        if (cell.getConfigLabels().hasLabel(ClickedColumnConfigLabelAccumulator.CLICKED_COLUMN_LABEL)) {
+            return OFFSET;
         }
-
-        final VerticalAlignmentEnum verticalAlignment = cellStyle.getAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT);
-        int verticalAlignmentPadding = 0;
-        switch (verticalAlignment) {
-            case TOP:
-                verticalAlignmentPadding = klickOffset;
-                break;
-            case MIDDLE:
-                verticalAlignmentPadding = klickOffset;
-                break;
-            case BOTTOM:
-                break;
-            default:
-                break;
+        else {
+            return 0;
         }
-
-        return super.getCellPainterAt(
-                x - horizontalAlignmentPadding,
-                y - verticalAlignmentPadding,
-                cell,
-                gc,
-                adjustedCellBounds,
-                configRegistry);
     }
 
 }

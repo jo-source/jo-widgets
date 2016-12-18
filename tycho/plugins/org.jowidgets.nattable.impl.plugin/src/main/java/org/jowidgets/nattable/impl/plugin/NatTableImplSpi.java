@@ -53,7 +53,6 @@ import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeCo
 import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEvent;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionConfigAttributes;
-import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
@@ -66,7 +65,6 @@ import org.eclipse.nebula.widgets.nattable.ui.util.CellEdgeEnum;
 import org.eclipse.nebula.widgets.nattable.util.GCFactory;
 import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MenuDetectEvent;
@@ -85,7 +83,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.common.color.ColorValue;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
@@ -125,7 +122,6 @@ import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
-import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.impl.swt.common.widgets.SwtControl;
 import org.jowidgets.spi.widgets.ITableSpi;
@@ -134,19 +130,16 @@ import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-@SuppressWarnings(value = {"all"})
 class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     private static final int PADDING = 5;
-    private static final int COLUMN_VERTICAL_PADDING = 4;
-
-    private final SwtImageRegistry imageRegistry;
 
     private final NatTable table;
+    private final NatTableLayers tableLayers;
+    private final IRowSelectionModel<Integer> rowSelectionModel;
     private final ITableDataModel dataModel;
     private final ITableColumnModelSpi columnModel;
-    private final IGenericWidgetFactory factory;
-    private final ICustomWidgetFactory editorCustomWidgetFactory;
+    private final IGenericWidgetFactory widgetFactory;
 
     private final TableCellObservable tableCellObservable;
     private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
@@ -158,60 +151,51 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     private final TableColumnModelListener tableColumnModelListener;
     private final ColumnLayerListener columnLayerListener;
     private final TableSelectionListener tableSelectionListener;
-    private final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory;
-
-    private final boolean columnsMoveable;
-    private final boolean columnsResizeable;
-
-    private final IColorConstant selectedForegroundColor;
-    private final IColorConstant selectedBackgroundColor;
-
-    private final SelectionLayer selectionLayer;
-    private final IRowSelectionModel<Integer> rowSelectionModel;
 
     private final HoveredColumnConfigLabelAccumulator hoveredColumnLabelAccumulator;
     private final ClickedColumnConfigLabelAccumulator clickedColumnLabelAccumulator;
 
-    private final NatTableLayers tableLayers;
-
-    private int[] lastColumnOrder;
     private final ToolTip toolTip;
-    private boolean editable;
-    private TableEditor editor;
-    private ITableCellEditor tableCellEditor;
-    private ITableCell editTableCell;
-    private final int editRowIndex;
-    private final int editColumnIndex;
-    private long stopEditTimestamp;
-    private boolean setWidthInvokedOnModel;
 
+    //ignore and use later for cell editing support (finals) -> begin
+    @SuppressWarnings("unused")
+    private final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory;
+    @SuppressWarnings("unused")
+    private final ICustomWidgetFactory editorCustomWidgetFactory;
+    // <-end ignore and use later for cell editing support
+
+    //ignore and use later for cell editing support (mutables) -> begin
+    @SuppressWarnings("unused")
+    private boolean editable;
+    @SuppressWarnings("unused")
+    private ITableCellEditor tableCellEditor;
+    @SuppressWarnings("unused")
+    private ITableCell editTableCell;
+    @SuppressWarnings("unused")
+    private final int editRowIndex;
+    @SuppressWarnings("unused")
+    private final int editColumnIndex;
+    @SuppressWarnings("unused")
+    private long stopEditTimestamp;
+    // <-end ignore and use later for cell editing support
+
+    private boolean setWidthInvokedOnModel;
     private ArrayList<Integer> lastSelection;
 
     NatTableImplSpi(
         final NatTableLayers tableLayers,
-        final IGenericWidgetFactory factory,
+        final IGenericWidgetFactory widgetFactory,
         final Object parentUiReference,
         final ITableSetupSpi setup,
         final SwtImageRegistry imageRegistry) {
         super(new NatTable((Composite) parentUiReference, getStyle(setup), tableLayers.getGridLayer()), imageRegistry);
 
         this.tableLayers = tableLayers;
+        this.widgetFactory = widgetFactory;
         this.table = getUiReference();
-
         configureNatTable(table, setup.getColumnModel(), imageRegistry);
 
         this.rowSelectionModel = tableLayers.getSelectionModel();
-        this.selectionLayer = tableLayers.getSelectionLayer();
-
-        this.imageRegistry = imageRegistry;
-
-        this.factory = factory;
-        this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
-
-        this.selectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
-        this.selectedBackgroundColor = SwtOptions.getTableSelectedBackgroundColor();
-
-        this.editable = true;
 
         this.tableCellObservable = new TableCellObservable();
         this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
@@ -224,18 +208,16 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         this.dataModel = setup.getDataModel();
         this.columnModel = setup.getColumnModel();
 
-        this.columnsMoveable = setup.getColumnsMoveable();
-        this.columnsResizeable = setup.getColumnsResizeable();
-
         this.editorFactory = setup.getEditor();
-
+        this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
+        this.editable = true;
         this.editRowIndex = -1;
         this.editColumnIndex = -1;
 
         this.tableSelectionListener = new TableSelectionListener();
-        selectionLayer.addLayerListener(tableSelectionListener);
+        tableLayers.getSelectionLayer().addLayerListener(tableSelectionListener);
 
-        table.addMouseListener(new TableCellListener());
+        table.addMouseListener(new TableCellMouseListener());
         table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
 
         setMenuDetectListener(new TableMenuDetectListener());
@@ -271,9 +253,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
             @Override
             public void mouseMove(final MouseEvent event) {
-                final int x = event.x;
-                final int y = event.y;
-
                 final int col = table.getColumnPositionByX(event.x);
                 final int row = table.getRowPositionByY(event.y);
 
@@ -347,20 +326,24 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         final ITableColumnModelSpi columnModel,
         final SwtImageRegistry imageRegistry) {
 
+        final IConfigRegistry config = table.getConfigRegistry();
+
         //use modern theme as base theme
         final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
         table.setTheme(modernTheme);
 
+        //use white background instead of grey to be more close to the swt win7 table
         table.setBackground(ColorCache.getInstance().getColor(Colors.WHITE));
 
+        //use grid color from the swt table under win7
         final Color gridColor = ColorCache.getInstance().getColor(new ColorValue(240, 240, 240));
+        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
+
+        //use grid for remainder space to be more close to the swt win7 table
         final NatGridLayerPainter gridPainter = new NatGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
         table.setLayerPainter(gridPainter);
 
-        final IConfigRegistry config = table.getConfigRegistry();
-        final ICellPainter cellPainter = createCellPainter(columnModel, imageRegistry);
-        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
-
+        //set table header painter
         final ICellPainter headerPainter = createHeaderPainter(imageRegistry);
         config.registerConfigAttribute(
                 CellConfigAttributes.CELL_PAINTER,
@@ -368,22 +351,23 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 DisplayMode.NORMAL,
                 GridRegion.COLUMN_HEADER);
 
-        //        final Style style = new Style();
-        //        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
-        //        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
-
+        //disable grid because header painter paints grid by itself to allow hovered and clicked grid colors
         config.registerConfigAttribute(
                 CellConfigAttributes.RENDER_GRID_LINES,
                 false,
                 DisplayMode.NORMAL,
                 GridRegion.COLUMN_HEADER);
 
+        //set cell painter
+        final ICellPainter cellPainter = createCellPainter(columnModel, imageRegistry);
+        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
+
+        //do not render dotted line for selected cell because this is ugly and selected cell can be determined by selected background
         config.registerConfigAttribute(
                 SelectionConfigAttributes.SELECTION_GRID_LINE_STYLE,
                 new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
                 DisplayMode.SELECT);
 
-        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
     }
 
     private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {
@@ -402,7 +386,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         contentPainter.setSpacing(PADDING);
         contentPainter.setPaintBackground(false);
         final PaddingDecorator paddingPainter = new PaddingDecorator(contentPainter, 0, PADDING, 0, PADDING, false);
-        final JoClickMovePaintDecorator klickMovePainter = new JoClickMovePaintDecorator(paddingPainter);
+        final JoMoveOnMouseClickPaintDecorator klickMovePainter = new JoMoveOnMouseClickPaintDecorator(paddingPainter);
         return new JoColumnBackgroundPainter(klickMovePainter);
     }
 
@@ -487,7 +471,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     @Override
     public void setRowHeight(final int height) {
         tableLayers.getDataLayer().setDefaultRowHeight(height);
-        table.redraw();
+        table.refresh(false);
     }
 
     @Override
@@ -510,8 +494,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     @Override
     public void resetFromModel() {
-        table.setRedraw(false);
-
         final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
         if (dataModelObservable != null) {
             dataModelObservable.removeDataModelListener(tableModelListener);
@@ -531,7 +513,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             columnModelObservable.addColumnModelListener(tableColumnModelListener);
         }
 
-        table.setRedraw(true);
+        table.refresh(false);
     }
 
     private void setColumnWidthFromModel() {
@@ -576,7 +558,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     @Override
     public void pack(final TablePackPolicy policy) {
-        //TODO Consider TablePackPolicy
+        //TODO consider TablePackPolicy
         for (int columnPosition = 0; columnPosition < table.getColumnCount(); columnPosition++) {
             pack(columnPosition);
         }
@@ -584,7 +566,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     @Override
     public void pack(final int columnIndex, final TablePackPolicy policy) {
-        //TODO Consider TablePackPolicy
+        //TODO consider TablePackPolicy
         pack(tableLayers.getColumnReorderLayer().getColumnPositionByIndex(columnIndex));
     }
 
@@ -626,7 +608,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     @Override
     public void setSelection(final List<Integer> selection) {
         if (!NullCompatibleEquivalence.equals(selection, lastSelection)) {
-            selectionLayer.removeLayerListener(tableSelectionListener);
+            tableLayers.getSelectionLayer().removeLayerListener(tableSelectionListener);
             if (selection != null) {
                 lastSelection = new ArrayList<Integer>(selection);
                 rowSelectionModel.clearSelection();
@@ -639,8 +621,8 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 rowSelectionModel.clearSelection();
             }
             tableSelectionObservable.fireSelectionChanged();
-            selectionLayer.addLayerListener(tableSelectionListener);
-            table.redraw();
+            tableLayers.getSelectionLayer().addLayerListener(tableSelectionListener);
+            table.refresh(false);
         }
     }
 
@@ -674,7 +656,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     }
 
     private CellIndices getExternalCellIndices(final Point point) {
-
         final int rowPositionByY = table.getRowPositionByY(point.y);
         if (rowPositionByY <= 0) {
             return null;
@@ -732,24 +713,15 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         return false;
     }
 
-    private int convertColumnIndexToView(final int modelIndex) {
-        final ArrayList<Integer> permutation = getColumnPermutation();
-        return permutation.indexOf(Integer.valueOf(modelIndex));
-    }
-
-    private int convertColumnIndexToModel(final int viewIndex) {
-        return getColumnPermutation().get(viewIndex).intValue();
-    }
-
     private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
         @Override
         public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
             final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-            return factory.create(table, descriptor);
+            return widgetFactory.create(table, descriptor);
         }
     }
 
-    private final class TableCellListener extends MouseAdapter {
+    private final class TableCellMouseListener extends MouseAdapter {
         @Override
         public void mouseUp(final MouseEvent e) {
             final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
@@ -936,8 +908,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 tableColumnObservable.fireColumnPermutationChanged();
             }
             else if (event instanceof ColumnResizeEvent) {
-                final ColumnResizeEvent resizeEvent = (ColumnResizeEvent) event;
-
                 final ColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
                 final AbstractLayerTransform headerLayer = tableLayers.getColumnHeaderLayer();
 

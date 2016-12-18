@@ -36,10 +36,10 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.GenericTableFactory;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 
-final class NatTableFactory<DESCRIPTOR_TYPE extends IWidgetDescriptor<ITable> & ITableSetup>
+public final class NatTableFactory<DESCRIPTOR_TYPE extends IWidgetDescriptor<ITable> & ITableSetup>
         extends GenericTableFactory<DESCRIPTOR_TYPE> {
 
-    NatTableFactory(
+    public NatTableFactory(
         final SwtImageRegistry imageRegistry,
         final IGenericWidgetFactory genericWidgetFactory,
         final ISpiBluePrintFactory spiBluePrintFactory) {

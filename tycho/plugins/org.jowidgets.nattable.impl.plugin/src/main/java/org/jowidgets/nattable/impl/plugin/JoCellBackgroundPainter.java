@@ -37,29 +37,38 @@ import org.eclipse.swt.graphics.Color;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 final class JoCellBackgroundPainter extends BackgroundPainter {
 
+    private final IColorConstant defaultSelectedBackgroundColor;
+
     JoCellBackgroundPainter(final ICellPainter painter) {
         super(painter);
+        this.defaultSelectedBackgroundColor = SwtOptions.getTableSelectedBackgroundColor();
     }
 
     @Override
     protected Color getBackgroundColour(final ILayerCell cell, final IConfigRegistry configRegistry) {
         final ITableCell tableCell = (ITableCell) cell.getDataValue();
 
-        final IColorConstant backgroundColor = tableCell.getBackgroundColor();
-        final IColorConstant selectedBackgroundColor = tableCell.getSelectedBackgroundColor();
+        if (DisplayMode.NORMAL.equals(cell.getDisplayMode())) {
+            final IColorConstant backgroundColor = tableCell.getBackgroundColor();
+            if (backgroundColor != null) {
+                return ColorCache.getInstance().getColor(backgroundColor);
+            }
+        }
+        else if (DisplayMode.SELECT.equals(cell.getDisplayMode())) {
+            IColorConstant selectedBackgroundColor = tableCell.getSelectedBackgroundColor();
+            if (selectedBackgroundColor == null) {
+                selectedBackgroundColor = defaultSelectedBackgroundColor;
+            }
+            if (selectedBackgroundColor != null) {
+                return ColorCache.getInstance().getColor(selectedBackgroundColor);
+            }
+        }
 
-        if (DisplayMode.NORMAL.equals(cell.getDisplayMode()) && backgroundColor != null) {
-            return ColorCache.getInstance().getColor(backgroundColor);
-        }
-        else if (DisplayMode.SELECT.equals(cell.getDisplayMode()) && selectedBackgroundColor != null) {
-            return ColorCache.getInstance().getColor(selectedBackgroundColor);
-        }
-        else {
-            return super.getBackgroundColour(cell, configRegistry);
-        }
+        return super.getBackgroundColour(cell, configRegistry);
     }
 
 }

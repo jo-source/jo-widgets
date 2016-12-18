@@ -42,12 +42,14 @@ import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.util.Assert;
 
 final class JoCellTextPainter extends AbstractJoTextPainter {
 
     private final ITableColumnModelSpi columnModel;
+    private final IColorConstant defaultSelectedForegroundColor;
 
     private Color originalForeground;
     private Font originalFont;
@@ -55,6 +57,7 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
     JoCellTextPainter(final ITableColumnModelSpi columnModel) {
         Assert.paramNotNull(columnModel, "columnModel");
         this.columnModel = columnModel;
+        this.defaultSelectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
     }
 
     @Override
@@ -102,7 +105,10 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
             }
         }
         else if (DisplayMode.SELECT.equals(layerCell.getDisplayMode())) {
-            final IColorConstant selectedForeground = tableCell.getSelectedForegroundColor();
+            IColorConstant selectedForeground = tableCell.getSelectedForegroundColor();
+            if (selectedForeground == null) {
+                selectedForeground = defaultSelectedForegroundColor;
+            }
             if (selectedForeground != null) {
                 return ColorCache.getInstance().getColor(selectedForeground);
             }

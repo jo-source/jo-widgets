@@ -55,6 +55,8 @@ public final class NatTableLayers {
     public NatTableLayers(
         final ITableDataModel dataModel,
         final ITableColumnModelSpi columnModel,
+        final boolean columsResizable,
+        final boolean columnsMoveable,
         final TableSelectionPolicy selectionPolicy) {
 
         Assert.paramNotNull(dataModel, "dataModel");
@@ -65,7 +67,7 @@ public final class NatTableLayers {
         final IDataProvider rowDataProvider = new DefaultRowDataProvider();
         final IDataProvider columnDataProvider = new DefaultColumnDataProvider(columnModel);
 
-        final BodyLayerStack bodyLayer = new BodyLayerStack(dataProvider, selectionPolicy);
+        final BodyLayerStack bodyLayer = new BodyLayerStack(dataProvider, columsResizable, columnsMoveable, selectionPolicy);
         this.dataLayer = bodyLayer.getDataLayer();
         this.selectionModel = bodyLayer.getSelectionModel();
         this.selectionLayer = bodyLayer.getSelectionLayer();

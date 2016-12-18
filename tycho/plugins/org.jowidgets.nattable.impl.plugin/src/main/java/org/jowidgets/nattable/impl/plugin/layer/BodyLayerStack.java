@@ -44,10 +44,22 @@ final class BodyLayerStack extends AbstractLayerTransform {
     private final JoColumnReorderLayer columnReorderLayer;
     private final ViewportLayer viewportLayer;
 
-    BodyLayerStack(final IDataProvider dataProvider, final TableSelectionPolicy selectionPolicy) {
+    BodyLayerStack(
+        final IDataProvider dataProvider,
+        final boolean columsResizable,
+        final boolean columnsMoveable,
+        final TableSelectionPolicy selectionPolicy) {
+
         this.dataLayer = new DataLayer(dataProvider);
+        dataLayer.setColumnsResizableByDefault(columsResizable);
+
         this.columnReorderLayer = new JoColumnReorderLayer(dataLayer);
-        this.selectionLayer = new SelectionLayer(columnReorderLayer);
+        if (columnsMoveable) {
+            this.selectionLayer = new SelectionLayer(columnReorderLayer);
+        }
+        else {
+            this.selectionLayer = new SelectionLayer(dataLayer);
+        }
 
         if (TableSelectionPolicy.NO_SELECTION.equals(selectionPolicy)) {
             this.selectionModel = new NoSelectionRowSelectionModel();
