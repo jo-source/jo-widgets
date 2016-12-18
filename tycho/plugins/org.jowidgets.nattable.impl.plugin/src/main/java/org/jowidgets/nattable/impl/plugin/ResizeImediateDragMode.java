@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, herrg
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,19 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin.layer;
+package org.jowidgets.nattable.impl.plugin;
 
-import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
-import org.eclipse.nebula.widgets.nattable.grid.layer.ColumnHeaderLayer;
-import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
-import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
+import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.nebula.widgets.nattable.layer.ILayer;
+import org.eclipse.nebula.widgets.nattable.resize.command.ColumnResizeCommand;
+import org.eclipse.nebula.widgets.nattable.resize.mode.ColumnResizeDragMode;
+import org.eclipse.swt.events.MouseEvent;
 
-final class ColumnHeaderLayerStack extends AbstractLayerTransform {
+final class ResizeImediateDragMode extends ColumnResizeDragMode {
 
-    ColumnHeaderLayerStack(final IDataProvider dataProvider, final BodyLayerStack bodyLayer) {
-        final DataLayer dataLayer = new DataLayer(dataProvider);
-        dataLayer.setDefaultRowHeight(Constants.COLUMN_HEADER_HEIGHT);
-        setUnderlyingLayer(new ColumnHeaderLayer(dataLayer, bodyLayer, bodyLayer.getSelectionLayer()));
+    @Override
+    public void mouseDown(final NatTable natTable, final MouseEvent event) {
+        super.mouseDown(natTable, event);
+        natTable.removeOverlayPainter(this.overlayPainter);
+    }
+
+    @Override
+    public void mouseMove(final NatTable natTable, final MouseEvent event) {
+        super.mouseMove(natTable, event);
+        updateColumnWidth(natTable, event);
+        natTable.redraw();
+    }
+
+    private void updateColumnWidth(final ILayer natLayer, final MouseEvent e) {
+        final int dragWidth = e.x - this.startX;
+        int newColumnWidth = this.originalColumnWidth + dragWidth;
+        if (newColumnWidth < getColumnWidthMinimum()) {
+            newColumnWidth = getColumnWidthMinimum();
+        }
+        natLayer.doCommand(new ColumnResizeCommand(natLayer, this.columnPositionToResize, newColumnWidth));
     }
 
 }

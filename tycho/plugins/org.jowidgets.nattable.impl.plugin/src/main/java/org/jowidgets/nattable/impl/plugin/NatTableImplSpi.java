@@ -51,6 +51,7 @@ import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
 import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
 import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeColumnsCommand;
 import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEvent;
+import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEventMatcher;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
@@ -59,8 +60,11 @@ import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
 import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
 import org.eclipse.nebula.widgets.nattable.style.theme.ModernNatTableThemeConfiguration;
 import org.eclipse.nebula.widgets.nattable.style.theme.ThemeConfiguration;
+import org.eclipse.nebula.widgets.nattable.ui.action.AggregateDragMode;
 import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
+import org.eclipse.nebula.widgets.nattable.ui.binding.UiBindingRegistry;
 import org.eclipse.nebula.widgets.nattable.ui.matcher.IMouseEventMatcher;
+import org.eclipse.nebula.widgets.nattable.ui.matcher.MouseEventMatcher;
 import org.eclipse.nebula.widgets.nattable.ui.util.CellEdgeEnum;
 import org.eclipse.nebula.widgets.nattable.util.GCFactory;
 import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
@@ -236,6 +240,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         tableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
 
         configureNatTable(table, setup.getColumnModel(), imageRegistry);
+        registerUiBindingsToNatTable(table);
     }
 
     private static int getStyle(final ITableSetupSpi setup) {
@@ -253,7 +258,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         final IConfigRegistry config = table.getConfigRegistry();
 
-        //use modern theme as base theme
+        //use modern theme as base theme (so fonts look like win 7 and win 10)
         final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
         table.setTheme(modernTheme);
 
@@ -293,6 +298,25 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
                 DisplayMode.SELECT);
 
+    }
+
+    private void registerUiBindingsToNatTable(final NatTable table) {
+
+        final UiBindingRegistry uiBindingRegistry = table.getUiBindingRegistry();
+
+        //avoid selection removed on reorder, use swt win style reorder overlay color and
+        //do not allow to draw overlay column outside the header
+        uiBindingRegistry.unregisterMouseDragMode(MouseEventMatcher.columnHeaderLeftClick(SWT.NONE));
+        uiBindingRegistry.registerMouseDragMode(
+                MouseEventMatcher.columnHeaderLeftClick(SWT.NONE),
+                new AggregateDragMode(
+                    new JoColumnReorderCellDragMode(),
+                    new JoColumnReorderDragMode(hoveredColumnLabelAccumulator)));
+
+        //do resize immediate when user changes column width
+        uiBindingRegistry.registerFirstMouseDragMode(
+                new ColumnResizeEventMatcher(SWT.NONE, GridRegion.COLUMN_HEADER, 1),
+                new ResizeImediateDragMode());
     }
 
     private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, herrg
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,17 +28,10 @@
 
 package org.jowidgets.nattable.impl.plugin.layer;
 
-import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
-import org.eclipse.nebula.widgets.nattable.grid.layer.ColumnHeaderLayer;
-import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
-import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
+public final class Constants {
 
-final class ColumnHeaderLayerStack extends AbstractLayerTransform {
+    public static final int COLUMN_HEADER_HEIGHT = 24;
 
-    ColumnHeaderLayerStack(final IDataProvider dataProvider, final BodyLayerStack bodyLayer) {
-        final DataLayer dataLayer = new DataLayer(dataProvider);
-        dataLayer.setDefaultRowHeight(Constants.COLUMN_HEADER_HEIGHT);
-        setUnderlyingLayer(new ColumnHeaderLayer(dataLayer, bodyLayer, bodyLayer.getSelectionLayer()));
-    }
+    private Constants() {}
 
 }
