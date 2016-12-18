@@ -62,6 +62,7 @@ final class DefaultColumnDataProvider implements IDataProvider {
         return 1;
     }
 
+    //TODO implement toString() of table column spi and remove this wrapper
     private class TableColumnWrapper implements ITableColumnSpi {
 
         private final ITableColumnSpi original;

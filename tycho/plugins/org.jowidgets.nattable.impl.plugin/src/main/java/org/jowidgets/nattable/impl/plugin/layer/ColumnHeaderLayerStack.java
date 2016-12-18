@@ -40,8 +40,7 @@ final class ColumnHeaderLayerStack extends AbstractLayerTransform {
     ColumnHeaderLayerStack(final IDataProvider dataProvider, final BodyLayerStack bodyLayer) {
         final DataLayer dataLayer = new DataLayer(dataProvider);
         dataLayer.setDefaultRowHeight(COLUMN_HEADER_HEIGHT);
-        final ColumnHeaderLayer colHeaderLayer = new ColumnHeaderLayer(dataLayer, bodyLayer, bodyLayer.getSelectionLayer());
-        setUnderlyingLayer(colHeaderLayer);
+        setUnderlyingLayer(new ColumnHeaderLayer(dataLayer, bodyLayer, bodyLayer.getSelectionLayer()));
     }
 
 }

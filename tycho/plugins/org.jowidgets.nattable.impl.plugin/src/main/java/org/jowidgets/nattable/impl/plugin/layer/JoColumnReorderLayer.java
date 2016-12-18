@@ -39,7 +39,6 @@ public class JoColumnReorderLayer extends ColumnReorderLayer {
 
     public JoColumnReorderLayer(final IUniqueIndexLayer underlyingLayer) {
         super(underlyingLayer);
-
     }
 
     public void setColumnIndexOrder(final List<Integer> order) {

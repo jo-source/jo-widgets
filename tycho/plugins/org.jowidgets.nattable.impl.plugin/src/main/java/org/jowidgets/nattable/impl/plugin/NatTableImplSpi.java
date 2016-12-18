@@ -190,127 +190,52 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         final SwtImageRegistry imageRegistry) {
         super(new NatTable((Composite) parentUiReference, getStyle(setup), tableLayers.getGridLayer()), imageRegistry);
 
-        this.tableLayers = tableLayers;
-        this.widgetFactory = widgetFactory;
         this.table = getUiReference();
-        configureNatTable(table, setup.getColumnModel(), imageRegistry);
-
+        this.tableLayers = tableLayers;
         this.rowSelectionModel = tableLayers.getSelectionModel();
+        this.widgetFactory = widgetFactory;
 
         this.tableCellObservable = new TableCellObservable();
         this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
         this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
         this.tableColumnObservable = new TableColumnObservable();
         this.tableSelectionObservable = new TableSelectionObservable();
+
         this.tableModelListener = new TableModelListener();
         this.tableColumnModelListener = new TableColumnModelListener();
+        this.columnLayerListener = new ColumnLayerListener();
+        this.tableSelectionListener = new TableSelectionListener();
+
+        this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
+        this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
+        this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
+        this.toolTip = createToolTip(table);
 
         this.dataModel = setup.getDataModel();
         this.columnModel = setup.getColumnModel();
-
         this.editorFactory = setup.getEditor();
-        this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
+
         this.editable = true;
         this.editRowIndex = -1;
         this.editColumnIndex = -1;
 
-        this.tableSelectionListener = new TableSelectionListener();
-        tableLayers.getSelectionLayer().addLayerListener(tableSelectionListener);
-
-        table.addMouseListener(new TableCellMouseListener());
-        table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
-
         setMenuDetectListener(new TableMenuDetectListener());
 
-        this.toolTip = createToolTip(table);
+        table.addMouseListener(new TableCellMouseListener());
+        table.addMouseMoveListener(new HeaderHoverMouseMoveListener());
+        table.addMouseTrackListener(new HeaderHoverAndClickMouseTrackAdapter());
+        table.addMouseListener(new HeaderMouseClickModeMouseListener());
+        table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
+        table.addDisposeListener(new NatTableDisposeListener());
 
-        table.addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(final DisposeEvent arg0) {
-                final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
-                if (dataModelObservable != null) {
-                    dataModelObservable.removeDataModelListener(tableModelListener);
-                }
-                final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
-                if (columnModelObservable != null) {
-                    columnModelObservable.removeColumnModelListener(tableColumnModelListener);
-                }
-            }
-        });
-
-        this.columnLayerListener = new ColumnLayerListener();
+        tableLayers.getSelectionLayer().addLayerListener(tableSelectionListener);
         tableLayers.getColumnReorderLayer().addLayerListener(columnLayerListener);
-
-        //TODO extract these listeners and fix columns get clicked on drag and resize
-        this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
-        this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
 
         final AggregateConfigLabelAccumulator columnLabelAccumulator = new AggregateConfigLabelAccumulator();
         columnLabelAccumulator.add(hoveredColumnLabelAccumulator, clickedColumnLabelAccumulator);
         tableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
 
-        final MouseMoveListener mouseMoveListener = new MouseMoveListener() {
-
-            @Override
-            public void mouseMove(final MouseEvent event) {
-                final int col = table.getColumnPositionByX(event.x);
-                final int row = table.getRowPositionByY(event.y);
-
-                final boolean changed;
-                if (row == 0 && col >= 0) {
-                    changed = hoveredColumnLabelAccumulator.setColumnIndex(col);
-                }
-                else {
-                    changed = hoveredColumnLabelAccumulator.clearColumnIndex();
-                }
-
-                if (changed) {
-                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
-                }
-            }
-        };
-
-        table.addMouseMoveListener(mouseMoveListener);
-        table.addMouseTrackListener(new MouseTrackAdapter() {
-            @Override
-            public void mouseExit(final MouseEvent e) {
-                final boolean changed = hoveredColumnLabelAccumulator.clearColumnIndex();
-                if (changed) {
-                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
-                }
-            }
-        });
-
-        table.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseUp(final MouseEvent e) {
-                final boolean changed = clickedColumnLabelAccumulator.clearColumnIndex();
-                if (changed) {
-                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
-                }
-            }
-
-            @Override
-            public void mouseDown(final MouseEvent event) {
-                final int col = table.getColumnPositionByX(event.x);
-                final int row = table.getRowPositionByY(event.y);
-
-                final boolean changed;
-                if (row == 0 && col >= 0 && event.button == 1) {
-                    changed = clickedColumnLabelAccumulator.setColumnIndex(col);
-                }
-                else {
-                    changed = clickedColumnLabelAccumulator.clearColumnIndex();
-                }
-
-                if (changed) {
-                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
-                }
-            }
-
-        });
-
+        configureNatTable(table, setup.getColumnModel(), imageRegistry);
     }
 
     private static int getStyle(final ITableSetupSpi setup) {
@@ -391,14 +316,12 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     }
 
     private ToolTip createToolTip(final NatTable table) {
-        //TODO extract to method
         // ToolTip support
         ToolTip result = null;
         try {
             result = new ToolTip(table.getShell(), SWT.NONE);
         }
         catch (final NoClassDefFoundError error) {
-            //TODO MG rwt has no tooltip, may use a window instead. 
             //(New rwt version supports tooltips)
         }
 
@@ -721,6 +644,74 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         }
     }
 
+    private final class HeaderHoverMouseMoveListener implements MouseMoveListener {
+
+        @Override
+        public void mouseMove(final MouseEvent event) {
+            final int col = table.getColumnPositionByX(event.x);
+            final int row = table.getRowPositionByY(event.y);
+            final boolean button1Pressed = (event.stateMask & SWT.BUTTON1) != 0;
+
+            final boolean hoverChanged;
+            if (row == 0 && col >= 0 && !button1Pressed) {//do not show hovered state when resizing or clicking
+                hoverChanged = hoveredColumnLabelAccumulator.setColumnIndex(col);
+            }
+            else if (!button1Pressed) {
+                hoverChanged = hoveredColumnLabelAccumulator.clearColumnIndex();
+            }
+            else {
+                hoverChanged = false;
+            }
+
+            if (hoverChanged) {
+                tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+            }
+        }
+    }
+
+    private final class HeaderMouseClickModeMouseListener extends MouseAdapter {
+
+        @Override
+        public void mouseUp(final MouseEvent e) {
+            final boolean changed = clickedColumnLabelAccumulator.clearColumnIndex();
+            if (changed) {
+                tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+            }
+        }
+
+        @Override
+        public void mouseDown(final MouseEvent event) {
+            final int col = table.getColumnPositionByX(event.x);
+            final int row = table.getRowPositionByY(event.y);
+
+            final boolean changed;
+            if (row == 0 && col >= 0 && event.button == 1 && table.getCursor() == null) {
+                //Hack description for: "table.getCursor() == null" 
+                //->do not set click mode if resize cursor is shown
+                changed = clickedColumnLabelAccumulator.setColumnIndex(col);
+            }
+            else {
+                changed = clickedColumnLabelAccumulator.clearColumnIndex();
+            }
+
+            if (changed) {
+                tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+            }
+        }
+
+    }
+
+    private final class HeaderHoverAndClickMouseTrackAdapter extends MouseTrackAdapter {
+        @Override
+        public void mouseExit(final MouseEvent e) {
+            final boolean hoverChanged = hoveredColumnLabelAccumulator.clearColumnIndex();
+            final boolean clickChanged = clickedColumnLabelAccumulator.clearColumnIndex();
+            if (hoverChanged || clickChanged) {
+                tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+            }
+        }
+    }
+
     private final class TableCellMouseListener extends MouseAdapter {
         @Override
         public void mouseUp(final MouseEvent e) {
@@ -992,6 +983,20 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             }
             else {
                 return null;
+            }
+        }
+    }
+
+    private final class NatTableDisposeListener implements DisposeListener {
+        @Override
+        public void widgetDisposed(final DisposeEvent event) {
+            final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+            if (dataModelObservable != null) {
+                dataModelObservable.removeDataModelListener(tableModelListener);
+            }
+            final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
+            if (columnModelObservable != null) {
+                columnModelObservable.removeColumnModelListener(tableColumnModelListener);
             }
         }
     }
