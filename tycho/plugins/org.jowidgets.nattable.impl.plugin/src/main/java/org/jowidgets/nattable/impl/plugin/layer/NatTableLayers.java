@@ -36,6 +36,7 @@ import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
+import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
 import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.TableSelectionPolicy;
@@ -47,6 +48,9 @@ public final class NatTableLayers {
     private final SelectionLayer selectionLayer;
     private final IRowSelectionModel<Integer> selectionModel;
     private final ColumnHeaderLayerStack columnHeaderLayer;
+    private final JoColumnReorderLayer columnReorderLayer;
+    private final DataLayer dataLayer;
+    private final ViewportLayer viewPortLayer;
 
     public NatTableLayers(
         final ITableDataModel dataModel,
@@ -62,8 +66,11 @@ public final class NatTableLayers {
         final IDataProvider columnDataProvider = new DefaultColumnDataProvider(columnModel);
 
         final BodyLayerStack bodyLayer = new BodyLayerStack(dataProvider, selectionPolicy);
+        this.dataLayer = bodyLayer.getDataLayer();
         this.selectionModel = bodyLayer.getSelectionModel();
         this.selectionLayer = bodyLayer.getSelectionLayer();
+        this.columnReorderLayer = bodyLayer.getColumnReorderLayer();
+        this.viewPortLayer = bodyLayer.getViewportLayer();
 
         this.columnHeaderLayer = new ColumnHeaderLayerStack(columnDataProvider, bodyLayer);
         final RowHeaderLayerStack rowHeaderLayer = new RowHeaderLayerStack(rowDataProvider, bodyLayer);
@@ -88,6 +95,18 @@ public final class NatTableLayers {
 
     public IRowSelectionModel<Integer> getSelectionModel() {
         return selectionModel;
+    }
+
+    public JoColumnReorderLayer getColumnReorderLayer() {
+        return columnReorderLayer;
+    }
+
+    public DataLayer getDataLayer() {
+        return dataLayer;
+    }
+
+    public ViewportLayer getViewPortLayer() {
+        return viewPortLayer;
     }
 
 }

@@ -37,6 +37,7 @@ import org.eclipse.nebula.widgets.nattable.command.VisualRefreshCommand;
 import org.eclipse.nebula.widgets.nattable.config.CellConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
+import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
 import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
@@ -46,9 +47,14 @@ import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
 import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.CellPainterDecorator;
 import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.PaddingDecorator;
 import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
+import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
+import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
+import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeColumnsCommand;
+import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEvent;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
+import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle;
 import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
 import org.eclipse.nebula.widgets.nattable.style.CellStyleAttributes;
@@ -60,6 +66,8 @@ import org.eclipse.nebula.widgets.nattable.style.theme.ThemeConfiguration;
 import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
 import org.eclipse.nebula.widgets.nattable.ui.matcher.IMouseEventMatcher;
 import org.eclipse.nebula.widgets.nattable.ui.util.CellEdgeEnum;
+import org.eclipse.nebula.widgets.nattable.util.GCFactory;
+import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.DisposeEvent;
@@ -106,6 +114,7 @@ import org.jowidgets.common.widgets.editor.ITableCellEditor;
 import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.nattable.impl.plugin.layer.JoColumnReorderLayer;
 import org.jowidgets.nattable.impl.plugin.layer.NatTableLayers;
 import org.jowidgets.spi.impl.controller.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
@@ -115,6 +124,7 @@ import org.jowidgets.spi.impl.controller.TableColumnMouseEvent;
 import org.jowidgets.spi.impl.controller.TableColumnObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
+import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
@@ -128,7 +138,7 @@ import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 @SuppressWarnings(value = {"all"})
-public class NatTableImplSpi extends SwtControl implements ITableSpi {
+class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     private static final int PADDING = 5;
     private static final int COLUMN_VERTICAL_PADDING = 4;
@@ -149,6 +159,8 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     private final TableModelListener tableModelListener;
     private final TableColumnModelListener tableColumnModelListener;
+    private final ColumnLayerListener columnLayerListener;
+    private final TableSelectionListener tableSelectionListener;
     private final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory;
 
     private final boolean columnsMoveable;
@@ -163,8 +175,10 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
     private final HoveredColumnConfigLabelAccumulator hoveredColumnLabelAccumulator;
     private final ClickedColumnConfigLabelAccumulator clickedColumnLabelAccumulator;
 
+    private final NatTableLayers tableLayers;
+
     private int[] lastColumnOrder;
-    private ToolTip toolTip;
+    private final ToolTip toolTip;
     private boolean editable;
     private TableEditor editor;
     private ITableCellEditor tableCellEditor;
@@ -172,61 +186,25 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
     private final int editRowIndex;
     private final int editColumnIndex;
     private long stopEditTimestamp;
-
-    private Integer rowHeight;
+    private boolean setWidthInvokedOnModel;
 
     private ArrayList<Integer> lastSelection;
 
-    public NatTableImplSpi(
-        final NatTableLayers natTableLayers,
+    NatTableImplSpi(
+        final NatTableLayers tableLayers,
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ITableSetupSpi setup,
         final SwtImageRegistry imageRegistry) {
-        super(new NatTable((Composite) parentUiReference, getStyle(setup), natTableLayers.getGridLayer()), imageRegistry);
+        super(new NatTable((Composite) parentUiReference, getStyle(setup), tableLayers.getGridLayer()), imageRegistry);
 
+        this.tableLayers = tableLayers;
         this.table = getUiReference();
 
-        //TODO move the nattable config to separate methods
-        final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
-        table.setTheme(modernTheme);
+        configureNatTable(table, setup.getColumnModel(), imageRegistry);
 
-        table.setBackground(ColorCache.getInstance().getColor(Colors.WHITE));
-
-        final Color gridColor = ColorCache.getInstance().getColor(new ColorValue(240, 240, 240));
-        final NatGridLayerPainter gridPainter = new NatGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
-        table.setLayerPainter(gridPainter);
-
-        final IConfigRegistry config = table.getConfigRegistry();
-        final ICellPainter cellPainter = createCellPainter(setup.getColumnModel(), imageRegistry);
-        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
-
-        final ICellPainter headerPainter = createHeaderPainter(imageRegistry);
-        config.registerConfigAttribute(
-                CellConfigAttributes.CELL_PAINTER,
-                headerPainter,
-                DisplayMode.NORMAL,
-                GridRegion.COLUMN_HEADER);
-
-        final Style style = new Style();
-        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
-        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
-
-        config.registerConfigAttribute(
-                CellConfigAttributes.RENDER_GRID_LINES,
-                false,
-                DisplayMode.NORMAL,
-                GridRegion.COLUMN_HEADER);
-
-        config.registerConfigAttribute(
-                SelectionConfigAttributes.SELECTION_GRID_LINE_STYLE,
-                new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
-                DisplayMode.SELECT);
-
-        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
-
-        this.rowSelectionModel = natTableLayers.getSelectionModel();
-        this.selectionLayer = natTableLayers.getSelectionLayer();
+        this.rowSelectionModel = tableLayers.getSelectionModel();
+        this.selectionLayer = tableLayers.getSelectionLayer();
 
         this.imageRegistry = imageRegistry;
 
@@ -257,29 +235,15 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         this.editRowIndex = -1;
         this.editColumnIndex = -1;
 
-        selectionLayer.addLayerListener(new TableSelectionListener());
+        this.tableSelectionListener = new TableSelectionListener();
+        selectionLayer.addLayerListener(tableSelectionListener);
 
         table.addMouseListener(new TableCellListener());
         table.getUiBindingRegistry().registerSingleClickBinding(new TableHeaderMouseEventMatcher(), new TableHeaderClickAction());
+
         setMenuDetectListener(new TableMenuDetectListener());
 
-        //TODO extract to method
-        // ToolTip support
-        try {
-            this.toolTip = new ToolTip(table.getShell(), SWT.NONE);
-        }
-        catch (final NoClassDefFoundError error) {
-            //TODO MG rwt has no tooltip, may use a window instead. 
-            //(New rwt version supports tooltips)
-        }
-
-        if (toolTip != null) {
-            final ToolTipListener toolTipListener = new ToolTipListener();
-            table.addListener(SWT.Dispose, toolTipListener);
-            table.addListener(SWT.KeyDown, toolTipListener);
-            table.addListener(SWT.MouseHover, toolTipListener);
-            table.addListener(SWT.MouseMove, toolTipListener);
-        }
+        this.toolTip = createToolTip(table);
 
         table.addDisposeListener(new DisposeListener() {
             @Override
@@ -295,13 +259,16 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             }
         });
 
+        this.columnLayerListener = new ColumnLayerListener();
+        tableLayers.getColumnReorderLayer().addLayerListener(columnLayerListener);
+
         //TODO extract these listeners and fix columns get clicked on drag and resize
         this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
         this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
 
         final AggregateConfigLabelAccumulator columnLabelAccumulator = new AggregateConfigLabelAccumulator();
         columnLabelAccumulator.add(hoveredColumnLabelAccumulator, clickedColumnLabelAccumulator);
-        natTableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
+        tableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
 
         final MouseMoveListener mouseMoveListener = new MouseMoveListener() {
 
@@ -322,7 +289,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
                 }
 
                 if (changed) {
-                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
                 }
             }
         };
@@ -333,7 +300,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             public void mouseExit(final MouseEvent e) {
                 final boolean changed = hoveredColumnLabelAccumulator.clearColumnIndex();
                 if (changed) {
-                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
                 }
             }
         });
@@ -344,7 +311,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             public void mouseUp(final MouseEvent e) {
                 final boolean changed = clickedColumnLabelAccumulator.clearColumnIndex();
                 if (changed) {
-                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
                 }
             }
 
@@ -362,7 +329,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
                 }
 
                 if (changed) {
-                    natTableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
+                    tableLayers.getColumnHeaderLayer().doCommand(new VisualRefreshCommand());
                 }
             }
 
@@ -376,6 +343,50 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
             result = result | SWT.BORDER;
         }
         return result;
+    }
+
+    private void configureNatTable(
+        final NatTable table,
+        final ITableColumnModelSpi columnModel,
+        final SwtImageRegistry imageRegistry) {
+
+        //use modern theme as base theme
+        final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
+        table.setTheme(modernTheme);
+
+        table.setBackground(ColorCache.getInstance().getColor(Colors.WHITE));
+
+        final Color gridColor = ColorCache.getInstance().getColor(new ColorValue(240, 240, 240));
+        final NatGridLayerPainter gridPainter = new NatGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
+        table.setLayerPainter(gridPainter);
+
+        final IConfigRegistry config = table.getConfigRegistry();
+        final ICellPainter cellPainter = createCellPainter(columnModel, imageRegistry);
+        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
+
+        final ICellPainter headerPainter = createHeaderPainter(imageRegistry);
+        config.registerConfigAttribute(
+                CellConfigAttributes.CELL_PAINTER,
+                headerPainter,
+                DisplayMode.NORMAL,
+                GridRegion.COLUMN_HEADER);
+
+        final Style style = new Style();
+        style.setAttributeValue(CellStyleAttributes.VERTICAL_ALIGNMENT, VerticalAlignmentEnum.TOP);
+        config.registerConfigAttribute(CellConfigAttributes.CELL_STYLE, style, DisplayMode.NORMAL, GridRegion.COLUMN_HEADER);
+
+        config.registerConfigAttribute(
+                CellConfigAttributes.RENDER_GRID_LINES,
+                false,
+                DisplayMode.NORMAL,
+                GridRegion.COLUMN_HEADER);
+
+        config.registerConfigAttribute(
+                SelectionConfigAttributes.SELECTION_GRID_LINE_STYLE,
+                new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
+                DisplayMode.SELECT);
+
+        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
     }
 
     private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {
@@ -404,177 +415,32 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         return new JoColumnBackgroundPainter(klickMovePainter);
     }
 
-    @Override
-    public NatTable getUiReference() {
-        return (NatTable) super.getUiReference();
-    }
-
-    @Override
-    public void setRowHeight(final int height) {
-        //TODO row height must be considered
-        this.rowHeight = Integer.valueOf(height);
-        table.redraw();
-    }
-
-    @Override
-    public void setEditable(final boolean editable) {
-        this.editable = editable;
-    }
-
-    @Override
-    public void setEnabled(final boolean enabled) {
-        if (isEditing() && !enabled) {
-            stopEditing();
+    private ToolTip createToolTip(final NatTable table) {
+        //TODO extract to method
+        // ToolTip support
+        ToolTip result = null;
+        try {
+            result = new ToolTip(table.getShell(), SWT.NONE);
         }
-        super.setEnabled(enabled);
-    }
-
-    @Override
-    public Dimension getMinSize() {
-        return new Dimension(40, 40);
-    }
-
-    @Override
-    public void resetFromModel() {
-        table.setRedraw(false);
-
-        final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
-        if (dataModelObservable != null) {
-            dataModelObservable.removeDataModelListener(tableModelListener);
+        catch (final NoClassDefFoundError error) {
+            //TODO MG rwt has no tooltip, may use a window instead. 
+            //(New rwt version supports tooltips)
         }
 
-        final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
-        if (columnModelObservable != null) {
-            columnModelObservable.removeColumnModelListener(tableColumnModelListener);
+        if (result != null) {
+            final ToolTipListener toolTipListener = new ToolTipListener();
+            table.addListener(SWT.Dispose, toolTipListener);
+            table.addListener(SWT.KeyDown, toolTipListener);
+            table.addListener(SWT.MouseHover, toolTipListener);
+            table.addListener(SWT.MouseMove, toolTipListener);
         }
 
-        setSelection(dataModel.getSelection());
-
-        if (dataModelObservable != null) {
-            dataModelObservable.addDataModelListener(tableModelListener);
-        }
-
-        if (columnModelObservable != null) {
-            columnModelObservable.addColumnModelListener(tableColumnModelListener);
-        }
-
-        table.setRedraw(true);
-    }
-
-    @Override
-    public Position getCellPosition(final int rowIndex, final int columnIndex) {
-        final Rectangle rectangle = table.getBoundsByPosition(columnIndex, rowIndex);
-        if (rectangle != null) {
-            return new Position(rectangle.x, rectangle.y);
-        }
-        else {
-            return null;
-        }
-    }
-
-    @Override
-    public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-        final Rectangle rectangle = table.getBoundsByPosition(columnIndex, rowIndex);
-        if (rectangle != null) {
-            return new Dimension(rectangle.width, rectangle.height);
-        }
-        else {
-            return null;
-        }
-    }
-
-    @Override
-    public void pack(final TablePackPolicy policy) {
-        //TODO must be implemented
-        //table.pack();
-    }
-
-    @Override
-    public void pack(final int columnIndex, final TablePackPolicy policy) {
-        //TODO must be implemented
-        //		table.setRedraw(false);
-        //		packColumn(columnIndex, policy);
-        //		table.setRedraw(true);
-    }
-
-    @Override
-    public ArrayList<Integer> getColumnPermutation() {
-        //TODO must be implemented or checked if necessary anymore
-        //		final ArrayList<Integer> result = new ArrayList<Integer>();
-        //		for (final int index : table.getColumnOrder()) {
-        //			if (index == 0) {
-        //				continue;
-        //			}
-        //			result.add(Integer.valueOf(index - 1));
-        //		}
-        final ArrayList<Integer> result = new ArrayList<Integer>();
-        for (int index = 0; index < table.getColumnCount(); index++) {
-            result.add(Integer.valueOf(index));
-        }
         return result;
     }
 
     @Override
-    public void setColumnPermutation(final List<Integer> permutation) {
-        //TODO must be implemented or checked if necessary anymore
-        //		if (!table.isDisposed()) {
-        //			final int[] columnOrder = new int[permutation.size() + 1];
-        //			columnOrder[0] = 0;
-        //			int i = 1;
-        //			for (final Integer permutatedIndex : permutation) {
-        //				columnOrder[i] = permutatedIndex.intValue() + 1;
-        //				i++;
-        //			}
-        //			table.setRedraw(false);
-        //			table.setColumnOrder(columnOrder);
-        //			table.setRedraw(true);
-        //		}
-    }
-
-    @Override
-    public ArrayList<Integer> getSelection() {
-        if (!EmptyCheck.isEmpty(lastSelection)) {
-            return lastSelection;
-        }
-        else {
-            return new ArrayList<Integer>();
-        }
-    }
-
-    @Override
-    public void setSelection(final List<Integer> selection) {
-        //CHECKSTYLE:OFF
-        if (!NullCompatibleEquivalence.equals(selection, lastSelection)) {
-            //TODO must be implemented
-        }
-        //CHECKSTYLE:ON
-    }
-
-    @Override
-    public void scrollToRow(final int rowIndex) {
-        //TODO must be implemented
-    }
-
-    @Override
-    public boolean isColumnPopupDetectionSupported() {
-        return true;
-    }
-
-    @Override
-    public Interval<Integer> getVisibleRows() {
-        final int rowCount = dataModel.getRowCount();
-        //TODO must be implemented
-        //		if (rowCount > 0) {
-        //			final int leftBoundary = table.getTopIndex();
-        //			final Dimension cellSize = getCellSize(leftBoundary, 0);
-        //			final Rectangle clientArea = table.getClientArea();
-        //			if (clientArea.height >= cellSize.getHeight()) {
-        //				final int visibleRows = (clientArea.height / cellSize.getHeight());
-        //				final int rigthBoundary = Math.min(rowCount - 1, leftBoundary + visibleRows);
-        //				return new Interval<Integer>(leftBoundary, rigthBoundary);
-        //			}
-        //		}
-        return new Interval<Integer>(0, rowCount - 1);
+    public NatTable getUiReference() {
+        return (NatTable) super.getUiReference();
     }
 
     @Override
@@ -627,6 +493,195 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         tableSelectionObservable.removeTableSelectionListener(listener);
     }
 
+    @Override
+    public void setRowHeight(final int height) {
+        tableLayers.getDataLayer().setDefaultRowHeight(height);
+        table.redraw();
+    }
+
+    @Override
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+    }
+
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (isEditing() && !enabled) {
+            stopEditing();
+        }
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public Dimension getMinSize() {
+        return new Dimension(40, 40);
+    }
+
+    @Override
+    public void resetFromModel() {
+        table.setRedraw(false);
+
+        final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+        if (dataModelObservable != null) {
+            dataModelObservable.removeDataModelListener(tableModelListener);
+        }
+        final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
+        if (columnModelObservable != null) {
+            columnModelObservable.removeColumnModelListener(tableColumnModelListener);
+        }
+
+        setColumnWidthFromModel();
+        setSelection(dataModel.getSelection());
+
+        if (dataModelObservable != null) {
+            dataModelObservable.addDataModelListener(tableModelListener);
+        }
+        if (columnModelObservable != null) {
+            columnModelObservable.addColumnModelListener(tableColumnModelListener);
+        }
+
+        table.setRedraw(true);
+    }
+
+    private void setColumnWidthFromModel() {
+        for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+            setColumnWidthFromModel(columnIndex);
+        }
+    }
+
+    private void setColumnWidthFromModel(final int columnIndex) {
+        final DataLayer dataLayer = tableLayers.getDataLayer();
+        final int width = columnModel.getColumn(columnIndex).getWidth();
+        if (width >= 0) {
+            //the data layer is not reordered so the index must be used here instead 
+            //of position (index and position are the same in this layer)
+            if (width != dataLayer.getColumnWidthByPosition(columnIndex)) {
+                dataLayer.setColumnWidthByPosition(columnIndex, width);
+            }
+        }
+    }
+
+    @Override
+    public Position getCellPosition(final int rowIndex, final int columnIndex) {
+        final Rectangle rectangle = table.getBoundsByPosition(columnIndex, rowIndex);
+        if (rectangle != null) {
+            return new Position(rectangle.x, rectangle.y);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public Dimension getCellSize(final int rowIndex, final int columnIndex) {
+        final Rectangle rectangle = table.getBoundsByPosition(columnIndex, rowIndex);
+        if (rectangle != null) {
+            return new Dimension(rectangle.width, rectangle.height);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public void pack(final TablePackPolicy policy) {
+        //TODO Consider TablePackPolicy
+        for (int columnPosition = 0; columnPosition < table.getColumnCount(); columnPosition++) {
+            pack(columnPosition);
+        }
+    }
+
+    @Override
+    public void pack(final int columnIndex, final TablePackPolicy policy) {
+        //TODO Consider TablePackPolicy
+        pack(tableLayers.getColumnReorderLayer().getColumnPositionByIndex(columnIndex));
+    }
+
+    private void pack(final int columnPosition) {
+        final InitializeAutoResizeColumnsCommand command = new InitializeAutoResizeColumnsCommand(
+            table,
+            columnPosition,
+            table.getConfigRegistry(),
+            new GCFactory(table));
+        table.doCommand(command);
+    }
+
+    @Override
+    public ArrayList<Integer> getColumnPermutation() {
+        final ColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
+        final ArrayList<Integer> result = new ArrayList<Integer>();
+        for (int position = 0; position < table.getColumnCount(); position++) {
+            result.add(Integer.valueOf(reorderLayer.getColumnIndexByPosition(position)));
+        }
+        return result;
+    }
+
+    @Override
+    public void setColumnPermutation(final List<Integer> permutation) {
+        final JoColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
+        reorderLayer.setColumnIndexOrder(permutation);
+    }
+
+    @Override
+    public ArrayList<Integer> getSelection() {
+        if (!EmptyCheck.isEmpty(lastSelection)) {
+            return lastSelection;
+        }
+        else {
+            return new ArrayList<Integer>();
+        }
+    }
+
+    @Override
+    public void setSelection(final List<Integer> selection) {
+        if (!NullCompatibleEquivalence.equals(selection, lastSelection)) {
+            selectionLayer.removeLayerListener(tableSelectionListener);
+            if (selection != null) {
+                lastSelection = new ArrayList<Integer>(selection);
+                rowSelectionModel.clearSelection();
+                for (final Integer selected : selection) {
+                    rowSelectionModel.addSelection(0, selected.intValue());
+                }
+            }
+            else {
+                lastSelection = new ArrayList<Integer>();
+                rowSelectionModel.clearSelection();
+            }
+            tableSelectionObservable.fireSelectionChanged();
+            selectionLayer.addLayerListener(tableSelectionListener);
+            table.redraw();
+        }
+    }
+
+    @Override
+    public void scrollToRow(final int rowIndex) {
+        final ViewportLayer viewPort = tableLayers.getViewPortLayer();
+        viewPort.moveRowPositionIntoViewport(rowIndex);
+    }
+
+    @Override
+    public boolean isColumnPopupDetectionSupported() {
+        return true;
+    }
+
+    @Override
+    public Interval<Integer> getVisibleRows() {
+        final ViewportLayer viewPort = tableLayers.getViewPortLayer();
+        final int originY = viewPort.getOrigin().getY();
+        final int firstRow = viewPort.getRowPositionByY(originY);
+        final int lastRow = viewPort.getRowPositionByY(originY + viewPort.getClientAreaHeight());
+        return new Interval<Integer>(getWrapperInteger(firstRow), getWrapperInteger(lastRow));
+    }
+
+    private Integer getWrapperInteger(final int value) {
+        if (value != -1) {
+            return Integer.valueOf(value);
+        }
+        else {
+            return null;
+        }
+    }
+
     private CellIndices getExternalCellIndices(final Point point) {
 
         final int rowPositionByY = table.getRowPositionByY(point.y);
@@ -657,7 +712,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         toolTip.setVisible(true);
     }
 
-    private void fireSelectionChangedIfNeccessary() {
+    private void setSelectionChangedIfNeccessary() {
         if (!NullCompatibleEquivalence.equals(lastSelection, rowSelectionModel.getSelectedRowObjects())) {
             lastSelection = new ArrayList<Integer>(rowSelectionModel.getSelectedRowObjects());
             tableSelectionObservable.fireSelectionChanged();
@@ -786,8 +841,8 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
             //if a drag source is installed, selection event fires after menu detect but selection
             //should always change before menu detection
-            //TODO proof if this is necessary for nattable
-            fireSelectionChangedIfNeccessary();
+            //Not sure if this is necessary for nattable but it does not harm anyway
+            setSelectionChangedIfNeccessary();
 
             //stop editing before popup opens
             stopEditing();
@@ -816,7 +871,9 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
     private final class TableSelectionListener implements ILayerListener {
         @Override
         public void handleLayerEvent(final ILayerEvent event) {
-            fireSelectionChangedIfNeccessary();
+            if (event instanceof CellSelectionEvent) {
+                setSelectionChangedIfNeccessary();
+            }
         }
     }
 
@@ -839,7 +896,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         @Override
         public void dataChanged() {
-            table.refresh();
+            table.refresh(false);
         }
 
         @Override
@@ -848,7 +905,7 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         }
 
         private void updateRows(final int[] rowIndices) {
-            table.refresh();
+            table.refresh(false);
         }
 
     }
@@ -858,21 +915,53 @@ public class NatTableImplSpi extends SwtControl implements ITableSpi {
         @Override
         public void columnsAdded(final int[] columnIndices) {
             stopEditing();
-            table.refresh();
+            table.refresh(false);
         }
 
         @Override
         public void columnsRemoved(final int[] columnIndices) {
             stopEditing();
-            table.refresh();
+            table.refresh(false);
         }
 
         @Override
         public void columnsChanged(final int[] columnIndices) {
-            stopEditing();
-            table.refresh();
+            if (!setWidthInvokedOnModel) {
+                stopEditing();
+                for (int i = 0; i < columnIndices.length; i++) {
+                    setColumnWidthFromModel(columnIndices[i]);
+                }
+                table.refresh(false);
+            }
         }
 
+    }
+
+    private final class ColumnLayerListener implements ILayerListener {
+
+        @Override
+        public void handleLayerEvent(final ILayerEvent event) {
+            if (event instanceof ColumnReorderEvent) {
+                tableColumnObservable.fireColumnPermutationChanged();
+            }
+            else if (event instanceof ColumnResizeEvent) {
+                final ColumnResizeEvent resizeEvent = (ColumnResizeEvent) event;
+
+                final ColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
+                final AbstractLayerTransform headerLayer = tableLayers.getColumnHeaderLayer();
+
+                final int columnPosition = ((ColumnResizeEvent) event).getColumnPositionRanges().iterator().next().start;
+                final int columnIndex = reorderLayer.getColumnIndexByPosition(columnPosition);
+                final int width = headerLayer.getColumnWidthByPosition(columnPosition);
+
+                setWidthInvokedOnModel = true;
+                columnModel.getColumn(columnIndex).setWidth(width);
+                setWidthInvokedOnModel = false;
+
+                final TableColumnResizeEvent joResizeEvent = new TableColumnResizeEvent(columnIndex, width);
+                tableColumnObservable.fireColumnResized(joResizeEvent);
+            }
+        }
     }
 
     private final class CellIndices {

@@ -31,48 +31,29 @@ package org.jowidgets.nattable.impl.plugin.layer;
 import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
 import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
-import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
-import org.eclipse.nebula.widgets.nattable.selection.RowSelectionModel;
 import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer;
 import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
 import org.jowidgets.common.types.TableSelectionPolicy;
 
 final class BodyLayerStack extends AbstractLayerTransform {
 
+    private final DataLayer dataLayer;
     private final SelectionLayer selectionLayer;
     private final IRowSelectionModel<Integer> selectionModel;
+    private final JoColumnReorderLayer columnReorderLayer;
+    private final ViewportLayer viewportLayer;
 
     BodyLayerStack(final IDataProvider dataProvider, final TableSelectionPolicy selectionPolicy) {
-        final DataLayer bodyDataLayer = new DataLayer(dataProvider);
-        final ColumnReorderLayer columnReorderLayer = new ColumnReorderLayer(bodyDataLayer);
+        this.dataLayer = new DataLayer(dataProvider);
+        this.columnReorderLayer = new JoColumnReorderLayer(dataLayer);
         this.selectionLayer = new SelectionLayer(columnReorderLayer);
 
         if (TableSelectionPolicy.NO_SELECTION.equals(selectionPolicy)) {
             this.selectionModel = new NoSelectionRowSelectionModel();
         }
         else {
-            //TODO extract to class
-            this.selectionModel = new RowSelectionModel<Integer>(
-                selectionLayer,
-                new RowIndexDataProvider(dataProvider),
-                new RowIndexAccessor()) {
-
-                @Override
-                public boolean isColumnPositionSelected(final int columnPosition) {
-                    return false;
-                }
-
-                @Override
-                public int[] getFullySelectedColumnPositions(final int fullySelectedColumnRowCount) {
-                    return new int[0];
-                }
-
-                @Override
-                public boolean isColumnPositionFullySelected(final int columnPosition, final int fullySelectedColumnRowCount) {
-                    return false;
-                }
-            };
+            this.selectionModel = new RowIndexSelectionModel(dataProvider, selectionLayer);
             if (TableSelectionPolicy.SINGLE_ROW_SELECTION.equals(selectionPolicy)) {
                 selectionModel.setMultipleSelectionAllowed(false);
             }
@@ -81,8 +62,12 @@ final class BodyLayerStack extends AbstractLayerTransform {
         selectionLayer.clearConfiguration();
         selectionLayer.addConfiguration(new SelectionLayerConfiguration());
 
-        final ViewportLayer viewportLayer = new ViewportLayer(selectionLayer);
+        this.viewportLayer = new ViewportLayer(selectionLayer);
         setUnderlyingLayer(viewportLayer);
+    }
+
+    DataLayer getDataLayer() {
+        return dataLayer;
     }
 
     SelectionLayer getSelectionLayer() {
@@ -91,6 +76,14 @@ final class BodyLayerStack extends AbstractLayerTransform {
 
     IRowSelectionModel<Integer> getSelectionModel() {
         return selectionModel;
+    }
+
+    JoColumnReorderLayer getColumnReorderLayer() {
+        return columnReorderLayer;
+    }
+
+    ViewportLayer getViewportLayer() {
+        return viewportLayer;
     }
 
 }

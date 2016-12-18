@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, grossmann
+ * Copyright (c) 2016, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.layer;
 
-import org.jowidgets.api.widgets.ITable;
-import org.jowidgets.api.widgets.descriptor.setup.ITableSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.impl.spi.ISpiBluePrintFactory;
-import org.jowidgets.impl.widgets.basic.factory.internal.GenericTableFactory;
-import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import java.util.List;
 
-final class NatTableFactory<DESCRIPTOR_TYPE extends IWidgetDescriptor<ITable> & ITableSetup>
-        extends GenericTableFactory<DESCRIPTOR_TYPE> {
+import org.eclipse.nebula.widgets.nattable.layer.IUniqueIndexLayer;
+import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
+import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
+import org.jowidgets.util.Assert;
 
-    NatTableFactory(
-        final SwtImageRegistry imageRegistry,
-        final IGenericWidgetFactory genericWidgetFactory,
-        final ISpiBluePrintFactory spiBluePrintFactory) {
-        super(genericWidgetFactory, new NatTableSpiFactory(imageRegistry), spiBluePrintFactory);
+public class JoColumnReorderLayer extends ColumnReorderLayer {
+
+    public JoColumnReorderLayer(final IUniqueIndexLayer underlyingLayer) {
+        super(underlyingLayer);
+
     }
 
+    public void setColumnIndexOrder(final List<Integer> order) {
+        Assert.paramNotNull(order, "order");
+        if (order.size() != getColumnCount()) {
+            throw new IllegalArgumentException("Order must have same size than column count");
+        }
+        columnIndexOrder.clear();
+        columnIndexOrder.addAll(order);
+        fireLayerEvent(new ColumnReorderEvent(this, 0, getColumnCount() - 1, true));
+    }
 }
