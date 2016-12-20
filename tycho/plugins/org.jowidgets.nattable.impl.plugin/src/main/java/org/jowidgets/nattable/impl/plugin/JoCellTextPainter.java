@@ -41,7 +41,8 @@ import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.nattable.impl.plugin.movetojo.RememberLastColorCache;
+import org.jowidgets.spi.impl.swt.common.color.IColorCache;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.util.Assert;
@@ -50,6 +51,8 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
 
     private final ITableColumnModelSpi columnModel;
     private final IColorConstant defaultSelectedForegroundColor;
+    private final IColorCache foregroundColorCache;
+    private final IColorCache selectedForegroundColorCache;
 
     private Color originalForeground;
     private Font originalFont;
@@ -58,6 +61,8 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
         Assert.paramNotNull(columnModel, "columnModel");
         this.columnModel = columnModel;
         this.defaultSelectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
+        this.foregroundColorCache = new RememberLastColorCache();
+        this.selectedForegroundColorCache = new RememberLastColorCache();
     }
 
     @Override
@@ -101,7 +106,7 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
         if (DisplayMode.NORMAL.equals(layerCell.getDisplayMode())) {
             final IColorConstant foreground = tableCell.getForegroundColor();
             if (foreground != null) {
-                return ColorCache.getInstance().getColor(foreground);
+                return foregroundColorCache.getColor(foreground);
             }
         }
         else if (DisplayMode.SELECT.equals(layerCell.getDisplayMode())) {
@@ -110,7 +115,7 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
                 selectedForeground = defaultSelectedForegroundColor;
             }
             if (selectedForeground != null) {
-                return ColorCache.getInstance().getColor(selectedForeground);
+                return selectedForegroundColorCache.getColor(selectedForeground);
             }
         }
         return defaultForeground != null ? defaultForeground : GUIHelper.COLOR_LIST_FOREGROUND;

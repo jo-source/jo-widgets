@@ -32,41 +32,40 @@ import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.nebula.widgets.nattable.painter.cell.CellPainterWrapper;
 import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.common.color.ColorValue;
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.nattable.impl.plugin.movetojo.ColorProvider;
 
 final class JoColumnBackgroundPainter extends CellPainterWrapper {
 
     private static final int SPLIT = 9;
 
-    private static final IColorConstant TOP = new ColorValue(255, 255, 255);
-    private static final IColorConstant BOTTOM = new ColorValue(243, 244, 246);
+    private static final ColorProvider TOP = new ColorProvider(255, 255, 255);
+    private static final ColorProvider BOTTOM = new ColorProvider(243, 244, 246);
 
-    private static final IColorConstant TOP_HOVER = new ColorValue(227, 247, 255);
-    private static final IColorConstant BOTTOM_HOVER = new ColorValue(185, 229, 252);
+    private static final ColorProvider TOP_HOVER = new ColorProvider(227, 247, 255);
+    private static final ColorProvider BOTTOM_HOVER = new ColorProvider(185, 229, 252);
 
-    private static final IColorConstant TOP_CLICKED = new ColorValue(188, 228, 249);
-    private static final IColorConstant BOTTOM_CLICKED = new ColorValue(139, 214, 246);
+    private static final ColorProvider TOP_CLICKED = new ColorProvider(188, 228, 249);
+    private static final ColorProvider BOTTOM_CLICKED = new ColorProvider(139, 214, 246);
 
-    private static final IColorConstant VERT_TOP_BORDER = new ColorValue(240, 240, 240);
-    private static final IColorConstant VERT_BOTTOM_BORDER = new ColorValue(229, 230, 231);
-    private static final IColorConstant BOTTOM_BORDER = new ColorValue(213, 213, 213);
+    private static final ColorProvider VERT_TOP_BORDER = new ColorProvider(240, 240, 240);
+    private static final ColorProvider VERT_BOTTOM_BORDER = new ColorProvider(229, 230, 231);
+    private static final ColorProvider BOTTOM_BORDER = new ColorProvider(213, 213, 213);
 
-    private static final IColorConstant VERT_TOP_BORDER_HOVER = new ColorValue(136, 203, 235);
-    private static final IColorConstant VERT_BOTTOM_BORDER_HOVER = new ColorValue(105, 187, 227);
-    private static final IColorConstant BOTTOM_BORDER_HOVER = new ColorValue(147, 201, 227);
+    private static final ColorProvider VERT_TOP_BORDER_HOVER = new ColorProvider(136, 203, 235);
+    private static final ColorProvider VERT_BOTTOM_BORDER_HOVER = new ColorProvider(105, 187, 227);
+    private static final ColorProvider BOTTOM_BORDER_HOVER = new ColorProvider(147, 201, 227);
 
-    private static final IColorConstant VERT_TOP_BORDER_CLICKED = new ColorValue(122, 158, 177);
-    private static final IColorConstant VERT_BOTTOM_BORDER_CLICKED = new ColorValue(79, 144, 174);
-    private static final IColorConstant BOTTOM_BORDER_CLICKED = new ColorValue(147, 201, 227);
+    private static final ColorProvider VERT_TOP_BORDER_CLICKED = new ColorProvider(122, 158, 177);
+    private static final ColorProvider VERT_BOTTOM_BORDER_CLICKED = new ColorProvider(79, 144, 174);
+    private static final ColorProvider BOTTOM_BORDER_CLICKED = new ColorProvider(147, 201, 227);
 
-    private static final IColorConstant VERT_TOP_INNER_BORDER_CLICKED = new ColorValue(162, 203, 224);
-    private static final IColorConstant VERT_BOTTOM_INNER_BORDER_CLICKED = new ColorValue(112, 187, 222);
-    private static final IColorConstant TOP_BORDER_CLICKED = VERT_TOP_BORDER_CLICKED;
-    private static final IColorConstant TOP_INNER_BORDER_CLICKED = VERT_TOP_INNER_BORDER_CLICKED;
+    private static final ColorProvider VERT_TOP_INNER_BORDER_CLICKED = new ColorProvider(162, 203, 224);
+    private static final ColorProvider VERT_BOTTOM_INNER_BORDER_CLICKED = new ColorProvider(112, 187, 222);
+    private static final ColorProvider TOP_BORDER_CLICKED = VERT_TOP_BORDER_CLICKED;
+    private static final ColorProvider TOP_INNER_BORDER_CLICKED = VERT_TOP_INNER_BORDER_CLICKED;
 
     JoColumnBackgroundPainter(final ICellPainter painter) {
         super(painter);
@@ -87,69 +86,71 @@ final class JoColumnBackgroundPainter extends CellPainterWrapper {
     }
 
     private void paintCellClicked(final GC gc, final Rectangle bounds) {
-        paintCellBackground(gc, bounds, TOP_CLICKED, BOTTOM_CLICKED);
-        paintBorder(gc, bounds, VERT_TOP_BORDER_CLICKED, VERT_BOTTOM_BORDER_CLICKED, BOTTOM_BORDER_CLICKED, true);
+        paintCellBackground(gc, bounds, TOP_CLICKED.get(), BOTTOM_CLICKED.get());
+        paintBorder(
+                gc,
+                bounds,
+                VERT_TOP_BORDER_CLICKED.get(),
+                VERT_BOTTOM_BORDER_CLICKED.get(),
+                BOTTOM_BORDER_CLICKED.get(),
+                true);
         paintClickedBorder(gc, bounds);
     }
 
     private void paintCellHover(final GC gc, final Rectangle bounds) {
-        paintCellBackground(gc, bounds, TOP_HOVER, BOTTOM_HOVER);
-        paintBorder(gc, bounds, VERT_TOP_BORDER_HOVER, VERT_BOTTOM_BORDER_HOVER, BOTTOM_BORDER_HOVER, true);
+        paintCellBackground(gc, bounds, TOP_HOVER.get(), BOTTOM_HOVER.get());
+        paintBorder(gc, bounds, VERT_TOP_BORDER_HOVER.get(), VERT_BOTTOM_BORDER_HOVER.get(), BOTTOM_BORDER_HOVER.get(), true);
     }
 
     private void paintCellDefault(final GC gc, final Rectangle bounds) {
-        paintCellBackground(gc, bounds, TOP, BOTTOM);
-        paintBorder(gc, bounds, VERT_TOP_BORDER, VERT_BOTTOM_BORDER, BOTTOM_BORDER, false);
+        paintCellBackground(gc, bounds, TOP.get(), BOTTOM.get());
+        paintBorder(gc, bounds, VERT_TOP_BORDER.get(), VERT_BOTTOM_BORDER.get(), BOTTOM_BORDER.get(), false);
     }
 
     private void paintBorder(
         final GC gc,
         final Rectangle bounds,
-        final IColorConstant verticalTopBorderColor,
-        final IColorConstant verticalBottomBorderColor,
-        final IColorConstant horizontalBottomBorderColor,
+        final Color verticalTopBorderColor,
+        final Color verticalBottomBorderColor,
+        final Color horizontalBottomBorderColor,
         final boolean leftBorder) {
 
-        gc.setBackground(ColorCache.getInstance().getColor(verticalTopBorderColor));
+        gc.setBackground(verticalTopBorderColor);
         if (leftBorder) {
             gc.fillRectangle(bounds.x, bounds.y, 1, SPLIT);
         }
         gc.fillRectangle(bounds.x + bounds.width - 1, bounds.y, 1, SPLIT);
 
-        gc.setBackground(ColorCache.getInstance().getColor(verticalBottomBorderColor));
+        gc.setBackground(verticalBottomBorderColor);
         if (leftBorder) {
             gc.fillRectangle(bounds.x, bounds.y + SPLIT, 1, bounds.height - SPLIT - 2);
         }
         gc.fillRectangle(bounds.x + bounds.width - 1, bounds.y + SPLIT, 1, bounds.height - SPLIT - 2);
 
-        gc.setBackground(ColorCache.getInstance().getColor(horizontalBottomBorderColor));
+        gc.setBackground(horizontalBottomBorderColor);
         gc.fillRectangle(bounds.x, bounds.y + bounds.height - 2, bounds.width, 1);
     }
 
     private void paintClickedBorder(final GC gc, final Rectangle bounds) {
-        gc.setBackground(ColorCache.getInstance().getColor(VERT_TOP_INNER_BORDER_CLICKED));
+        gc.setBackground(VERT_TOP_INNER_BORDER_CLICKED.get());
         gc.fillRectangle(bounds.x + 1, bounds.y, 1, SPLIT);
         gc.fillRectangle(bounds.x + bounds.width - 2, bounds.y, 1, SPLIT);
 
-        gc.setBackground(ColorCache.getInstance().getColor(VERT_BOTTOM_INNER_BORDER_CLICKED));
+        gc.setBackground(VERT_BOTTOM_INNER_BORDER_CLICKED.get());
         gc.fillRectangle(bounds.x + 1, bounds.y + SPLIT, 1, bounds.height - SPLIT - 2);
         gc.fillRectangle(bounds.x + bounds.width - 2, bounds.y + SPLIT, 1, bounds.height - SPLIT - 2);
 
-        gc.setBackground(ColorCache.getInstance().getColor(TOP_BORDER_CLICKED));
+        gc.setBackground(TOP_BORDER_CLICKED.get());
         gc.fillRectangle(bounds.x, bounds.y, bounds.width, 1);
 
-        gc.setBackground(ColorCache.getInstance().getColor(TOP_INNER_BORDER_CLICKED));
+        gc.setBackground(TOP_INNER_BORDER_CLICKED.get());
         gc.fillRectangle(bounds.x + 2, bounds.y + 1, bounds.width - 4, 1);
     }
 
-    private void paintCellBackground(
-        final GC gc,
-        final Rectangle bounds,
-        final IColorConstant topColor,
-        final IColorConstant bottomColor) {
-        gc.setBackground(ColorCache.getInstance().getColor(topColor));
+    private void paintCellBackground(final GC gc, final Rectangle bounds, final Color topColor, final Color bottomColor) {
+        gc.setBackground(topColor);
         gc.fillRectangle(bounds.x, bounds.y, bounds.width, SPLIT);
-        gc.setBackground(ColorCache.getInstance().getColor(bottomColor));
+        gc.setBackground(bottomColor);
         gc.fillRectangle(bounds.x, bounds.y + SPLIT, bounds.width, bounds.height - SPLIT - 1);
     }
 

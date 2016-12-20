@@ -36,16 +36,21 @@ import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
 import org.eclipse.swt.graphics.Color;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.nattable.impl.plugin.movetojo.RememberLastColorCache;
+import org.jowidgets.spi.impl.swt.common.color.IColorCache;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 final class JoCellBackgroundPainter extends BackgroundPainter {
 
     private final IColorConstant defaultSelectedBackgroundColor;
+    private final IColorCache backgroundColorCache;
+    private final IColorCache selectedBackgroundColorCache;
 
     JoCellBackgroundPainter(final ICellPainter painter) {
         super(painter);
         this.defaultSelectedBackgroundColor = SwtOptions.getTableSelectedBackgroundColor();
+        this.backgroundColorCache = new RememberLastColorCache();
+        this.selectedBackgroundColorCache = new RememberLastColorCache();
     }
 
     @Override
@@ -55,7 +60,7 @@ final class JoCellBackgroundPainter extends BackgroundPainter {
         if (DisplayMode.NORMAL.equals(cell.getDisplayMode())) {
             final IColorConstant backgroundColor = tableCell.getBackgroundColor();
             if (backgroundColor != null) {
-                return ColorCache.getInstance().getColor(backgroundColor);
+                return backgroundColorCache.getColor(backgroundColor);
             }
         }
         else if (DisplayMode.SELECT.equals(cell.getDisplayMode())) {
@@ -64,7 +69,7 @@ final class JoCellBackgroundPainter extends BackgroundPainter {
                 selectedBackgroundColor = defaultSelectedBackgroundColor;
             }
             if (selectedBackgroundColor != null) {
-                return ColorCache.getInstance().getColor(selectedBackgroundColor);
+                return selectedBackgroundColorCache.getColor(selectedBackgroundColor);
             }
         }
 

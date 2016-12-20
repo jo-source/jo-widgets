@@ -38,14 +38,13 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.nattable.impl.plugin.layer.Constants;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.nattable.impl.plugin.movetojo.ColorProvider;
 import org.jowidgets.util.Assert;
 
 final class JoColumnReorderDragMode extends ColumnReorderDragMode {
 
-    private static final ColorValue OVERLAY_COLOR = new ColorValue(0, 102, 204);
+    private static final ColorProvider OVERLAY_COLOR = new ColorProvider(0, 102, 204);
 
     private final HoveredColumnConfigLabelAccumulator hoveredColumnLabelAccumulator;
     private final ColumnReorderOverlayPainter overlayPainter;
@@ -127,7 +126,7 @@ final class JoColumnReorderDragMode extends ColumnReorderDragMode {
 
                 if (dragToColumnHandleX > 0) {
                     final Color orgBgColor = gc.getBackground();
-                    gc.setBackground(ColorCache.getInstance().getColor(OVERLAY_COLOR));
+                    gc.setBackground(OVERLAY_COLOR.get());
                     gc.fillRectangle(dragToColumnHandleX - 1, 0, 2, Constants.COLUMN_HEADER_HEIGHT - 1);
                     gc.setBackground(orgBgColor);
                 }
