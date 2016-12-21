@@ -39,8 +39,8 @@ import org.eclipse.swt.graphics.GC;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.nattable.impl.plugin.movetojo.RememberLastColorCache;
 import org.jowidgets.spi.impl.swt.common.color.IColorCache;
+import org.jowidgets.spi.impl.swt.common.color.RememberLastColorCache;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 

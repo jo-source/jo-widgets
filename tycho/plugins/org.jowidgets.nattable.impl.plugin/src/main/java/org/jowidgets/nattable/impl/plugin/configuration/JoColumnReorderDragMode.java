@@ -39,8 +39,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jowidgets.nattable.impl.plugin.layer.Constants;
-import org.jowidgets.nattable.impl.plugin.movetojo.ColorProvider;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
+import org.jowidgets.spi.impl.swt.common.color.ColorProvider;
 import org.jowidgets.util.Assert;
 
 final class JoColumnReorderDragMode extends ColumnReorderDragMode {

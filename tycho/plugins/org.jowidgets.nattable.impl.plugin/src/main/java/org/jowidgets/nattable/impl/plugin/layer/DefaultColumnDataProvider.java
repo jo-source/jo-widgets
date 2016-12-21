@@ -29,10 +29,7 @@
 package org.jowidgets.nattable.impl.plugin.layer;
 
 import org.eclipse.nebula.widgets.nattable.data.IDataProvider;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableColumnModelSpi;
-import org.jowidgets.common.model.ITableColumnSpi;
-import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.util.Assert;
 
 final class DefaultColumnDataProvider implements IDataProvider {
@@ -46,7 +43,7 @@ final class DefaultColumnDataProvider implements IDataProvider {
 
     @Override
     public Object getDataValue(final int columnIndex, final int rowIndex) {
-        return new TableColumnWrapper(columnModel.getColumn(columnIndex));
+        return columnModel.getColumn(columnIndex);
     }
 
     @Override
@@ -62,50 +59,4 @@ final class DefaultColumnDataProvider implements IDataProvider {
         return 1;
     }
 
-    //TODO implement toString() of table column spi and remove this wrapper
-    private class TableColumnWrapper implements ITableColumnSpi {
-
-        private final ITableColumnSpi original;
-
-        TableColumnWrapper(final ITableColumnSpi original) {
-            Assert.getParamNotNull(original, "original");
-            this.original = original;
-        }
-
-        @Override
-        public String getText() {
-            return original.getText();
-        }
-
-        @Override
-        public String getToolTipText() {
-            return original.getToolTipText();
-        }
-
-        @Override
-        public IImageConstant getIcon() {
-            return original.getIcon();
-        }
-
-        @Override
-        public void setWidth(final int width) {
-            original.setWidth(width);
-        }
-
-        @Override
-        public int getWidth() {
-            return original.getWidth();
-        }
-
-        @Override
-        public AlignmentHorizontal getAlignment() {
-            return original.getAlignment();
-        }
-
-        @Override
-        public String toString() {
-            return original.getText();
-        }
-
-    }
 }

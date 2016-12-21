@@ -38,7 +38,7 @@ public class ColumnIndexConfigLabelAccumulator implements IConfigLabelAccumulato
 
     private Integer columnIndex;
 
-    public ColumnIndexConfigLabelAccumulator(final String label) {
+    ColumnIndexConfigLabelAccumulator(final String label) {
         Assert.paramNotEmpty(label, "label");
         this.label = label;
     }

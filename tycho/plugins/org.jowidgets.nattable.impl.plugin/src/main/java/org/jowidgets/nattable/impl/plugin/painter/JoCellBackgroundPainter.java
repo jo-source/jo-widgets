@@ -36,8 +36,8 @@ import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
 import org.eclipse.swt.graphics.Color;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.nattable.impl.plugin.movetojo.RememberLastColorCache;
 import org.jowidgets.spi.impl.swt.common.color.IColorCache;
+import org.jowidgets.spi.impl.swt.common.color.RememberLastColorCache;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 final class JoCellBackgroundPainter extends BackgroundPainter {

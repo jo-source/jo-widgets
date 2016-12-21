@@ -35,7 +35,7 @@ import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.nattable.impl.plugin.movetojo.ColorProvider;
+import org.jowidgets.spi.impl.swt.common.color.ColorProvider;
 
 final class JoColumnBackgroundPainter extends CellPainterWrapper {
 

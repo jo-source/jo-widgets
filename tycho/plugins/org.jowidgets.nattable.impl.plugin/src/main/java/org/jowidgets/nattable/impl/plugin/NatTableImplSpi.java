@@ -41,6 +41,7 @@ import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
 import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
 import org.eclipse.nebula.widgets.nattable.layer.cell.AggregateConfigLabelAccumulator;
 import org.eclipse.nebula.widgets.nattable.layer.event.ILayerEvent;
+import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
 import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
 import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
 import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeColumnsCommand;
@@ -310,6 +311,8 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     @Override
     public void setRowHeight(final int height) {
         tableLayers.getDataLayer().setDefaultRowHeight(height);
+        final NatGridLayerPainter gridPainter = (NatGridLayerPainter) table.getLayerPainter();
+        gridPainter.setDefaultRowHeight(height);
         table.refresh(false);
     }
 
