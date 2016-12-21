@@ -102,7 +102,7 @@ final class JoColumnBackgroundPainter extends CellPainterWrapper {
         paintBorder(gc, bounds, VERT_TOP_BORDER_HOVER.get(), VERT_BOTTOM_BORDER_HOVER.get(), BOTTOM_BORDER_HOVER.get(), true);
     }
 
-    private void paintCellDefault(final GC gc, final Rectangle bounds) {
+    void paintCellDefault(final GC gc, final Rectangle bounds) {
         paintCellBackground(gc, bounds, TOP.get(), BOTTOM.get());
         paintBorder(gc, bounds, VERT_TOP_BORDER.get(), VERT_BOTTOM_BORDER.get(), BOTTOM_BORDER.get(), false);
     }
@@ -151,7 +151,7 @@ final class JoColumnBackgroundPainter extends CellPainterWrapper {
         gc.setBackground(topColor);
         gc.fillRectangle(bounds.x, bounds.y, bounds.width, SPLIT);
         gc.setBackground(bottomColor);
-        gc.fillRectangle(bounds.x, bounds.y + SPLIT, bounds.width, bounds.height - SPLIT - 1);
+        gc.fillRectangle(bounds.x, bounds.y + SPLIT, bounds.width, bounds.height - SPLIT - 2);
     }
 
 }
