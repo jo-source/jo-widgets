@@ -26,14 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
-class HoveredColumnConfigLabelAccumulator extends ColumnIndexConfigLabelAccumulator {
+public final class ClickedColumnConfigLabelAccumulator extends ColumnIndexConfigLabelAccumulator {
 
-    static final String HOVERED_COLUMN_LABEL = "HOVERED_COLUMN";
+    static final String CLICKED_COLUMN_LABEL = "CLICKED_COLUMN";
 
-    HoveredColumnConfigLabelAccumulator() {
-        super(HOVERED_COLUMN_LABEL);
+    public ClickedColumnConfigLabelAccumulator() {
+        super(CLICKED_COLUMN_LABEL);
     }
 
 }

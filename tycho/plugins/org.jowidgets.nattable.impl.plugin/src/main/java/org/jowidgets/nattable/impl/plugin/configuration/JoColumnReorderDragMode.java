@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.configuration;
 
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.layer.ILayer;
@@ -40,6 +40,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.jowidgets.nattable.impl.plugin.layer.Constants;
 import org.jowidgets.nattable.impl.plugin.movetojo.ColorProvider;
+import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.util.Assert;
 
 final class JoColumnReorderDragMode extends ColumnReorderDragMode {

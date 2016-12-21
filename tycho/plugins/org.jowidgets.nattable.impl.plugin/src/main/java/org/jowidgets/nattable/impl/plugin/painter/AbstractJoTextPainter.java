@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
 import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.layer.ILayer;
@@ -38,26 +38,35 @@ import org.eclipse.nebula.widgets.nattable.style.IStyle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.util.EmptyCheck;
 
+/**
+ * Abstract painter to paint text into cells
+ */
 abstract class AbstractJoTextPainter extends TextPainter {
 
     AbstractJoTextPainter() {
         super(false, false);
     }
 
-    abstract AlignmentHorizontal getHorizontalAlignment(ILayerCell cell);
-
     void setupGC(final GC gc, final ILayerCell layerCell, final IStyle cellStyle) {
         setupGCFromConfig(gc, cellStyle);
     }
 
     @Override
-    public void paintCell(
-        final ILayerCell cell,
-        final GC gc,
-        final Rectangle rectangle,
-        final IConfigRegistry configRegistry) {
+    public int getPreferredWidth(final ILayerCell cell, final GC gc, final IConfigRegistry configRegistry) {
+        final Object dataValue = cell.getDataValue();
+        if (dataValue == null || EmptyCheck.isEmpty(dataValue.toString())) {
+            return 0;
+        }
+        else {
+            setupGC(gc, cell, CellStyleUtil.getCellStyle(cell, configRegistry));
+            return getLengthFromCache(gc, convertDataType(cell, configRegistry)) + (this.spacing * 2) + 1;
+        }
+    }
+
+    @Override
+    public void paintCell(final ILayerCell cell, final GC gc, final Rectangle rectangle, final IConfigRegistry configRegistry) {
 
         final Rectangle originalClipping = gc.getClipping();
         gc.setClipping(rectangle.intersection(originalClipping));
@@ -81,19 +90,15 @@ abstract class AbstractJoTextPainter extends TextPainter {
             layer.doCommand(new RowResizeCommand(layer, cell.getRowPosition(), contentHeight + contentToCellDiff));
         }
 
-        final int contentWidth = Math.min(getLengthFromCache(gc, text), rectangle.width);
-        final AlignmentHorizontal horizontalAlignment = getHorizontalAlignment(cell);
-        final int horizontalAligmentPadding = getHorizontalAlignmentPadding(horizontalAlignment, rectangle, contentWidth);
-
         final int verticalAlignmentPadding = CellStyleUtil.getVerticalAlignmentPadding(cellStyle, rectangle, contentHeight);
         gc.drawText(
                 text,
-                rectangle.x + horizontalAligmentPadding + this.spacing,
+                rectangle.x + this.spacing,
                 rectangle.y + verticalAlignmentPadding + this.spacing,
                 SWT.DRAW_TRANSPARENT | SWT.DRAW_DELIMITER);
 
         // start x of line = start x of text
-        final int x = rectangle.x + horizontalAligmentPadding + this.spacing;
+        final int x = rectangle.x + this.spacing;
         // y = start y of text
         final int y = rectangle.y + verticalAlignmentPadding + this.spacing;
         final int length = gc.textExtent(text).x;
@@ -101,22 +106,6 @@ abstract class AbstractJoTextPainter extends TextPainter {
 
         gc.setClipping(originalClipping);
         resetGC(gc);
-    }
-
-    private int getHorizontalAlignmentPadding(
-        final AlignmentHorizontal alignment,
-        final Rectangle rectangle,
-        final int contentWidth) {
-
-        if (AlignmentHorizontal.CENTER.equals(alignment)) {
-            return Math.max(0, (rectangle.width - contentWidth) / 2);
-        }
-        else if (AlignmentHorizontal.RIGHT.equals(alignment)) {
-            return Math.max(0, rectangle.width - contentWidth);
-        }
-        else {
-            return 0;
-        }
     }
 
 }

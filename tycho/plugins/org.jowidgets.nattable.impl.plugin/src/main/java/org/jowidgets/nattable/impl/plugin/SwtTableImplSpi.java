@@ -124,6 +124,7 @@ import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
+//TODO remove this class later, it was only be used as template for nat table impl
 public class SwtTableImplSpi extends SwtControl implements ITableSpi {
 
     private final SwtImageRegistry imageRegistry;

@@ -26,37 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.configuration;
 
-import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
-import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
-import org.eclipse.nebula.widgets.nattable.painter.cell.ImagePainter;
-import org.eclipse.swt.graphics.Image;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
-import org.jowidgets.util.Assert;
+import org.eclipse.nebula.widgets.nattable.NatTable;
+import org.eclipse.nebula.widgets.nattable.layer.ILayer;
+import org.eclipse.nebula.widgets.nattable.resize.command.ColumnResizeCommand;
+import org.eclipse.nebula.widgets.nattable.resize.mode.ColumnResizeDragMode;
+import org.eclipse.swt.events.MouseEvent;
 
-final class JoCellImagePainter extends ImagePainter {
+final class ResizeImediateDragMode extends ColumnResizeDragMode {
 
-    private final SwtImageRegistry imageRegistry;
-
-    JoCellImagePainter(final SwtImageRegistry imageRegistry) {
-        super(false);
-        Assert.paramNotNull(imageRegistry, "imageRegistry");
-        this.imageRegistry = imageRegistry;
+    @Override
+    public void mouseDown(final NatTable natTable, final MouseEvent event) {
+        super.mouseDown(natTable, event);
+        natTable.removeOverlayPainter(this.overlayPainter);
     }
 
     @Override
-    protected Image getImage(final ILayerCell cell, final IConfigRegistry configRegistry) {
-        final ITableCell tableCell = (ITableCell) cell.getDataValue();
-        final IImageConstant icon = tableCell.getIcon();
-        if (icon != null) {
-            return imageRegistry.getImage(icon);
+    public void mouseMove(final NatTable natTable, final MouseEvent event) {
+        super.mouseMove(natTable, event);
+        updateColumnWidth(natTable, event);
+        natTable.redraw();
+    }
+
+    private void updateColumnWidth(final ILayer natLayer, final MouseEvent e) {
+        final int dragWidth = e.x - this.startX;
+        int newColumnWidth = this.originalColumnWidth + dragWidth;
+        if (newColumnWidth < getColumnWidthMinimum()) {
+            newColumnWidth = getColumnWidthMinimum();
         }
-        else {
-            return null;
-        }
+        natLayer.doCommand(new ColumnResizeCommand(natLayer, this.columnPositionToResize, newColumnWidth));
     }
 
 }

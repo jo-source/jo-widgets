@@ -26,37 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
-import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
-import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
-import org.eclipse.nebula.widgets.nattable.painter.cell.ImagePainter;
-import org.eclipse.swt.graphics.Image;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.model.ITableColumnSpi;
-import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
-import org.jowidgets.util.Assert;
+final class JoColumnTextPainter extends AbstractJoTextPainter {
 
-final class JoColumnImagePainter extends ImagePainter {
-
-    private final SwtImageRegistry imageRegistry;
-
-    JoColumnImagePainter(final SwtImageRegistry imageRegistry) {
-        super(false);
-        Assert.paramNotNull(imageRegistry, "imageRegistry");
-        this.imageRegistry = imageRegistry;
-    }
-
-    @Override
-    protected Image getImage(final ILayerCell cell, final IConfigRegistry configRegistry) {
-        final ITableColumnSpi tableColumn = (ITableColumnSpi) cell.getDataValue();
-        final IImageConstant icon = tableColumn.getIcon();
-        if (icon != null) {
-            return imageRegistry.getImage(icon);
-        }
-        else {
-            return null;
-        }
+    JoColumnTextPainter() {
+        super();
     }
 
 }

@@ -26,36 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
-import org.eclipse.nebula.widgets.nattable.NatTable;
-import org.eclipse.nebula.widgets.nattable.layer.ILayer;
-import org.eclipse.nebula.widgets.nattable.resize.command.ColumnResizeCommand;
-import org.eclipse.nebula.widgets.nattable.resize.mode.ColumnResizeDragMode;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
+import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
+import org.jowidgets.common.model.ITableColumnModelSpi;
+import org.jowidgets.common.types.AlignmentHorizontal;
 
-final class ResizeImediateDragMode extends ColumnResizeDragMode {
+final class JoCellHorizontalAlignmentPainter extends AbstractJoHorizontalAlignmentPainter {
 
-    @Override
-    public void mouseDown(final NatTable natTable, final MouseEvent event) {
-        super.mouseDown(natTable, event);
-        natTable.removeOverlayPainter(this.overlayPainter);
+    private final ITableColumnModelSpi columnModel;
+
+    JoCellHorizontalAlignmentPainter(final ICellPainter painter, final ITableColumnModelSpi columnModel) {
+        super(painter);
+        this.columnModel = columnModel;
     }
 
     @Override
-    public void mouseMove(final NatTable natTable, final MouseEvent event) {
-        super.mouseMove(natTable, event);
-        updateColumnWidth(natTable, event);
-        natTable.redraw();
-    }
-
-    private void updateColumnWidth(final ILayer natLayer, final MouseEvent e) {
-        final int dragWidth = e.x - this.startX;
-        int newColumnWidth = this.originalColumnWidth + dragWidth;
-        if (newColumnWidth < getColumnWidthMinimum()) {
-            newColumnWidth = getColumnWidthMinimum();
-        }
-        natLayer.doCommand(new ColumnResizeCommand(natLayer, this.columnPositionToResize, newColumnWidth));
+    AlignmentHorizontal getHorizontalAlignment(final ILayerCell cell) {
+        return columnModel.getColumn(cell.getColumnIndex()).getAlignment();
     }
 
 }

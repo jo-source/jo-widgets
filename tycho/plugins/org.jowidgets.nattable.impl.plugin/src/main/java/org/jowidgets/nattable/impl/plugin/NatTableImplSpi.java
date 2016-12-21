@@ -34,8 +34,6 @@ import java.util.Set;
 
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.command.VisualRefreshCommand;
-import org.eclipse.nebula.widgets.nattable.config.CellConfigAttributes;
-import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
 import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
@@ -43,29 +41,14 @@ import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
 import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
 import org.eclipse.nebula.widgets.nattable.layer.cell.AggregateConfigLabelAccumulator;
 import org.eclipse.nebula.widgets.nattable.layer.event.ILayerEvent;
-import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
-import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.CellPainterDecorator;
-import org.eclipse.nebula.widgets.nattable.painter.cell.decorator.PaddingDecorator;
-import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
 import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
 import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
 import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeColumnsCommand;
 import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEvent;
-import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEventMatcher;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
-import org.eclipse.nebula.widgets.nattable.selection.SelectionConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
-import org.eclipse.nebula.widgets.nattable.style.BorderStyle;
-import org.eclipse.nebula.widgets.nattable.style.BorderStyle.LineStyleEnum;
-import org.eclipse.nebula.widgets.nattable.style.DisplayMode;
-import org.eclipse.nebula.widgets.nattable.style.theme.ModernNatTableThemeConfiguration;
-import org.eclipse.nebula.widgets.nattable.style.theme.ThemeConfiguration;
-import org.eclipse.nebula.widgets.nattable.ui.action.AggregateDragMode;
 import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
-import org.eclipse.nebula.widgets.nattable.ui.binding.UiBindingRegistry;
 import org.eclipse.nebula.widgets.nattable.ui.matcher.IMouseEventMatcher;
-import org.eclipse.nebula.widgets.nattable.ui.matcher.MouseEventMatcher;
-import org.eclipse.nebula.widgets.nattable.ui.util.CellEdgeEnum;
 import org.eclipse.nebula.widgets.nattable.util.GCFactory;
 import org.eclipse.nebula.widgets.nattable.viewport.ViewportLayer;
 import org.eclipse.swt.SWT;
@@ -77,7 +60,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -85,8 +67,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
-import org.jowidgets.api.color.Colors;
-import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
@@ -112,8 +92,11 @@ import org.jowidgets.common.widgets.editor.ITableCellEditor;
 import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.nattable.impl.plugin.configuration.JoNatTableConfigurator;
 import org.jowidgets.nattable.impl.plugin.layer.JoColumnReorderLayer;
 import org.jowidgets.nattable.impl.plugin.layer.NatTableLayers;
+import org.jowidgets.nattable.impl.plugin.painter.ClickedColumnConfigLabelAccumulator;
+import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.spi.impl.controller.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
@@ -124,7 +107,6 @@ import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.impl.swt.common.widgets.SwtControl;
@@ -135,8 +117,6 @@ import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 class NatTableImplSpi extends SwtControl implements ITableSpi {
-
-    private static final int PADDING = 5;
 
     private final NatTable table;
     private final NatTableLayers tableLayers;
@@ -239,8 +219,8 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         columnLabelAccumulator.add(hoveredColumnLabelAccumulator, clickedColumnLabelAccumulator);
         tableLayers.getColumnHeaderLayer().setConfigLabelAccumulator(columnLabelAccumulator);
 
-        configureNatTable(table, setup.getColumnModel(), imageRegistry);
-        registerUiBindingsToNatTable(table);
+        JoNatTableConfigurator.configureNatTable(table, setup.getColumnModel(), imageRegistry);
+        JoNatTableConfigurator.registerUiBindingsToNatTable(table, hoveredColumnLabelAccumulator);
     }
 
     private static int getStyle(final ITableSetupSpi setup) {
@@ -249,94 +229,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             result = result | SWT.BORDER;
         }
         return result;
-    }
-
-    private void configureNatTable(
-        final NatTable table,
-        final ITableColumnModelSpi columnModel,
-        final SwtImageRegistry imageRegistry) {
-
-        final IConfigRegistry config = table.getConfigRegistry();
-
-        //use modern theme as base theme (so fonts look like win 7 and win 10)
-        final ThemeConfiguration modernTheme = new ModernNatTableThemeConfiguration();
-        table.setTheme(modernTheme);
-
-        //use white background instead of grey to be more close to the swt win7 table
-        table.setBackground(ColorCache.getInstance().getColor(Colors.WHITE));
-
-        //use grid color from the swt table under win7
-        final Color gridColor = ColorCache.getInstance().getColor(new ColorValue(240, 240, 240));
-        config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
-
-        //use grid for remainder space to be more close to the swt win7 table
-        final NatGridLayerPainter gridPainter = new NatGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
-        table.setLayerPainter(gridPainter);
-
-        //set table header painter
-        final ICellPainter headerPainter = createHeaderPainter(imageRegistry);
-        config.registerConfigAttribute(
-                CellConfigAttributes.CELL_PAINTER,
-                headerPainter,
-                DisplayMode.NORMAL,
-                GridRegion.COLUMN_HEADER);
-
-        //disable grid because header painter paints grid by itself to allow hovered and clicked grid colors
-        config.registerConfigAttribute(
-                CellConfigAttributes.RENDER_GRID_LINES,
-                false,
-                DisplayMode.NORMAL,
-                GridRegion.COLUMN_HEADER);
-
-        //set cell painter
-        final ICellPainter cellPainter = createCellPainter(columnModel, imageRegistry);
-        config.registerConfigAttribute(CellConfigAttributes.CELL_PAINTER, cellPainter, DisplayMode.NORMAL, GridRegion.BODY);
-
-        //do not render dotted line for selected cell because this is ugly and selected cell can be determined by selected background
-        config.registerConfigAttribute(
-                SelectionConfigAttributes.SELECTION_GRID_LINE_STYLE,
-                new BorderStyle(1, gridColor, LineStyleEnum.SOLID),
-                DisplayMode.SELECT);
-
-    }
-
-    private void registerUiBindingsToNatTable(final NatTable table) {
-
-        final UiBindingRegistry uiBindingRegistry = table.getUiBindingRegistry();
-
-        //avoid selection removed on reorder, use swt win style reorder overlay color and
-        //do not allow to draw overlay column outside the header
-        uiBindingRegistry.unregisterMouseDragMode(MouseEventMatcher.columnHeaderLeftClick(SWT.NONE));
-        uiBindingRegistry.registerMouseDragMode(
-                MouseEventMatcher.columnHeaderLeftClick(SWT.NONE),
-                new AggregateDragMode(
-                    new JoColumnReorderCellDragMode(),
-                    new JoColumnReorderDragMode(hoveredColumnLabelAccumulator)));
-
-        //do resize immediate when user changes column width
-        uiBindingRegistry.registerFirstMouseDragMode(
-                new ColumnResizeEventMatcher(SWT.NONE, GridRegion.COLUMN_HEADER, 1),
-                new ResizeImediateDragMode());
-    }
-
-    private ICellPainter createCellPainter(final ITableColumnModelSpi columnModel, final SwtImageRegistry imageRegistry) {
-        final JoCellImagePainter imagePainter = new JoCellImagePainter(imageRegistry);
-        final JoCellTextPainter textPainter = new JoCellTextPainter(columnModel);
-        final CellPainterDecorator contentPainter = new CellPainterDecorator(textPainter, CellEdgeEnum.LEFT, imagePainter);
-        contentPainter.setPaintBackground(false);
-        final PaddingDecorator paddingPainter = new PaddingDecorator(contentPainter, 0, PADDING, 0, PADDING, false);
-        return new JoCellBackgroundPainter(paddingPainter);
-    }
-
-    private ICellPainter createHeaderPainter(final SwtImageRegistry imageRegistry) {
-        final ICellPainter imagePainter = new JoColumnImagePainter(imageRegistry);
-        final ICellPainter textPainter = new JoColumnTextPainter();
-        final CellPainterDecorator contentPainter = new CellPainterDecorator(textPainter, CellEdgeEnum.LEFT, imagePainter);
-        contentPainter.setSpacing(PADDING);
-        contentPainter.setPaintBackground(false);
-        final PaddingDecorator paddingPainter = new PaddingDecorator(contentPainter, 0, PADDING, 0, PADDING, false);
-        final JoMoveOnMouseClickPaintDecorator klickMovePainter = new JoMoveOnMouseClickPaintDecorator(paddingPainter);
-        return new JoColumnBackgroundPainter(klickMovePainter);
     }
 
     private ToolTip createToolTip(final NatTable table) {

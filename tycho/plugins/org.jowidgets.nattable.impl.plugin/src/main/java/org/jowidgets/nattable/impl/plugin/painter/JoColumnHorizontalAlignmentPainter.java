@@ -26,16 +26,17 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
+import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
 import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.common.types.AlignmentHorizontal;
 
-final class JoColumnTextPainter extends AbstractJoTextPainter {
+final class JoColumnHorizontalAlignmentPainter extends AbstractJoHorizontalAlignmentPainter {
 
-    JoColumnTextPainter() {
-        super();
+    JoColumnHorizontalAlignmentPainter(final ICellPainter painter) {
+        super(painter);
     }
 
     @Override

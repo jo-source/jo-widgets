@@ -26,48 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
-import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
-import org.eclipse.nebula.widgets.nattable.layer.cell.IConfigLabelAccumulator;
-import org.jowidgets.util.Assert;
+public final class HoveredColumnConfigLabelAccumulator extends ColumnIndexConfigLabelAccumulator {
 
-class ColumnIndexConfigLabelAccumulator implements IConfigLabelAccumulator {
+    static final String HOVERED_COLUMN_LABEL = "HOVERED_COLUMN";
 
-    private final String label;
-
-    private Integer columnIndex;
-
-    ColumnIndexConfigLabelAccumulator(final String label) {
-        Assert.paramNotEmpty(label, "label");
-        this.label = label;
-    }
-
-    @Override
-    public final void accumulateConfigLabels(final LabelStack configLabels, final int columnPosition, final int rowPosition) {
-        if (columnIndex != null && columnIndex.intValue() == columnPosition) {
-            configLabels.addLabel(label);
-        }
-    }
-
-    final boolean setColumnIndex(final int hoveredColumnIndex) {
-        if (this.columnIndex == null || this.columnIndex != hoveredColumnIndex) {
-            this.columnIndex = Integer.valueOf(hoveredColumnIndex);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    final boolean clearColumnIndex() {
-        if (this.columnIndex != null) {
-            this.columnIndex = null;
-            return true;
-        }
-        else {
-            return false;
-        }
+    public HoveredColumnConfigLabelAccumulator() {
+        super(HOVERED_COLUMN_LABEL);
     }
 
 }

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.nattable.impl.plugin;
+package org.jowidgets.nattable.impl.plugin.painter;
 
 import org.eclipse.nebula.widgets.nattable.layer.cell.ILayerCell;
 import org.eclipse.nebula.widgets.nattable.style.CellStyleAttributes;
@@ -38,18 +38,14 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableCell;
-import org.jowidgets.common.model.ITableColumnModelSpi;
-import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.nattable.impl.plugin.movetojo.RememberLastColorCache;
 import org.jowidgets.spi.impl.swt.common.color.IColorCache;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
-import org.jowidgets.util.Assert;
 
 final class JoCellTextPainter extends AbstractJoTextPainter {
 
-    private final ITableColumnModelSpi columnModel;
     private final IColorConstant defaultSelectedForegroundColor;
     private final IColorCache foregroundColorCache;
     private final IColorCache selectedForegroundColorCache;
@@ -57,17 +53,10 @@ final class JoCellTextPainter extends AbstractJoTextPainter {
     private Color originalForeground;
     private Font originalFont;
 
-    JoCellTextPainter(final ITableColumnModelSpi columnModel) {
-        Assert.paramNotNull(columnModel, "columnModel");
-        this.columnModel = columnModel;
+    JoCellTextPainter() {
         this.defaultSelectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
         this.foregroundColorCache = new RememberLastColorCache();
         this.selectedForegroundColorCache = new RememberLastColorCache();
-    }
-
-    @Override
-    AlignmentHorizontal getHorizontalAlignment(final ILayerCell cell) {
-        return columnModel.getColumn(cell.getColumnIndex()).getAlignment();
     }
 
     @Override
