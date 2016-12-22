@@ -27,14 +27,44 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
-public class CompositeWrapper extends SwtComposite {
+public class CompositeWrapper extends SwtComposite implements ICompositeWrapperSpi {
 
-    public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite, final SwtImageRegistry imageRegistry) {
+    private final DisposeObservableSpi disposeObservable;
+
+    public CompositeWrapper(
+        final IGenericWidgetFactory factory,
+        final Composite composite,
+        final SwtImageRegistry imageRegistry) {
+
         super(factory, composite, imageRegistry);
+
+        this.disposeObservable = new DisposeObservableSpi();
+
+        composite.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                disposeObservable.fireAfterDispose();
+            }
+        });
+    }
+
+    @Override
+    public void addDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.addDisposeListener(listener);
+    }
+
+    @Override
+    public void removeDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.removeDisposeListener(listener);
     }
 
 }

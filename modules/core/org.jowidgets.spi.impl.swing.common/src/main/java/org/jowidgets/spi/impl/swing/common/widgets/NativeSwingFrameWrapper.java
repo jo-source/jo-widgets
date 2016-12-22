@@ -38,16 +38,22 @@ import javax.swing.JRootPane;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.spi.impl.swing.common.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.common.util.FrameUtil;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.impl.swing.common.widgets.event.SwingDisposeObservable;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 import org.jowidgets.util.TypeCast;
 
-public class NativeSwingFrameWrapper extends SwingWindow implements IFrameSpi {
+public class NativeSwingFrameWrapper extends SwingWindow implements IFrameWrapperSpi {
+
+    private final DisposeObservableSpi disposeObservable;
 
     public NativeSwingFrameWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
         super(factory, uiReference, true);
+        this.disposeObservable = new SwingDisposeObservable(uiReference);
     }
 
     @Override
@@ -145,6 +151,23 @@ public class NativeSwingFrameWrapper extends SwingWindow implements IFrameSpi {
         else {
             return false;
         }
+    }
+
+    @Override
+    public void dispose() {
+        if (getUiReference().isDisplayable()) {
+            super.dispose();
+        }
+    }
+
+    @Override
+    public void addDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.addDisposeListener(listener);
+    }
+
+    @Override
+    public void removeDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.removeDisposeListener(listener);
     }
 
 }

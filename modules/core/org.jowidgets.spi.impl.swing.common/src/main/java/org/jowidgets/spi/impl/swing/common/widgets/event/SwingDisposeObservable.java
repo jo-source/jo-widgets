@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2016, herrg
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,48 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.spi.impl.swing.common.widgets.event;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
+import java.awt.Component;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.util.Assert;
 
-/**
- * Creates wrapper for native swt widgets
- */
-public final class SwtToJoWrapper {
+public class SwingDisposeObservable extends DisposeObservableSpi {
 
-    private SwtToJoWrapper() {}
+    private boolean wasDisplayable;
 
-    /**
-     * Creates a IComposite Wrapper with help of a swt composite.
-     * 
-     * The IComposite will be disposed if the swt composite will be disposed
-     * 
-     * @param composite The swt composite to create the IComposite for, must not be null
-     * 
-     * @return A IComposite Wrapper
-     */
-    public static IComposite create(final Composite composite) {
-        Assert.paramNotNull(composite, "composite");
-        return Toolkit.getWidgetWrapperFactory().createComposite(composite);
-    }
+    public SwingDisposeObservable(final Component component) {
+        Assert.paramNotNull(component, "component");
 
-    /**
-     * Creates a IFrame Wrapper with help of a swt shell.
-     * 
-     * The IFrame will be disposed if the swt shell will be disposed
-     * 
-     * @param shell The swt shell to create the IComposite for, must not be null
-     * 
-     * @return A IFrame Wrapper
-     */
-    public static IFrame create(final Shell shell) {
-        Assert.paramNotNull(shell, "shell");
-        return Toolkit.getWidgetWrapperFactory().createFrame(shell);
+        this.wasDisplayable = component.isDisplayable();
+        component.addHierarchyListener(new HierarchyListener() {
+            @Override
+            public void hierarchyChanged(final HierarchyEvent e) {
+                if ((e.getChangeFlags() & HierarchyEvent.DISPLAYABILITY_CHANGED) != 0) {
+                    if (wasDisplayable && !component.isDisplayable()) {
+                        fireAfterDispose();
+                    }
+                    else if (!wasDisplayable && component.isDisplayable()) {
+                        wasDisplayable = true;
+                    }
+                }
+            }
+        });
     }
 
 }

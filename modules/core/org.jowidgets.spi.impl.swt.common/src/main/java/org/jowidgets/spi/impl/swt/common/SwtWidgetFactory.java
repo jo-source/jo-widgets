@@ -67,8 +67,10 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
@@ -128,7 +130,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+    public IFrameWrapperSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Shell) {
             return new NativeSwtFrameWrapper(factory, (Shell) uiReference, imageRegistry);
@@ -142,7 +144,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
+    public ICompositeWrapperSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Composite) {
             return new CompositeWrapper(factory, (Composite) uiReference, imageRegistry);
@@ -156,7 +158,10 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+    public IFrameSpi createDialog(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup) {
         return new DialogImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
@@ -285,7 +290,10 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+    public ITableSpi createTable(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ITableSetupSpi setup) {
         return new TableImpl(factory, parentUiReference, setup, imageRegistry);
     }
 

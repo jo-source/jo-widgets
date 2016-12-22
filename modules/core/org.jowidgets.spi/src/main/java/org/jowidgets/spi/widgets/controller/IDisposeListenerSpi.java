@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2016, herrg
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,48 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.spi.widgets.controller;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.util.Assert;
+public interface IDisposeListenerSpi {
 
-/**
- * Creates wrapper for native swt widgets
- */
-public final class SwtToJoWrapper {
-
-    private SwtToJoWrapper() {}
-
-    /**
-     * Creates a IComposite Wrapper with help of a swt composite.
-     * 
-     * The IComposite will be disposed if the swt composite will be disposed
-     * 
-     * @param composite The swt composite to create the IComposite for, must not be null
-     * 
-     * @return A IComposite Wrapper
-     */
-    public static IComposite create(final Composite composite) {
-        Assert.paramNotNull(composite, "composite");
-        return Toolkit.getWidgetWrapperFactory().createComposite(composite);
-    }
-
-    /**
-     * Creates a IFrame Wrapper with help of a swt shell.
-     * 
-     * The IFrame will be disposed if the swt shell will be disposed
-     * 
-     * @param shell The swt shell to create the IComposite for, must not be null
-     * 
-     * @return A IFrame Wrapper
-     */
-    public static IFrame create(final Shell shell) {
-        Assert.paramNotNull(shell, "shell");
-        return Toolkit.getWidgetWrapperFactory().createFrame(shell);
-    }
+    void afterDispose();
 
 }

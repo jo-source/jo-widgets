@@ -34,8 +34,10 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
@@ -83,11 +85,11 @@ public interface IWidgetFactorySpi extends ITableSpiFactory {
 
     boolean isConvertibleToFrame(Object uiReference);
 
-    IFrameSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
+    IFrameWrapperSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
 
     boolean isConvertibleToComposite(Object uiReference);
 
-    ICompositeSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
+    ICompositeWrapperSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
 
     //create widgets from setup
 

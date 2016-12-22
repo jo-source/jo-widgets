@@ -28,15 +28,20 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
 import org.jowidgets.spi.impl.dummy.ui.UIDWindow;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
-public class NativeDummyFrameWrapper extends DummyWindow implements IFrameSpi {
+public class NativeDummyFrameWrapper extends DummyWindow implements IFrameWrapperSpi {
+
+    private final DisposeObservableSpi disposeObservable;
 
     public NativeDummyFrameWrapper(final IGenericWidgetFactory factory, final UIDWindow uiReference) {
         super(factory, uiReference);
+        this.disposeObservable = new DisposeObservableSpi();
     }
 
     @Override
@@ -52,6 +57,22 @@ public class NativeDummyFrameWrapper extends DummyWindow implements IFrameSpi {
     @Override
     public void setTitle(final String title) {
         getUiReference().setTitle(title);
+    }
+
+    @Override
+    public void addDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.addDisposeListener(listener);
+    }
+
+    @Override
+    public void removeDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.removeDisposeListener(listener);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        disposeObservable.fireAfterDispose();
     }
 
 }

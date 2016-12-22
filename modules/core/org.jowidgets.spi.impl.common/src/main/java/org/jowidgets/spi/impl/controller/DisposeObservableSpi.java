@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2016, herrg
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,48 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.spi.impl.controller;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.util.Assert;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeObservableSpi;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 
-/**
- * Creates wrapper for native swt widgets
- */
-public final class SwtToJoWrapper {
+public class DisposeObservableSpi implements IDisposeObservableSpi {
 
-    private SwtToJoWrapper() {}
+    private final IObserverSet<IDisposeListenerSpi> listeners;
 
-    /**
-     * Creates a IComposite Wrapper with help of a swt composite.
-     * 
-     * The IComposite will be disposed if the swt composite will be disposed
-     * 
-     * @param composite The swt composite to create the IComposite for, must not be null
-     * 
-     * @return A IComposite Wrapper
-     */
-    public static IComposite create(final Composite composite) {
-        Assert.paramNotNull(composite, "composite");
-        return Toolkit.getWidgetWrapperFactory().createComposite(composite);
+    public DisposeObservableSpi() {
+        this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
     }
 
-    /**
-     * Creates a IFrame Wrapper with help of a swt shell.
-     * 
-     * The IFrame will be disposed if the swt shell will be disposed
-     * 
-     * @param shell The swt shell to create the IComposite for, must not be null
-     * 
-     * @return A IFrame Wrapper
-     */
-    public static IFrame create(final Shell shell) {
-        Assert.paramNotNull(shell, "shell");
-        return Toolkit.getWidgetWrapperFactory().createFrame(shell);
+    @Override
+    public final void addDisposeListener(final IDisposeListenerSpi listener) {
+        listeners.add(listener);
+    }
+
+    @Override
+    public final void removeDisposeListener(final IDisposeListenerSpi listener) {
+        listeners.remove(listener);
+    }
+
+    public final void fireAfterDispose() {
+        for (final IDisposeListenerSpi listener : listeners) {
+            listener.afterDispose();
+        }
     }
 
 }

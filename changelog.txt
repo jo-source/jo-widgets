@@ -149,6 +149,20 @@ Bugfixes:
 * Fixes issue #56 https://github.com/jo-source/jo-widgets/issues/#56  TreeExpansionAction does not consider all enabled changes
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.68.0
+
+Features:
+
+* Fixed issue #58 https://github.com/jo-source/jo-widgets/issues/58 Nattatble support
+
+
+Bugfixes:
+
+* Fixes issue #59 https://github.com/jo-source/jo-widgets/issues/#59  Potential Memory Leak in org.jowidgets.impl.toolkit.WindowProvider
+
+
 
 
 

@@ -58,8 +58,10 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
@@ -119,7 +121,7 @@ public class DummyWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+    public IFrameWrapperSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof UIDWindow) {
             return new NativeDummyFrameWrapper(factory, (UIDWindow) uiReference);
@@ -133,7 +135,7 @@ public class DummyWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
+    public ICompositeWrapperSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof UIDContainer) {
             return new CompositeWrapper(factory, (UIDContainer) uiReference);
@@ -147,7 +149,10 @@ public class DummyWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+    public IFrameSpi createDialog(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup) {
         return new DialogImpl(factory, imageRegistry, parentUiReference, setup);
     }
 
@@ -262,7 +267,10 @@ public class DummyWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+    public ITableSpi createTable(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ITableSetupSpi setup) {
         // TODO must be implemented
         return null;
     }

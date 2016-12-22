@@ -28,17 +28,33 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.spi.impl.dummy.ui.UIDContainer;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
-public class CompositeWrapper extends DummyComposite {
+public class CompositeWrapper extends DummyComposite implements ICompositeWrapperSpi {
+
+    private final DisposeObservableSpi disposeObservable;
 
     public CompositeWrapper(final IGenericWidgetFactory factory, final UIDContainer uiReference) {
         super(factory, uiReference);
+        this.disposeObservable = new DisposeObservableSpi();
     }
 
     @Override
     public UIDContainer getUiReference() {
         return super.getUiReference();
+    }
+
+    @Override
+    public void addDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.addDisposeListener(listener);
+    }
+
+    @Override
+    public void removeDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.removeDisposeListener(listener);
     }
 
 }

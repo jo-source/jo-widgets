@@ -38,6 +38,9 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.basic.CompositeImpl;
 import org.jowidgets.impl.widgets.basic.FrameImpl;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
 public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 
@@ -57,14 +60,34 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 
     @Override
     public IFrame createFrame(final Object uiReference) {
-        final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-        return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp, true);
+        final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff().autoPackOff();
+        final IFrameWrapperSpi frameWrapper = widgetFactorySpi.createFrame(widgetFactory, uiReference);
+        final FrameImpl result = new FrameImpl(frameWrapper, bp, true);
+        frameWrapper.addDisposeListener(new IDisposeListenerSpi() {
+            @Override
+            public void afterDispose() {
+                if (!result.isDisposed()) {
+                    result.dispose();
+                }
+            }
+        });
+        return result;
     }
 
     @Override
     public IComposite createComposite(final Object uiReference) {
         final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
-        return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp, true);
+        final ICompositeWrapperSpi compositeWrapper = widgetFactorySpi.createComposite(widgetFactory, uiReference);
+        final CompositeImpl result = new CompositeImpl(compositeWrapper, bp, true);
+        compositeWrapper.addDisposeListener(new IDisposeListenerSpi() {
+            @Override
+            public void afterDispose() {
+                if (!result.isDisposed()) {
+                    result.dispose();
+                }
+            }
+        });
+        return result;
     }
 
     @Override

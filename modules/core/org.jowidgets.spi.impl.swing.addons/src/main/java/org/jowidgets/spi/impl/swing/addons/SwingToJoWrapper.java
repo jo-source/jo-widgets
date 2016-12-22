@@ -50,13 +50,11 @@ public final class SwingToJoWrapper {
 
     public static IFrame create(final JFrame frame) {
         Assert.paramNotNull(frame, "frame");
-        //TODO observe information when frame was disposed and invoke dispose on the result
         return Toolkit.getWidgetWrapperFactory().createFrame(frame);
     }
 
     public static IFrame create(final JDialog dialog) {
         Assert.paramNotNull(dialog, "dialog");
-        //TODO observe information when dialog was disposed and invoke dispose on the result
         return Toolkit.getWidgetWrapperFactory().createFrame(dialog);
     }
 

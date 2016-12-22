@@ -28,17 +28,18 @@
 
 package org.jowidgets.examples.swt;
 
-import net.miginfocom.swt.MigLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.spi.impl.swt.addons.SwtToJoWrapper;
+
+import net.miginfocom.swt.MigLayout;
 
 public final class PlainSwtWithJowidgetsDemo {
 
@@ -77,8 +78,18 @@ public final class PlainSwtWithJowidgetsDemo {
         final IComposite joComposite = SwtToJoWrapper.create(swtComposite2);
         DemoForm1Creator.createDemoForm1(joComposite);
 
+        joComposite.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                //CHECKSTYLE:OFF
+                System.out.println("jo composite disposed");
+                //CHECKSTYLE:ON
+            }
+        });
+
         // open the shell
         shell.open();
+
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch()) {
                 display.sleep();

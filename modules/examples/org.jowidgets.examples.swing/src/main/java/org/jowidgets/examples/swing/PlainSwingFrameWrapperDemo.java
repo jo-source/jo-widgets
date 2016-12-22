@@ -28,24 +28,21 @@
 
 package org.jowidgets.examples.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.examples.common.demo.DemoForm1Creator;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.spi.impl.swing.addons.SwingToJoWrapper;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public final class PlainSwingWithJowidgetsDemo {
+public final class PlainSwingFrameWrapperDemo {
 
-    private PlainSwingWithJowidgetsDemo() {}
+    private PlainSwingFrameWrapperDemo() {}
 
     public static void main(final String[] args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -65,28 +62,23 @@ public final class PlainSwingWithJowidgetsDemo {
         frame.setSize(450, 350);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        //setting the border layout for the content pane
-        final Container contentPane = frame.getContentPane();
-        contentPane.setLayout(new BorderLayout());
-
-        //adding a label in swing
-        final JLabel swingLabel = new JLabel("JLabel created with Swing");
-        contentPane.add(BorderLayout.NORTH, swingLabel);
-
-        //creating the center panel with swing and adding it to the content pane
-        final JPanel centerPanel = new JPanel();
-        contentPane.add(BorderLayout.CENTER, centerPanel);
-
-        //now a jowidgets composite will be created with help of the swing panel
-        //and the demo form 1 from examples common will be added 
-        final IComposite centerComposite = SwingToJoWrapper.create(centerPanel);
-        DemoForm1Creator.createDemoForm1(centerComposite);
-
-        centerComposite.addDisposeListener(new IDisposeListener() {
+        final IFrame joFrame = SwingToJoWrapper.create(frame);
+        joFrame.setLayout(new MigLayoutDescriptor("", ""));
+        final IButton button = joFrame.add(BPF.button("Test"));
+        button.addDisposeListener(new IDisposeListener() {
             @Override
             public void onDispose() {
                 //CHECKSTYLE:OFF
-                System.out.println("center composite disposed");
+                System.out.println("Button disposed");
+                //CHECKSTYLE:ON
+            }
+        });
+
+        joFrame.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                //CHECKSTYLE:OFF
+                System.out.println("Jo Frame disposed");
                 //CHECKSTYLE:ON
             }
         });

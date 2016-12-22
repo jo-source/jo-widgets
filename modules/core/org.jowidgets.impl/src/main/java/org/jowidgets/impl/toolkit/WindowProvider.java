@@ -42,7 +42,8 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.impl.widgets.basic.FrameImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
 public class WindowProvider {
 
@@ -50,7 +51,9 @@ public class WindowProvider {
     private final IWidgetsServiceProvider widgetsServiceProvider;
     private final Map<Object, IWindow> uiReferenceToWindow;
 
-    public WindowProvider(final IGenericWidgetFactory genericWidgetFactory, final IWidgetsServiceProvider widgetsServiceProvider) {
+    public WindowProvider(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider) {
 
         this.genericWidgetFactory = genericWidgetFactory;
         this.uiReferenceToWindow = new HashMap<Object, IWindow>();
@@ -110,13 +113,21 @@ public class WindowProvider {
         if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(uiRef)) {
 
             final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-
-            final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
-
+            final IFrameWrapperSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
             final IWindow result = new FrameImpl(frameSpi, bp, true);
 
             //register the created frame to avoid a new creation for every call of this method
             uiReferenceToWindow.put(uiRef, result);
+
+            frameSpi.addDisposeListener(new IDisposeListenerSpi() {
+                @Override
+                public void afterDispose() {
+                    if (!result.isDisposed()) {
+                        result.dispose();
+                    }
+                    uiReferenceToWindow.remove(uiRef);
+                }
+            });
 
             return result;
         }

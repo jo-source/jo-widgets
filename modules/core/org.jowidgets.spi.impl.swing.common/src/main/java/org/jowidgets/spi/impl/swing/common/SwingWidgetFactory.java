@@ -44,8 +44,8 @@ import org.jowidgets.spi.impl.swing.common.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.DialogImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.FrameImpl;
-import org.jowidgets.spi.impl.swing.common.widgets.NativeSwingFrameWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.IconImpl;
+import org.jowidgets.spi.impl.swing.common.widgets.NativeSwingFrameWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.PopupDialogImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.ScrollCompositeImpl;
@@ -67,8 +67,10 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
+import org.jowidgets.spi.widgets.ICompositeWrapperSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
@@ -128,7 +130,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+    public IFrameWrapperSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Window) {
             return new NativeSwingFrameWrapper(factory, (Window) uiReference);
@@ -142,7 +144,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
+    public ICompositeWrapperSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Container) {
             return new CompositeWrapper(factory, (Container) uiReference);
@@ -156,7 +158,10 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+    public IFrameSpi createDialog(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup) {
         return new DialogImpl(factory, imageRegistry, parentUiReference, setup);
     }
 
@@ -275,7 +280,10 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
     }
 
     @Override
-    public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+    public ITableSpi createTable(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ITableSetupSpi setup) {
         return new TableImpl(factory, setup);
     }
 

@@ -27,15 +27,46 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.controller.DisposeObservableSpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
-import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IFrameWrapperSpi;
+import org.jowidgets.spi.widgets.controller.IDisposeListenerSpi;
 
-public class NativeSwtFrameWrapper extends SwtWindow implements IFrameSpi {
+public class NativeSwtFrameWrapper extends SwtWindow implements IFrameWrapperSpi {
+
+    private final DisposeObservableSpi disposeObservable;
 
     public NativeSwtFrameWrapper(final IGenericWidgetFactory factory, final Shell shell, final SwtImageRegistry imageRegistry) {
         super(factory, shell, imageRegistry);
+        this.disposeObservable = new DisposeObservableSpi();
+
+        shell.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                disposeObservable.fireAfterDispose();
+            }
+        });
+    }
+
+    @Override
+    public void addDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.addDisposeListener(listener);
+    }
+
+    @Override
+    public void removeDisposeListener(final IDisposeListenerSpi listener) {
+        disposeObservable.removeDisposeListener(listener);
+    }
+
+    @Override
+    public void dispose() {
+        if (!getUiReference().isDisposed()) {
+            super.dispose();
+        }
     }
 
 }

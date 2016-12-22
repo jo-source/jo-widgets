@@ -26,48 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.examples.swt.analyse;
 
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.api.animation.IAnimationRunner;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.util.Assert;
+import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
-/**
- * Creates wrapper for native swt widgets
- */
-public final class SwtToJoWrapper {
+public final class SwtWindowProviderMemoryLeakCheck {
 
-    private SwtToJoWrapper() {}
+    private SwtWindowProviderMemoryLeakCheck() {}
 
-    /**
-     * Creates a IComposite Wrapper with help of a swt composite.
-     * 
-     * The IComposite will be disposed if the swt composite will be disposed
-     * 
-     * @param composite The swt composite to create the IComposite for, must not be null
-     * 
-     * @return A IComposite Wrapper
-     */
-    public static IComposite create(final Composite composite) {
-        Assert.paramNotNull(composite, "composite");
-        return Toolkit.getWidgetWrapperFactory().createComposite(composite);
+    public static void main(final String[] args) throws Exception {
+        DemoIconsInitializer.initialize();
+
+        createAndShowJFrame();
     }
 
-    /**
-     * Creates a IFrame Wrapper with help of a swt shell.
-     * 
-     * The IFrame will be disposed if the swt shell will be disposed
-     * 
-     * @param shell The swt shell to create the IComposite for, must not be null
-     * 
-     * @return A IFrame Wrapper
-     */
-    public static IFrame create(final Shell shell) {
-        Assert.paramNotNull(shell, "shell");
-        return Toolkit.getWidgetWrapperFactory().createFrame(shell);
+    private static void createAndShowJFrame() {
+
+        final Display display = new Display();
+        final Shell shell = new Shell(display);
+        shell.setSize(500, 400);
+
+        final IAnimationRunner animationRunner = Toolkit.getAnimationRunnerBuilder().setDelay(1).build();
+        animationRunner.run(new Runnable() {
+            @Override
+            public void run() {
+                final Shell window = new Shell(Display.getDefault());
+                window.setSize(1, 1);
+                window.open();
+                Toolkit.getActiveWindow();
+                window.dispose();
+                animationRunner.run(this);
+            }
+        });
+        animationRunner.start();
+
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
     }
 
 }
