@@ -28,10 +28,11 @@
 
 package org.jowidgets.nattable.impl.plugin.layer;
 
-public final class Constants {
+public final class CellConstants {
 
     public static final int COLUMN_HEADER_HEIGHT = 24;
+    public static final int DEFAULT_ROW_HEIGHT = 19;
 
-    private Constants() {}
+    private CellConstants() {}
 
 }

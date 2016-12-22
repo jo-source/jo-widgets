@@ -32,7 +32,6 @@ import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.config.CellConfigAttributes;
 import org.eclipse.nebula.widgets.nattable.config.IConfigRegistry;
 import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
-import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.painter.cell.ICellPainter;
 import org.eclipse.nebula.widgets.nattable.painter.layer.ILayerPainter;
 import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEventMatcher;
@@ -51,6 +50,7 @@ import org.jowidgets.api.color.Colors;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.model.ITableColumnModelSpi;
+import org.jowidgets.nattable.impl.plugin.layer.CellConstants;
 import org.jowidgets.nattable.impl.plugin.painter.CellPainterFactory;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.nattable.impl.plugin.painter.JoNatTableGridLayerPainter;
@@ -82,7 +82,7 @@ public final class JoNatTableConfigurator {
         config.registerConfigAttribute(CellConfigAttributes.GRID_LINE_COLOR, gridColor, DisplayMode.NORMAL, GridRegion.BODY);
 
         //use grid for remainder space to be more close to the swt win7 table
-        final ILayerPainter gridPainter = new JoNatTableGridLayerPainter(table, gridColor, DataLayer.DEFAULT_ROW_HEIGHT);
+        final ILayerPainter gridPainter = new JoNatTableGridLayerPainter(table, gridColor, CellConstants.DEFAULT_ROW_HEIGHT);
         table.setLayerPainter(gridPainter);
 
         //set table header painter

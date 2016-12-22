@@ -38,7 +38,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.nattable.impl.plugin.layer.Constants;
+import org.jowidgets.nattable.impl.plugin.layer.CellConstants;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.spi.impl.swt.common.color.ColorProvider;
 import org.jowidgets.util.Assert;
@@ -128,7 +128,7 @@ final class JoColumnReorderDragMode extends ColumnReorderDragMode {
                 if (dragToColumnHandleX > 0) {
                     final Color orgBgColor = gc.getBackground();
                     gc.setBackground(OVERLAY_COLOR.get());
-                    gc.fillRectangle(dragToColumnHandleX - 1, 0, 2, Constants.COLUMN_HEADER_HEIGHT - 1);
+                    gc.fillRectangle(dragToColumnHandleX - 1, 0, 2, CellConstants.COLUMN_HEADER_HEIGHT - 1);
                     gc.setBackground(orgBgColor);
                 }
             }

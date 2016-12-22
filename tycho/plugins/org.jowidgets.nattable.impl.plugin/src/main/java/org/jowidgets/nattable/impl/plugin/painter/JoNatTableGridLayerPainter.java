@@ -35,12 +35,16 @@ import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
-import org.jowidgets.nattable.impl.plugin.layer.Constants;
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.nattable.impl.plugin.layer.CellConstants;
+import org.jowidgets.spi.impl.swt.common.color.ColorProvider;
 
 /**
  * Renders the same background as the column header to the residual space right to the table
  */
 public final class JoNatTableGridLayerPainter extends NatGridLayerPainter {
+
+    private static final ColorProvider WHITE = new ColorProvider(Colors.WHITE);
 
     private final JoColumnBackgroundPainter backgroundPainter;
 
@@ -57,9 +61,21 @@ public final class JoNatTableGridLayerPainter extends NatGridLayerPainter {
         final int yOffset,
         final Rectangle rectangle,
         final IConfigRegistry configRegistry) {
+
+        //paint the grid
         super.paintBackground(natLayer, gc, xOffset, yOffset, rectangle, configRegistry);
-        final Rectangle decoratedRectangle = new Rectangle(rectangle.x, 0, rectangle.width, Constants.COLUMN_HEADER_HEIGHT);
-        backgroundPainter.paintCellDefault(gc, decoratedRectangle);
+
+        //paint the default column header for the full width
+        final Rectangle headerBackgroundPainterBounds = new Rectangle(
+            rectangle.x,
+            0,
+            rectangle.width,
+            CellConstants.COLUMN_HEADER_HEIGHT);
+        backgroundPainter.paintCellDefault(gc, headerBackgroundPainterBounds);
+
+        //remove the first grid line under the header because it looks weird and its like in win7 (first grid line is white there too)
+        gc.setBackground(WHITE.get());
+        gc.fillRectangle(0, CellConstants.COLUMN_HEADER_HEIGHT - 1, rectangle.width, 1);
     }
 
 }

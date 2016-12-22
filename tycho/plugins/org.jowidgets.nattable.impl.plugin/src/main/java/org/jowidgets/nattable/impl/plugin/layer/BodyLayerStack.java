@@ -51,6 +51,7 @@ final class BodyLayerStack extends AbstractLayerTransform {
         final TableSelectionPolicy selectionPolicy) {
 
         this.dataLayer = new DataLayer(dataProvider);
+        dataLayer.setDefaultRowHeight(CellConstants.DEFAULT_ROW_HEIGHT);
         dataLayer.setColumnsResizableByDefault(columsResizable);
 
         this.columnReorderLayer = new JoColumnReorderLayer(dataLayer);
