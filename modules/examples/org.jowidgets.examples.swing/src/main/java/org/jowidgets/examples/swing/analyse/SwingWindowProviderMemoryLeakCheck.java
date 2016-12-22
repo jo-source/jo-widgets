@@ -63,7 +63,11 @@ public final class SwingWindowProviderMemoryLeakCheck {
         animationRunner.run(new Runnable() {
             @Override
             public void run() {
-                final JFrame window = new JFrame();
+                final JFrame window = new JFrame() {
+                    private static final long serialVersionUID = 5049447815415149630L;
+                    @SuppressWarnings("unused")
+                    private final int[] memory = new int[64000];
+                };
                 window.setSize(2, 2);
 
                 window.setAlwaysOnTop(true);
