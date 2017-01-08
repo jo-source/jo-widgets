@@ -140,4 +140,8 @@ public class SwtControl extends SwtComponent implements IControlSpi {
         return visible;
     }
 
+    protected boolean isDragSourceActive() {
+        return dragSource.isActive();
+    }
+
 }

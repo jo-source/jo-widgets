@@ -78,6 +78,24 @@ public interface ITableCommon extends
 
     Position getCellPosition(int rowIndex, int columnIndex);
 
+    /**
+     * Gets the column index of a specific position
+     * 
+     * @param position The position, must not be null
+     * 
+     * @return The column index or -1 of the position matches no column
+     */
+    int getColumnAtPosition(Position position);
+
+    /**
+     * Gets the row index of a specific position
+     * 
+     * @param position The position, must not be null
+     * 
+     * @return The row index or -1 of the position matches no row
+     */
+    int getRowAtPosition(Position position);
+
     Dimension getCellSize(int rowIndex, int columnIndex);
 
     ArrayList<Integer> getColumnPermutation();

@@ -36,4 +36,15 @@ final class SelectionBindings extends DefaultSelectionBindings {
     @Override
     protected void configureColumnHeaderMouseClickBindings(final UiBindingRegistry uiBindingRegistry) {}
 
+    @Override
+    protected void configureBodyMouseDragMode(final UiBindingRegistry uiBindingRegistry) {
+        //Do not enable drag selection
+    }
+
+    @Override
+    protected void configureBodyMouseClickBindings(final UiBindingRegistry uiBindingRegistry) {
+        //Mouse click selection behavior interfere with drag and drop so it will be done manually
+        //in class org.jowidgets.nattable.impl.plugin.NatTableImplSpi.TableCellMouseSelectionListener
+    }
+
 }

@@ -530,6 +530,32 @@ public class SwtTableImplSpi extends SwtControl implements ITableSpi {
     }
 
     @Override
+    public int getColumnAtPosition(final Position position) {
+        final Point point = new Point(position.getX(), position.getY());
+        final TableItem item = table.getItem(point);
+        if (item != null) {
+            for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
+                final int internalIndex = columnIndex + 1;
+                final Rectangle rect = item.getBounds(internalIndex);
+                if (rect.contains(point)) {
+                    return columnIndex;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int getRowAtPosition(final Position position) {
+        final Point point = new Point(position.getX(), position.getY());
+        final TableItem item = table.getItem(point);
+        if (item != null) {
+            return table.indexOf(item);
+        }
+        return -1;
+    }
+
+    @Override
     public void pack(final TablePackPolicy policy) {
         table.setRedraw(false);
         for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {

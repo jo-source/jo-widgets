@@ -549,6 +549,28 @@ public class TableImpl extends SwingControl implements ITableSpi {
     }
 
     @Override
+    public int getColumnAtPosition(final Position position) {
+        final int result = table.columnAtPoint(new Point(position.getX(), position.getY()));
+        if (result != -1) {
+            return table.convertColumnIndexToModel(result);
+        }
+        else {
+            return -1;
+        }
+    }
+
+    @Override
+    public int getRowAtPosition(final Position position) {
+        final int result = table.rowAtPoint(new Point(position.getX(), position.getY()));
+        if (result != -1) {
+            return table.convertRowIndexToModel(result);
+        }
+        else {
+            return -1;
+        }
+    }
+
+    @Override
     public void pack(final TablePackPolicy policy) {
         for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
             pack(columnIndex, getRowRange(policy), policy);

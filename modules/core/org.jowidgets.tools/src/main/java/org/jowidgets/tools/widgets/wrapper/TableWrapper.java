@@ -115,6 +115,16 @@ public class TableWrapper extends ControlWrapper implements ITable {
     }
 
     @Override
+    public int getColumnAtPosition(final Position position) {
+        return getWidget().getColumnAtPosition(position);
+    }
+
+    @Override
+    public int getRowAtPosition(final Position position) {
+        return getWidget().getRowAtPosition(position);
+    }
+
+    @Override
     public ArrayList<Integer> getColumnPermutation() {
         return getWidget().getColumnPermutation();
     }

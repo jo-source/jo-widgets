@@ -80,7 +80,9 @@ public final class NatTableLayers {
         final DefaultCornerDataProvider cornerDataProvider = new DefaultCornerDataProvider(columnDataProvider, rowDataProvider);
         final CornerLayer cornerLayer = new CornerLayer(new DataLayer(cornerDataProvider), rowHeaderLayer, columnHeaderLayer);
 
-        this.gridLayer = new GridLayer(bodyLayer, columnHeaderLayer, rowHeaderLayer, cornerLayer);
+        //remark: false also disable editing, but when editing is enabled selection drag mode is enabled and must
+        //be disabled to allow drag and drop on tables
+        this.gridLayer = new GridLayer(bodyLayer, columnHeaderLayer, rowHeaderLayer, cornerLayer, false);
     }
 
     public GridLayer getGridLayer() {

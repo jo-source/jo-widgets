@@ -163,6 +163,17 @@ Bugfixes:
 * Fixes issue #59 https://github.com/jo-source/jo-widgets/issues/#59  Potential Memory Leak in org.jowidgets.impl.toolkit.WindowProvider
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.68.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #60 https://github.com/jo-source/jo-widgets/issues/60 The NatTable selection behaviour is not consitent with that of swt or windows explorer
+
 
 
 

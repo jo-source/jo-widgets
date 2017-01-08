@@ -100,6 +100,11 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
         }
     }
 
+    @Override
+    public boolean isActive() {
+        return super.isActive();
+    }
+
     private void createDragSourceIfNecessary() {
         if (dragSource == null && isActive() && !EmptyCheck.isEmpty(actions) && !EmptyCheck.isEmpty(supportedTypes)) {
             this.dragSource = new DragSource(control, DragDropUtil.createOperations(actions));

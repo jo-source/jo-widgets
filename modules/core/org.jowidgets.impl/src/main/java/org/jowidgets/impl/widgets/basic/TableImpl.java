@@ -360,6 +360,20 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
     }
 
     @Override
+    public int getColumnAtPosition(final Position position) {
+        final int result = getWidget().getColumnAtPosition(position);
+        if (result != -1) {
+            return modelSpiAdapter.convertViewToModel(result);
+        }
+        return -1;
+    }
+
+    @Override
+    public int getRowAtPosition(final Position position) {
+        return getWidget().getRowAtPosition(position);
+    }
+
+    @Override
     public ArrayList<Integer> getColumnPermutation() {
         return modelSpiAdapter.getCurrentPermutation();
     }
