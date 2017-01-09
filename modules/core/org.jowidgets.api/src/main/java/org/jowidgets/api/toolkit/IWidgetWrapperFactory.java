@@ -42,7 +42,7 @@ public interface IWidgetWrapperFactory {
     boolean isConvertibleToFrame(Object uiReference);
 
     /**
-     * Creates a IFrame from an ui-platform specific ui-reference
+     * Creates a IFrame from an ui-platform specific ui-reference with auto dispose=true
      * 
      * Remark: The created IFrame has no parent set
      * 
@@ -55,6 +55,22 @@ public interface IWidgetWrapperFactory {
     IFrame createFrame(Object uiReference);
 
     /**
+     * Creates a IFrame from an ui-platform specific ui-reference
+     * 
+     * Remark: The created IFrame has no parent set
+     * 
+     * @param uiReference The ui-platform specific object that shall be wrapped to an
+     *            IFrame (e.g. Window for Swing, Shell for swt).
+     * @param autoDispose If set to true, the returned widget will be disposed if the wrapped native widget will be disposed. In
+     *            swing panels can be reused after peer was removed so it might be useful not to auto dispose the widgets if
+     *            native widget lost the peer. Only disable auto dispose if your are knowing exactly what you are doing.
+     * 
+     * @return The created IFrame
+     * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IFrame.
+     */
+    IFrame createFrame(Object uiReference, boolean autoDispose);
+
+    /**
      * Tests if the ui reference can be converted / wrapped to an IComposite
      * 
      * @param uiReference
@@ -63,7 +79,7 @@ public interface IWidgetWrapperFactory {
     boolean isConvertibleToComposite(Object uiReference);
 
     /**
-     * Creates a IComposite from an ui-platform specific ui-reference
+     * Creates a IComposite from an ui-platform specific ui-reference with auto dispose=true
      * 
      * Remark: The created IComposite has no parent set
      * 
@@ -73,5 +89,20 @@ public interface IWidgetWrapperFactory {
      * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IComposite.
      */
     IComposite createComposite(Object uiReference);
+
+    /**
+     * Creates a IComposite from an ui-platform specific ui-reference
+     * 
+     * Remark: The created IComposite has no parent set
+     * 
+     * @param uiReference The ui-platform specific object that shall be wrapped to an
+     *            IComposite (e.g. Container for Swing, Composite for swt).
+     * @param autoDispose If set to true, the returned widget will be disposed if the wrapped native widget will be disposed. In
+     *            swing panels can be reused after peer was removed so it might be useful not to auto dispose the widgets if
+     *            native widget lost the peer. Only disable auto dispose if your are knowing exactly what you are doing.
+     * @return The created ICompositeCommon
+     * @throws IllegalArgumentException If the ui-reference could not be wrapped to an IComposite.
+     */
+    IComposite createComposite(Object uiReference, boolean autoDispose);
 
 }

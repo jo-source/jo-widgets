@@ -41,21 +41,91 @@ public final class SwingToJoWrapper {
 
     private SwingToJoWrapper() {}
 
+    /**
+     * Creates a wrapped composite from the given JPanel with autoDispose = false
+     * 
+     * Remark: autoDispose is set to false by default due to backward compatibility and due to the fact
+     * that in swing panels can be reused after disposed (lost peer) and this is even a best practice.
+     * This implies that the returned IComposite will never be disposed until it will be done programmatically.
+     * 
+     * @param panel The panel to create the wrapper for.
+     * 
+     * @return The composite that wrappes the given panel
+     */
     public static IComposite create(final JPanel panel) {
+        return create(panel, false);
+    }
+
+    /**
+     * Creates a wrapped composite from the given JPanel
+     * 
+     * @param panel The panel to create the wrapper for.
+     * @param autoDispose If set to true, the returned composite will be disposed automatically after the given panel has lost its
+     *            peer. Do not set to true if you intend to reuse the composite with a different parent.
+     * 
+     * @return The composite that wrappes the given panel
+     */
+    public static IComposite create(final JPanel panel, final boolean autoDispose) {
         Assert.paramNotNull(panel, "panel");
-        //TODO observe information when panel was disposed (removed from its parent) and
-        //invoke dispose on the result
-        return Toolkit.getWidgetWrapperFactory().createComposite(panel);
+        return Toolkit.getWidgetWrapperFactory().createComposite(panel, autoDispose);
     }
 
+    /**
+     * Creates a wrapped IFrame from the given JFrame with autoDispose = false
+     * 
+     * Remark: autoDispose is set to false by default due to backward compatibility and due to the fact
+     * that in swing frames can be reused after disposed (lost peer) and this is even a best practice.
+     * This implies that the returned IFrame will never be disposed until it will be done programmatically.
+     * 
+     * @param frame The frame to create the wrapper for.
+     * 
+     * @return The IFrame that wrappes the given frame
+     */
     public static IFrame create(final JFrame frame) {
-        Assert.paramNotNull(frame, "frame");
-        return Toolkit.getWidgetWrapperFactory().createFrame(frame);
+        return create(frame, false);
     }
 
+    /**
+     * Creates a wrapped IFrame from the given JDialog with autoDispose = false
+     * 
+     * Remark: autoDispose is set to false by default due to backward compatibility and due to the fact
+     * that in swing frames can be reused after disposed (lost peer) and this is even a best practice.
+     * This implies that the returned IFrame will never be disposed until it will be done programmatically.
+     * 
+     * @param dialog The dialog to create the wrapper for.
+     * 
+     * @return The IFrame that wrappes the given dialog
+     */
     public static IFrame create(final JDialog dialog) {
+        return create(dialog, false);
+    }
+
+    /**
+     * Creates a wrapped IFrame from the given JFrame
+     * 
+     * @param frame The frame to create the wrapper for.
+     * @param autoDispose If set to true, the returned IFrame will be disposed automatically after the given JFrame has lost its
+     *            peer. Do not set to true if you intend to reuse (open / pack) the JFrame with after dispose.
+     * 
+     * @return The IFrame that wrappes the given frame
+     */
+    public static IFrame create(final JFrame frame, final boolean autoDispose) {
+        Assert.paramNotNull(frame, "frame");
+        return Toolkit.getWidgetWrapperFactory().createFrame(frame, autoDispose);
+    }
+
+    /**
+     * Creates a wrapped IFrame from the given JDialog
+     * 
+     * @param dialog The dialog to create the wrapper for.
+     * @param autoDispose If set to true, the returned IFrame will be disposed automatically after the given JDialog has lost its
+     *            peer. Do not set to true if you intend to reuse (open / pack) the JDialog with after dispose.
+     * 
+     * @return The IFrame that wrappes the given dialog
+     */
+    public static IFrame create(final JDialog dialog, final boolean autoDispose) {
         Assert.paramNotNull(dialog, "dialog");
-        return Toolkit.getWidgetWrapperFactory().createFrame(dialog);
+        return Toolkit.getWidgetWrapperFactory().createFrame(dialog, autoDispose);
     }
 
 }

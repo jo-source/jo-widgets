@@ -165,14 +165,18 @@ Bugfixes:
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-0.68.0
+0.69.0
 
 Features:
 
+Implements issue #62 https://github.com/jo-source/jo-widgets/issues/62 Autodispose must be optional for WidgetWrappers
+ 
 
 Bugfixes:
 
 * Fixed issue #60 https://github.com/jo-source/jo-widgets/issues/60 The NatTable selection behaviour is not consitent with that of swt or windows explorer
+
+
 
 
 

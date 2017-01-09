@@ -60,33 +60,47 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 
     @Override
     public IFrame createFrame(final Object uiReference) {
+        return createFrame(uiReference, true);
+    }
+
+    @Override
+    public IFrame createFrame(final Object uiReference, final boolean autoDispose) {
         final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff().autoPackOff();
         final IFrameWrapperSpi frameWrapper = widgetFactorySpi.createFrame(widgetFactory, uiReference);
         final FrameImpl result = new FrameImpl(frameWrapper, bp, true);
-        frameWrapper.addDisposeListener(new IDisposeListenerSpi() {
-            @Override
-            public void afterDispose() {
-                if (!result.isDisposed()) {
-                    result.dispose();
+        if (autoDispose) {
+            frameWrapper.addDisposeListener(new IDisposeListenerSpi() {
+                @Override
+                public void afterDispose() {
+                    if (!result.isDisposed()) {
+                        result.dispose();
+                    }
                 }
-            }
-        });
+            });
+        }
         return result;
     }
 
     @Override
     public IComposite createComposite(final Object uiReference) {
+        return createComposite(uiReference, true);
+    }
+
+    @Override
+    public IComposite createComposite(final Object uiReference, final boolean autoDispose) {
         final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
         final ICompositeWrapperSpi compositeWrapper = widgetFactorySpi.createComposite(widgetFactory, uiReference);
         final CompositeImpl result = new CompositeImpl(compositeWrapper, bp, true);
-        compositeWrapper.addDisposeListener(new IDisposeListenerSpi() {
-            @Override
-            public void afterDispose() {
-                if (!result.isDisposed()) {
-                    result.dispose();
+        if (autoDispose) {
+            compositeWrapper.addDisposeListener(new IDisposeListenerSpi() {
+                @Override
+                public void afterDispose() {
+                    if (!result.isDisposed()) {
+                        result.dispose();
+                    }
                 }
-            }
-        });
+            });
+        }
         return result;
     }
 
