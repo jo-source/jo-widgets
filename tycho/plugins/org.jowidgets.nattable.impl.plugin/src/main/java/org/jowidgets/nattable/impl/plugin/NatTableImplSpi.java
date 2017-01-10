@@ -47,7 +47,6 @@ import org.eclipse.nebula.widgets.nattable.reorder.event.ColumnReorderEvent;
 import org.eclipse.nebula.widgets.nattable.resize.command.InitializeAutoResizeColumnsCommand;
 import org.eclipse.nebula.widgets.nattable.resize.event.ColumnResizeEvent;
 import org.eclipse.nebula.widgets.nattable.selection.IRowSelectionModel;
-import org.eclipse.nebula.widgets.nattable.selection.action.SelectCellAction;
 import org.eclipse.nebula.widgets.nattable.selection.event.CellSelectionEvent;
 import org.eclipse.nebula.widgets.nattable.ui.action.IMouseAction;
 import org.eclipse.nebula.widgets.nattable.ui.matcher.IMouseEventMatcher;
@@ -93,6 +92,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.nattable.impl.plugin.configuration.JoNatTableConfigurator;
 import org.jowidgets.nattable.impl.plugin.layer.JoColumnReorderLayer;
 import org.jowidgets.nattable.impl.plugin.layer.NatTableLayers;
+import org.jowidgets.nattable.impl.plugin.listener.CellSelectionListener;
 import org.jowidgets.nattable.impl.plugin.listener.ToolTipListener;
 import org.jowidgets.nattable.impl.plugin.painter.ClickedColumnConfigLabelAccumulator;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
@@ -107,6 +107,7 @@ import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
+import org.jowidgets.spi.impl.swt.common.dnd.SwtDragSource;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.impl.swt.common.widgets.SwtControl;
@@ -203,11 +204,12 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         this.editRowIndex = -1;
         this.editColumnIndex = -1;
 
-        this.dragSource = new NatTableDragSource(super.getDragSource(), this);
+        final SwtDragSource swtDragSource = (SwtDragSource) super.getDragSource();
+        this.dragSource = new NatTableDragSource(swtDragSource, this);
 
         setMenuDetectListener(new TableMenuDetectListener());
 
-        table.addMouseListener(new TableCellMouseSelectionListener());
+        table.addMouseListener(new CellSelectionListener(table, swtDragSource, rowSelectionModel));
         table.addMouseListener(new TableCellMouseListener());
         table.addMouseMoveListener(new HeaderHoverMouseMoveListener());
         table.addMouseTrackListener(new HeaderHoverAndClickMouseTrackAdapter());
@@ -770,72 +772,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 setSelectionChangedIfNeccessary();
             }
         }
-    }
-
-    private final class TableCellMouseSelectionListener extends MouseAdapter {
-
-        private static final int DELAY = 500;
-
-        private int lastMouseDownTimestamp = -1;
-        private int lastRowIndex = -1;
-
-        @Override
-        public void mouseDown(final MouseEvent e) {
-            handleMouseEvent(e, true);
-        }
-
-        @Override
-        public void mouseUp(final MouseEvent e) {
-            handleMouseEvent(e, false);
-        }
-
-        private void handleMouseEvent(final MouseEvent event, final boolean down) {
-            final int rowIndex = getRowIndex(event);
-            if (rowIndex == -1) {
-                return;
-            }
-
-            final boolean leftButton = event.button == 1;
-            final boolean rightButton = event.button == 3;
-            final boolean shift = (event.stateMask & SWT.SHIFT) > 0;
-            final boolean ctrl = (event.stateMask & SWT.CTRL) > 0;
-            final boolean isSelected = rowSelectionModel.isRowPositionSelected(rowIndex);
-            final boolean isDragSourceActive = isDragSourceActive();
-
-            if (!isSelected && down && rightButton && !shift && !ctrl) {
-                runSelectionAction(event);
-            }
-            else if (!isDragSourceActive && down && leftButton) {
-                runSelectionAction(event);
-            }
-            else if (isDragSourceActive && down && leftButton) {
-                if (!isSelected) {
-                    runSelectionAction(event);
-                }
-                else {
-                    lastMouseDownTimestamp = event.time;
-                    lastRowIndex = rowIndex;
-                }
-            }
-            else if (isDragSourceActive && !down && (event.time - lastMouseDownTimestamp) < DELAY && lastRowIndex == rowIndex) {
-                runSelectionAction(event);
-            }
-        }
-
-        private int getRowIndex(final MouseEvent event) {
-            final int rowPositionByY = table.getRowPositionByY(event.y);
-            if (rowPositionByY <= 0) {
-                return -1;
-            }
-            else {
-                return table.getRowIndexByPosition(rowPositionByY);
-            }
-        }
-
-        private void runSelectionAction(final MouseEvent event) {
-            new SelectCellAction().run(getUiReference(), event);
-        }
-
     }
 
     private final class TableModelListener implements ITableDataModelListener {
