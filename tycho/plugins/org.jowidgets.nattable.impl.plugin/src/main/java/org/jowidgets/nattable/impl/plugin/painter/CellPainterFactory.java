@@ -35,7 +35,8 @@ import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 
 public final class CellPainterFactory {
 
-    private static final int CELL_PADDING = 6;
+    public static final int CELL_PADDING = 6;
+
     private static final int ICON_TEXT_SPACING = 8;
 
     private CellPainterFactory() {}

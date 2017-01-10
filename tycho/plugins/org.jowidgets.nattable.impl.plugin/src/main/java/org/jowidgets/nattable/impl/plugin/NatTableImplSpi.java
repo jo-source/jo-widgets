@@ -65,15 +65,11 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableColumnModelSpi;
-import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
@@ -97,6 +93,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.nattable.impl.plugin.configuration.JoNatTableConfigurator;
 import org.jowidgets.nattable.impl.plugin.layer.JoColumnReorderLayer;
 import org.jowidgets.nattable.impl.plugin.layer.NatTableLayers;
+import org.jowidgets.nattable.impl.plugin.listener.ToolTipListener;
 import org.jowidgets.nattable.impl.plugin.painter.ClickedColumnConfigLabelAccumulator;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
@@ -143,8 +140,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
     private final HoveredColumnConfigLabelAccumulator hoveredColumnLabelAccumulator;
     private final ClickedColumnConfigLabelAccumulator clickedColumnLabelAccumulator;
-
-    private final ToolTip toolTip;
 
     //ignore and use later for cell editing support (finals) -> begin
     @SuppressWarnings("unused")
@@ -198,10 +193,10 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         this.hoveredColumnLabelAccumulator = new HoveredColumnConfigLabelAccumulator();
         this.clickedColumnLabelAccumulator = new ClickedColumnConfigLabelAccumulator();
         this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
-        this.toolTip = createToolTip(table);
 
         this.dataModel = setup.getDataModel();
         this.columnModel = setup.getColumnModel();
+        createAndInstallTooltipListener(table, columnModel, dataModel);
         this.editorFactory = setup.getEditor();
 
         this.editable = true;
@@ -239,25 +234,26 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         return result;
     }
 
-    private ToolTip createToolTip(final NatTable table) {
+    private void createAndInstallTooltipListener(
+        final NatTable table,
+        final ITableColumnModelSpi columnModel,
+        final ITableDataModel dataModel) {
         // ToolTip support
-        ToolTip result = null;
+        ToolTip toolTip = null;
         try {
-            result = new ToolTip(table.getShell(), SWT.NONE);
+            toolTip = new ToolTip(table.getShell(), SWT.NONE);
         }
         catch (final NoClassDefFoundError error) {
             //(New rwt version supports tooltips)
         }
 
-        if (result != null) {
-            final ToolTipListener toolTipListener = new ToolTipListener();
-            table.addListener(SWT.Dispose, toolTipListener);
-            table.addListener(SWT.KeyDown, toolTipListener);
-            table.addListener(SWT.MouseHover, toolTipListener);
-            table.addListener(SWT.MouseMove, toolTipListener);
+        if (toolTip != null) {
+            final ToolTipListener result = new ToolTipListener(toolTip, table, columnModel, dataModel);
+            table.addListener(SWT.Dispose, result);
+            table.addListener(SWT.KeyDown, result);
+            table.addListener(SWT.MouseHover, result);
+            table.addListener(SWT.MouseMove, result);
         }
-
-        return result;
     }
 
     @Override
@@ -550,17 +546,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         else {
             return null;
         }
-    }
-
-    private void showToolTip(final String message) {
-        if (EmptyCheck.isEmpty(message)) {
-            return;
-        }
-        toolTip.setVisible(false);
-        toolTip.setMessage(message);
-        final Point location = Display.getCurrent().getCursorLocation();
-        toolTip.setLocation(location.x + 16, location.y + 16);
-        toolTip.setVisible(true);
     }
 
     private void setSelectionChangedIfNeccessary() {
@@ -961,52 +946,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             return "CellIndices [rowIndex=" + rowIndex + ", columnIndex=" + columnIndex + "]";
         }
 
-    }
-
-    private final class ToolTipListener implements Listener {
-
-        @Override
-        public void handleEvent(final Event event) {
-            if (event.type == SWT.MouseHover) {
-                final int rowPositionByY = table.getRowPositionByY(event.y);
-                final int columnPositionByX = table.getColumnPositionByX(event.x);
-
-                final int rowIndex = table.getRowIndexByPosition(rowPositionByY);
-                final int columnIndex = table.getColumnIndexByPosition(columnPositionByX);
-
-                if (rowPositionByY == 0 && rowIndex >= 0 && columnIndex >= 0) {
-                    showToolTip(getColumnToolTipText(columnIndex));
-                }
-                else if (rowIndex >= 0 && columnIndex >= 0) {
-                    showToolTip(getCellToolTipText(rowIndex, columnIndex));
-                }
-            }
-            else {
-                if (toolTip != null && !toolTip.isDisposed()) {
-                    toolTip.setVisible(false);
-                }
-            }
-        }
-
-        private String getCellToolTipText(final int rowIndex, final int columnIndex) {
-            final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
-            if (cell != null) {
-                return cell.getToolTipText();
-            }
-            else {
-                return null;
-            }
-        }
-
-        private String getColumnToolTipText(final int columnIndex) {
-            final ITableColumnSpi column = columnModel.getColumn(columnIndex);
-            if (column != null) {
-                return column.getToolTipText();
-            }
-            else {
-                return null;
-            }
-        }
     }
 
     private final class NatTableDisposeListener implements DisposeListener {

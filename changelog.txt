@@ -175,7 +175,14 @@ Implements issue #62 https://github.com/jo-source/jo-widgets/issues/62 Autodispo
 Bugfixes:
 
 * Fixed issue #60 https://github.com/jo-source/jo-widgets/issues/60 The NatTable selection behaviour is not consitent with that of swt or windows explorer
+* Fixed issue #61 https://github.com/jo-source/jo-widgets/issues/61 Mouseover tooltip for partially visible cell content in the NatTable missing 
 
+
+
+
+
+
+Mouseover tooltip for partially visible cell content in the NatTable missing 
 
 
 
