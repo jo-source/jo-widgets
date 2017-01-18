@@ -64,7 +64,6 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
@@ -93,7 +92,6 @@ import org.jowidgets.nattable.impl.plugin.configuration.JoNatTableConfigurator;
 import org.jowidgets.nattable.impl.plugin.layer.JoColumnReorderLayer;
 import org.jowidgets.nattable.impl.plugin.layer.NatTableLayers;
 import org.jowidgets.nattable.impl.plugin.listener.CellSelectionListener;
-import org.jowidgets.nattable.impl.plugin.listener.ToolTipListener;
 import org.jowidgets.nattable.impl.plugin.painter.ClickedColumnConfigLabelAccumulator;
 import org.jowidgets.nattable.impl.plugin.painter.HoveredColumnConfigLabelAccumulator;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
@@ -197,7 +195,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         this.dataModel = setup.getDataModel();
         this.columnModel = setup.getColumnModel();
-        createAndInstallTooltipListener(table, columnModel, dataModel);
         this.editorFactory = setup.getEditor();
 
         this.editable = true;
@@ -226,6 +223,21 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
 
         JoNatTableConfigurator.configureNatTable(table, setup.getColumnModel(), imageRegistry);
         JoNatTableConfigurator.registerUiBindingsToNatTable(table, hoveredColumnLabelAccumulator);
+
+        final NatTableTooltip tooltip = new NatTableTooltip(
+            table,
+            dataModel,
+            columnModel,
+            GridRegion.COLUMN_HEADER,
+            GridRegion.BODY);
+
+        table.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                tooltip.dispose();
+            }
+        });
+
     }
 
     private static int getStyle(final ITableSetupSpi setup) {
@@ -234,28 +246,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             result = result | SWT.BORDER;
         }
         return result;
-    }
-
-    private void createAndInstallTooltipListener(
-        final NatTable table,
-        final ITableColumnModelSpi columnModel,
-        final ITableDataModel dataModel) {
-        // ToolTip support
-        ToolTip toolTip = null;
-        try {
-            toolTip = new ToolTip(table.getShell(), SWT.NONE);
-        }
-        catch (final NoClassDefFoundError error) {
-            //(New rwt version supports tooltips)
-        }
-
-        if (toolTip != null) {
-            final ToolTipListener result = new ToolTipListener(toolTip, table, columnModel, dataModel);
-            table.addListener(SWT.Dispose, result);
-            table.addListener(SWT.KeyDown, result);
-            table.addListener(SWT.MouseHover, result);
-            table.addListener(SWT.MouseMove, result);
-        }
     }
 
     @Override

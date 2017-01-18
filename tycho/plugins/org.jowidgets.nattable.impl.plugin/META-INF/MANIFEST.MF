@@ -21,3 +21,4 @@ Require-Bundle:
  org.eclipse.swt
 Shared-Classloader-Contribution: true
 Export-Package: org.jowidgets.nattable.impl.plugin
+Import-Package: org.eclipse.jface.window
