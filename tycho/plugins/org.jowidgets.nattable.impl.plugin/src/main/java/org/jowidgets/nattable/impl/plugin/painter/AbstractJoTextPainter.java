@@ -76,6 +76,9 @@ abstract class AbstractJoTextPainter extends TextPainter {
 
         final int fontHeight = gc.getFontMetrics().getHeight();
         String text = convertDataType(cell, configRegistry);
+        if (!EmptyCheck.isEmpty(text)) {
+            text = text.replaceAll(NEW_LINE_REGEX, "");
+        }
 
         // Draw Text
         text = getTextToDisplay(cell, gc, rectangle.width, text);
