@@ -126,10 +126,13 @@ Features:
 
 
 
+
 Bugfixes:
 
 * StringUtils concat() handles empty values like null values now
 * Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/52 Verify of double values is to strict
+* StringUtils concat() handles empty values like null values now
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -183,6 +186,8 @@ Bugfixes:
 0.70.0
 
 Features:
+
+Implemented issue #65 https://github.com/jo-source/jo-widgets/issues/65 Add a mock implementation for ISingleThreadAccess
 
 
 Bugfixes:
