@@ -166,7 +166,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         scrolledComposite.addListener(SWT.Resize, new Listener() {
             @Override
             public void handleEvent(final Event event) {
-                scrolledComposite.layout(true, true);
                 adaptIncrements(scrolledComposite.getVerticalBar(), SCROLL_SPEED_FACTOR);
                 adaptIncrements(scrolledComposite.getHorizontalBar(), SCROLL_SPEED_FACTOR);
             }
