@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.nattable.decoration.plugin
 Bundle-SymbolicName: org.jowidgets.nattable.decoration.plugin;singleton:=true
-Bundle-Version: 0.70.0.qualifier
+Bundle-Version: 0.71.0.qualifier
 Bundle-Vendor: jowidgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
