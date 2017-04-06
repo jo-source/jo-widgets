@@ -35,7 +35,6 @@ import java.util.Set;
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.command.VisualRefreshCommand;
 import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
-import org.eclipse.nebula.widgets.nattable.layer.AbstractLayerTransform;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
 import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
@@ -833,11 +832,10 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             }
             else if (event instanceof ColumnResizeEvent) {
                 final ColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
-                final AbstractLayerTransform headerLayer = tableLayers.getColumnHeaderLayer();
 
                 final int columnPosition = ((ColumnResizeEvent) event).getColumnPositionRanges().iterator().next().start;
                 final int columnIndex = reorderLayer.getColumnIndexByPosition(columnPosition);
-                final int width = headerLayer.getColumnWidthByPosition(columnPosition);
+                final int width = reorderLayer.getColumnWidthByPosition(columnPosition);
 
                 setWidthInvokedOnModel = true;
                 columnModel.getColumn(columnIndex).setWidth(width);

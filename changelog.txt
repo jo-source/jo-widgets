@@ -194,11 +194,17 @@ Bugfixes:
 
 * Fixed issue #64 https://github.com/jo-source/jo-widgets/issues/64 NatTable table impl must no split cell text by line breaks
 * Fixed issue #63 https://github.com/jo-source/jo-widgets/issues/63 NatTable table impl hangs with long tooltip contents
-* Bugfix added with issue #43 https://github.com/jo-source/jo-widgets/issues/43 Default increment of SWT ScrollBar is 1px, removed unnecessary layouting
+* Bugfix for bug added with issue #43 https://github.com/jo-source/jo-widgets/issues/43 Default increment of SWT ScrollBar is 1px, removed unnecessary layouting
+
+------------------------------------------------------------------------------------------------------------------------------
+
+0.71.0
+
+Features:
 
 
+Bugfixes:
 
-
-
+* Fixed issue #66 https://github.com/jo-source/jo-widgets/issues/66 Column width will be tracked incorrectly for NatTableImplSpi if scrolled horizontaly
 
 
