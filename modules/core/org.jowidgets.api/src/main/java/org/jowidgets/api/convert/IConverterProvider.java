@@ -40,6 +40,12 @@ import org.jowidgets.unit.api.IUnitConverter;
 
 public interface IConverterProvider {
 
+    int DOUBLE_MIN_FRACTION_DIGITS_DEFAULT = 0;
+    int DOUBLE_MAX_FRACTION_DIGITS_DEFAULT = 16;
+
+    int FLOAT_MIN_FRACTION_DIGITS_DEFAULT = 0;
+    int FLOAT_MAX_FRACTION_DIGITS_DEFAULT = 7;
+
     /**
      * Generic method to get an converter for an type. This method only gets an converter for the types supported by the
      * explicit methods of this interface or that was registered before.

@@ -90,33 +90,61 @@ public final class DefaultConverterProvider implements IConverterProvider {
         register(Boolean.class, booleanLong);
         register(boolean.class, booleanLong);
 
-        final DecimalFormat decimalFormatUS = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
+        final DecimalFormat decimalFormatUsDouble = createDecimalFormatForLocale(
+                Locale.US,
+                DOUBLE_MIN_FRACTION_DIGITS_DEFAULT,
+                DOUBLE_MAX_FRACTION_DIGITS_DEFAULT);
 
         final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(
-            decimalFormatUS,
+            decimalFormatUsDouble,
             "Must be a valid floating point number");
         register(Double.class, doubleNumberUS);
         register(double.class, doubleNumberUS);
 
+        final DecimalFormat decimalFormatUsFloat = createDecimalFormatForLocale(
+                Locale.US,
+                FLOAT_MIN_FRACTION_DIGITS_DEFAULT,
+                FLOAT_MAX_FRACTION_DIGITS_DEFAULT);
+
         final IConverter<Float> floatNumberUS = new DefaultFloatConverter(
-            decimalFormatUS,
+            decimalFormatUsFloat,
             "Must be a valid floating point number");
         register(Float.class, floatNumberUS);
         register(float.class, floatNumberUS);
 
-        final DecimalFormat decimalFormatDE = (DecimalFormat) DecimalFormat.getInstance(Locale.GERMAN);
+        final DecimalFormat decimalFormatDeDouble = createDecimalFormatForLocale(
+                Locale.GERMAN,
+                DOUBLE_MIN_FRACTION_DIGITS_DEFAULT,
+                DOUBLE_MAX_FRACTION_DIGITS_DEFAULT);
 
-        final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "Muss eine gültige Kommazahl sein");
+        final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(
+            decimalFormatDeDouble,
+            "Muss eine gültige Kommazahl sein");
         register(Locale.GERMANY, Double.class, doubleNumberDE);
         register(Locale.GERMANY, double.class, doubleNumberDE);
         register(Locale.GERMAN, Double.class, doubleNumberDE);
         register(Locale.GERMAN, double.class, doubleNumberDE);
 
-        final IConverter<Float> floatNumberDE = new DefaultFloatConverter(decimalFormatDE, "Muss eine gültige Kommazahl sein");
+        final DecimalFormat decimalFormatDeFloat = createDecimalFormatForLocale(
+                Locale.GERMAN,
+                FLOAT_MIN_FRACTION_DIGITS_DEFAULT,
+                FLOAT_MAX_FRACTION_DIGITS_DEFAULT);
+
+        final IConverter<Float> floatNumberDE = new DefaultFloatConverter(
+            decimalFormatDeFloat,
+            "Muss eine gültige Kommazahl sein");
         register(Locale.GERMANY, Float.class, floatNumberDE);
         register(Locale.GERMANY, float.class, floatNumberDE);
         register(Locale.GERMAN, Float.class, floatNumberDE);
         register(Locale.GERMAN, float.class, floatNumberDE);
+    }
+
+    private DecimalFormat createDecimalFormatForLocale(final Locale locale, final int minDigits, final int maxDigits) {
+        final DecimalFormat formatOfLocale = (DecimalFormat) DecimalFormat.getInstance(locale);
+        final DecimalFormat result = (DecimalFormat) formatOfLocale.clone();
+        result.setMinimumFractionDigits(minDigits);
+        result.setMaximumFractionDigits(maxDigits);
+        return result;
     }
 
     @Override
