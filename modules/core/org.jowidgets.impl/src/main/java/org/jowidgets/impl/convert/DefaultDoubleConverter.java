@@ -31,6 +31,10 @@ import java.text.DecimalFormat;
 
 class DefaultDoubleConverter extends AbstractFloatingPointNumberConverter<Double> {
 
+    DefaultDoubleConverter(final DecimalFormat decimalFormat, final String formatHint, final boolean warnOnRounding) {
+        super(decimalFormat, formatHint, warnOnRounding);
+    }
+
     DefaultDoubleConverter(final DecimalFormat decimalFormat, final String formatHint) {
         super(decimalFormat, formatHint);
     }

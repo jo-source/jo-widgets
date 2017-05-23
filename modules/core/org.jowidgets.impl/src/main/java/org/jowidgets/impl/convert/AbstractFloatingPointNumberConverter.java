@@ -27,7 +27,10 @@
  */
 package org.jowidgets.impl.convert;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.ParsePosition;
 
 import org.jowidgets.api.convert.IConverter;
@@ -49,21 +52,41 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
     private static final IMessage MUST_BE_A_VALID_DECIMAL_NUMBER = Messages
             .getMessage("AbstractFloatingPointNumberConverter.must_be_a_valid_decimal_number");
 
+    private static final IMessage INPUT_IS_ROUNDED = Messages.getMessage("AbstractFloatingPointNumberConverter.input_is_rounded");
+
     private final DecimalFormat decimalFormat;
+    private final DecimalFormat bigDecimalFormat;
     private final String formatHint;
+    private boolean warnOnRounding;
     private final String acceptingRegExp;
     private final String decimalSeparatorRegEx;
     private final String groupingSeparatorRegEx;
     private final IValidator<String> stringValidator;
 
     AbstractFloatingPointNumberConverter(final DecimalFormat decimalFormat, final String formatHint) {
+        this(decimalFormat, formatHint, true);
+    }
+
+    AbstractFloatingPointNumberConverter(
+        final DecimalFormat decimalFormat,
+        final String formatHint,
+        final boolean warnOnRounding) {
         Assert.paramNotNull(decimalFormat, "decimalFormat");
         this.decimalFormat = decimalFormat;
+        this.bigDecimalFormat = createBigDecimalFormat(decimalFormat);
         this.formatHint = formatHint;
+        this.warnOnRounding = warnOnRounding;
         this.decimalSeparatorRegEx = getDecimalSeparatorRegEx(decimalFormat);
         this.groupingSeparatorRegEx = getGroupingSeparatorRegEx(decimalFormat);
         this.acceptingRegExp = createAcceptionRegEx(decimalFormat, decimalSeparatorRegEx, groupingSeparatorRegEx);
         this.stringValidator = new StringValidator();
+    }
+
+    private static DecimalFormat createBigDecimalFormat(final DecimalFormat format) {
+        final DecimalFormat result = (DecimalFormat) format.clone();
+        result.setRoundingMode(RoundingMode.UNNECESSARY);
+        result.setParseBigDecimal(true);
+        return result;
     }
 
     private static String createAcceptionRegEx(
@@ -170,6 +193,9 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
                         return ValidationResult.error(MUST_BE_A_VALID_DECIMAL_NUMBER.get());
                     }
                 }
+                else if (warnOnRounding && hasRounding(input)) {
+                    return ValidationResult.warning(INPUT_IS_ROUNDED.get());
+                }
             }
             return ValidationResult.ok();
         }
@@ -178,6 +204,30 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
             final ParsePosition pos = new ParsePosition(0);
             final Number number = decimalFormat.parse(tanga, pos);
             return number == null || pos.getIndex() < tanga.length() || pos.getErrorIndex() != -1;
+        }
+
+        private boolean hasRounding(final String tanga) {
+            try {
+                final BigDecimal parsedNumber = (BigDecimal) bigDecimalFormat.parse(tanga);
+                if (parsedNumber != null) {
+                    final Number converted = convertToObject(tanga);
+                    if (converted == null) {
+                        return true;
+                    }
+                    else {
+                        final BigDecimal convertedAsBigDecimal = new BigDecimal(converted.toString());
+                        return parsedNumber.compareTo(convertedAsBigDecimal) != 0;
+                    }
+                }
+            }
+            catch (final NumberFormatException e) {
+                return true;
+            }
+            catch (final ParseException e) {
+                return true;
+            }
+
+            return false;
         }
 
     }

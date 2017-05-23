@@ -207,7 +207,9 @@ Bugfixes:
 
 * Fixed issue #66 https://github.com/jo-source/jo-widgets/issues/66 Column width will be tracked incorrectly for NatTableImplSpi if scrolled horizontaly
 * Fixed issue #68 https://github.com/jo-source/jo-widgets/issues/68 UnitValueField does not consider warnings of base input field 
-* Fixed issue #69 https://github.com/jo-source/jo-widgets/issues/69 Default floating point converters decimal format should have maximimal number of fraction digits
+* Behavior change!!! Fixed issue #69 https://github.com/jo-source/jo-widgets/issues/69 Default floating point converters decimal format should have maximimal number of fraction digits
+* Fixed issue #70 https://github.com/jo-source/jo-widgets/issues/70 AbstractFloatingPointNumberConverter should warn on rounding
+
 
 
 
