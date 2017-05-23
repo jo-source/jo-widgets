@@ -268,10 +268,24 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
         }
         final IValidator<IUnitValue<UNIT_VALUE_TYPE>> unitValidator = unitConverter.getValidator();
         if (unitValidator != null) {
-            final IValidationResult validationResult = unitValidator.validate(getUnitValue());
-            return validationResult;
+            return combineValidationResults(fieldResult, unitValidator.validate(getUnitValue()));
         }
-        return ValidationResult.ok();
+        return combineValidationResults(fieldResult, null);
+    }
+
+    private IValidationResult combineValidationResults(final IValidationResult result1, final IValidationResult result2) {
+        if (result1 != null && result2 != null) {
+            return result1.withResult(result2);
+        }
+        else if (result1 != null) {
+            return result1;
+        }
+        else if (result2 != null) {
+            return result2;
+        }
+        else {
+            return ValidationResult.ok();
+        }
     }
 
     @Override
