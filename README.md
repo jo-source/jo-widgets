@@ -22,7 +22,11 @@
 ## Architecture
 
 ![Architecture](http://jowidgets.org/pics/architecture.gif) 
-  
+
+## Widget-hierarchy
+
+![Architecture](http://jowidgets.org/pic/widgets_hierarchy.gif) 
+
 ## Screenshots
 
 ### Swing SPI implementation
