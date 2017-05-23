@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2017, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,63 +33,67 @@ import java.math.BigDecimal;
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitProvider;
-import org.jowidgets.unit.api.IUnitValue;
-import org.jowidgets.unit.tools.StaticUnitProvider;
-import org.jowidgets.unit.tools.UnitValue;
-import org.jowidgets.util.Assert;
 
 public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Double, Double>
         implements IUnitConverter<Double, Double> {
 
-    private final IUnitProvider<Double> unitProvider;
-
+    /**
+     * Creates a new instance with static unit provider holding the given unit
+     * 
+     * @param defaultUnit The default unit to use for conversion, must not be null
+     */
     public DoubleUnitConverter(final IUnit defaultUnit) {
-        this(new StaticUnitProvider<Double>(defaultUnit));
+        super(defaultUnit);
     }
 
+    /**
+     * Creates a new instance with a given unit provider
+     * 
+     * @param defaultUnit The unit provider to use for conversion, must not be null
+     */
     public DoubleUnitConverter(final IUnitProvider<Double> unitProvider) {
-        Assert.paramNotNull(unitProvider, "name");
-        this.unitProvider = unitProvider;
+        super(unitProvider);
     }
 
-    //    @Override
-    //    public Double toBaseValue(final IUnitValue<Double> unitValue) {
-    //        if (unitValue != null) {
-    //            return Double.valueOf(unitValue.getValue() * unitValue.getUnit().getConversionFactor());
-    //        }
-    //        return null;
-    //    }
-    //
-    //    @Override
-    //    public IUnitValue<Double> toUnitValue(final Double baseValue) {
-    //        if (baseValue != null) {
-    //            final IUnit unit = unitProvider.getUnit(baseValue);
-    //            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
-    //            return new UnitValue<Double>(unitValue, unit);
-    //        }
-    //        return null;
-    //    }
-
-    @Override
-    public Double toBaseValue(final IUnitValue<Double> unitValue) {
-        if (unitValue != null) {
-            final BigDecimal value = BigDecimal.valueOf(unitValue.getValue());
-            final BigDecimal baseValue = value.multiply(BigDecimal.valueOf(unitValue.getUnit().getConversionFactor()));
-            return Double.valueOf(baseValue.doubleValue());
-        }
-        return null;
+    /**
+     * Creates a new instance with a given unit provider
+     * 
+     * @param defaultUnit The unit provider to use for conversion, must not be null
+     * @param unconvertibleSubstitude This value will be used if a base value it not convertible to the base value type because it
+     *            is out of range. The substitute may be null
+     */
+    public DoubleUnitConverter(final IUnitProvider<Double> unitProvider, final Double unconvertibleSubstitude) {
+        super(unitProvider, unconvertibleSubstitude);
     }
 
     @Override
-    public IUnitValue<Double> toUnitValue(final Double baseValue) {
-        if (baseValue != null) {
-            final IUnit unit = unitProvider.getUnit(baseValue);
-            final BigDecimal baseValueDecimal = BigDecimal.valueOf(baseValue);
-            final BigDecimal unitValueDecimal = baseValueDecimal.divide(BigDecimal.valueOf(unit.getConversionFactor()));
-            final Double unitValue = unitValueDecimal.doubleValue();
-            return new UnitValue<Double>(unitValue, unit);
-        }
-        return null;
+    protected BigDecimal baseValueToBigDecimal(final Double baseValue) {
+        return BigDecimal.valueOf(baseValue);
+    }
+
+    @Override
+    protected Double bigDecimalToBaseValue(final BigDecimal value) {
+        return value.doubleValue();
+    }
+
+    @Override
+    protected boolean isConvertibleToBaseValue(final BigDecimal value) {
+        return isInsideDoubleValuesInterval(value);
+    }
+
+    @Override
+    protected BigDecimal unitValueToBigDecimal(final Double unitValue) {
+        return BigDecimal.valueOf(unitValue);
+    }
+
+    @Override
+    protected Double bigDecimalToUnitValue(final BigDecimal value) {
+        return value.doubleValue();
+    }
+
+    @Override
+    protected boolean isConvertibleToUnitValue(final BigDecimal value) {
+        return isInsideDoubleValuesInterval(value);
     }
 
 }

@@ -28,44 +28,36 @@
 
 package org.jowidgets.unit.api;
 
-import org.jowidgets.validation.IValidator;
-
 /**
- * Allows to convert from base value to a IUnitValue and vice versa.
- * 
- * The base value often can be used to be stored in a database e.g.
- * and the unit value may be used for representation in ui.
+ * Allows to converts base values to a defined {@link IUnit} or to convert a {@link IUnitValue} to a {@link IUnitValue}
+ * with different {@link IUnit}.
  * 
  * @param <BASE_VALUE_TYPE> The type of the base value
  * @param <UNIT_VALUE_TYPE> The value type of the unit values
  */
-public interface IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
+public interface IUnitValueConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
 
     /**
-     * Converts a given {@link IUnitValue} to a base value
+     * Converts a base value to a unit value with a given unit
      * 
-     * @param value The unit value to convert, may be null
+     * @param baseValue The base value, may be null
+     * @param resultUnit The unit of the result, must not be null
      * 
      * @return The converted value, may be null
      */
-    BASE_VALUE_TYPE toBaseValue(IUnitValue<UNIT_VALUE_TYPE> value);
+    IUnitValue<UNIT_VALUE_TYPE> toUnitValue(BASE_VALUE_TYPE baseValue, IUnit resultUnit);
 
     /**
-     * Converts a given base value to a unit value.
+     * Converts a unit value to a a unit value with a given unit.
      * 
-     * The resulting unit will be chosen by the converter and may differ depending on the given base value.
+     * If the unit of the given value is equal with the expected result value, the given value
+     * will be returned without any conversion
      * 
-     * @param value The value to convert, may be null
-     * 
+     * @param unitValue The source value, may be null
+     * @param resultUnit The unit of the result, must not be null
+     *
      * @return The converted value, may be null
      */
-    IUnitValue<UNIT_VALUE_TYPE> toUnitValue(BASE_VALUE_TYPE value);
-
-    /**
-     * Gets a validator to validate IUnitValues
-     * 
-     * @return The validator, may be null if no validation is supported
-     */
-    IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator();
+    IUnitValue<UNIT_VALUE_TYPE> convert(IUnitValue<UNIT_VALUE_TYPE> unitValue, IUnit resultUnit);
 
 }

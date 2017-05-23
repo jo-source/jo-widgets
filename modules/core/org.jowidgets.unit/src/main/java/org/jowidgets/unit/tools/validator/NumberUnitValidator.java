@@ -29,35 +29,37 @@
 package org.jowidgets.unit.tools.validator;
 
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitValue;
+import org.jowidgets.unit.api.IUnitValueConverter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public final class NumberUnitValidator<BASE_VALUE_TYPE extends Number, UNIT_VALUE_TYPE extends Number> implements
-        IValidator<IUnitValue<UNIT_VALUE_TYPE>> {
+public final class NumberUnitValidator<BASE_VALUE_TYPE extends Number, UNIT_VALUE_TYPE extends Number>
+        implements IValidator<IUnitValue<UNIT_VALUE_TYPE>> {
 
-    private static final IMessage BIJECTIVITY_CHECK_WARNING = Messages.getMessage("BijectiveCheckUnitValidator.bijectivityCheckFailed");
+    public static final IMessage OUT_OF_RANGE_ERROR = Messages.getMessage("NumberUnitValidator.outOfRange");
+    private static final IMessage BIJECTIVITY_CHECK_WARNING = Messages.getMessage("NumberUnitValidator.bijectivityCheckFailed");
 
-    private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter;
+    private final IUnitValueConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter;
 
-    public NumberUnitValidator(final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter) {
+    public NumberUnitValidator(final IUnitValueConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter) {
         Assert.paramNotNull(converter, "converter");
         this.converter = converter;
     }
 
     @Override
-    public IValidationResult validate(final IUnitValue<UNIT_VALUE_TYPE> value) {
-        if (value != null && value.getValue() != null) {
-            final Number baseValue = converter.toBaseValue(value);
+    public IValidationResult validate(final IUnitValue<UNIT_VALUE_TYPE> unitValue) {
+        if (unitValue != null && unitValue.getValue() != null) {
+            final BASE_VALUE_TYPE baseValue = converter.toBaseValue(unitValue);
             if (baseValue == null) {
-                return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
+                return ValidationResult.error(OUT_OF_RANGE_ERROR.get());
             }
-            final Number backValue = baseValue.doubleValue() / value.getUnit().getConversionFactor();
-            if (!NullCompatibleEquivalence.equals(value.getValue().doubleValue(), backValue.doubleValue())) {
+
+            final IUnitValue<UNIT_VALUE_TYPE> bakUnitValue = converter.toUnitValue(baseValue, unitValue.getUnit());
+            if (!NullCompatibleEquivalence.equals(bakUnitValue, unitValue)) {
                 return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
             }
         }

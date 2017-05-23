@@ -206,6 +206,7 @@ Features:
 Bugfixes:
 
 * Fixed issue #66 https://github.com/jo-source/jo-widgets/issues/66 Column width will be tracked incorrectly for NatTableImplSpi if scrolled horizontaly
+* Minor API Change!!! Fixed issue #67 https://github.com/jo-source/jo-widgets/issues/67 LongDoubleUnitConverter must reject and validate unit values that are to big for the base value
 * Fixed issue #68 https://github.com/jo-source/jo-widgets/issues/68 UnitValueField does not consider warnings of base input field 
 * Behavior change!!! Fixed issue #69 https://github.com/jo-source/jo-widgets/issues/69 Default floating point converters decimal format should have maximimal number of fraction digits
 * Fixed issue #70 https://github.com/jo-source/jo-widgets/issues/70 AbstractFloatingPointNumberConverter should warn on rounding
