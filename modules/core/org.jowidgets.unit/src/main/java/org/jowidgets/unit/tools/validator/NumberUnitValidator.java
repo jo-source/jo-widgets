@@ -58,8 +58,8 @@ public final class NumberUnitValidator<BASE_VALUE_TYPE extends Number, UNIT_VALU
                 return ValidationResult.error(OUT_OF_RANGE_ERROR.get());
             }
 
-            final IUnitValue<UNIT_VALUE_TYPE> bakUnitValue = converter.toUnitValue(baseValue, unitValue.getUnit());
-            if (!NullCompatibleEquivalence.equals(bakUnitValue, unitValue)) {
+            final IUnitValue<UNIT_VALUE_TYPE> backUnitValue = converter.toUnitValue(baseValue, unitValue.getUnit());
+            if (!NullCompatibleEquivalence.equals(backUnitValue, unitValue)) {
                 return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
             }
         }

@@ -71,7 +71,7 @@ public abstract class AbstractNumberUnitConverter<BASE_VALUE_TYPE extends Number
     private final BASE_VALUE_TYPE unconvertibleSubstitude;
 
     /**
-     * Creates a new instance with static unit provider holding the given unit
+     * Creates a new instance {@link StaticUnitProvider} provider holding the given unit
      * 
      * @param defaultUnit The default unit to use for conversion, must not be null
      */
