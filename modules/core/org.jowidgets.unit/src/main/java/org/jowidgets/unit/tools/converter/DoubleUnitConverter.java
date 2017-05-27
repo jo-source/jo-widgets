@@ -33,12 +33,13 @@ import java.math.BigDecimal;
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitProvider;
+import org.jowidgets.unit.tools.StaticUnitProvider;
 
 public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Double, Double>
         implements IUnitConverter<Double, Double> {
 
     /**
-     * Creates a new instance with static unit provider holding the given unit
+     * Creates a new instance with a {@link StaticUnitProvider} holding the given unit
      * 
      * @param defaultUnit The default unit to use for conversion, must not be null
      */
