@@ -40,6 +40,8 @@ import org.jowidgets.unit.api.IUnitConverter;
 
 public interface IConverterProvider {
 
+    boolean WARN_ON_ROUNDING_DEFAULT = true;
+
     int DOUBLE_MIN_FRACTION_DIGITS_DEFAULT = 0;
     int DOUBLE_MAX_FRACTION_DIGITS_DEFAULT = 16;
 
@@ -100,6 +102,14 @@ public interface IConverterProvider {
     IConverter<Double> doubleNumber(int minFractionDigits, int maxFractionDigits);
 
     IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
+
+    IConverter<Double> doubleNumber(int minFractionDigits, int maxFractionDigits, boolean warnOnRounding);
+
+    IConverter<Double> doubleNumber(Locale locale, int minFractionDigits, int maxFractionDigits);
+
+    IConverter<Double> doubleNumber(Locale locale, int minFractionDigits, int maxFractionDigits, boolean warnOnRounding);
+
+    IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint, boolean warnOnRounding);
 
     IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
 

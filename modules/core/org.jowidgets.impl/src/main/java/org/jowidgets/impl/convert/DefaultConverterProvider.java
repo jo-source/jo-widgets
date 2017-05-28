@@ -141,7 +141,15 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
     private DecimalFormat createDecimalFormatForLocale(final Locale locale, final int minDigits, final int maxDigits) {
         final DecimalFormat formatOfLocale = (DecimalFormat) DecimalFormat.getInstance(locale);
-        final DecimalFormat result = (DecimalFormat) formatOfLocale.clone();
+        return createDecimalFormatCloneWithFractions(formatOfLocale, minDigits, maxDigits);
+    }
+
+    private DecimalFormat createDecimalFormatCloneWithFractions(
+        final DecimalFormat decimalFormat,
+        final int minDigits,
+        final int maxDigits) {
+        Assert.getParamNotNull(decimalFormat, "decimalFormat");
+        final DecimalFormat result = (DecimalFormat) decimalFormat.clone();
         result.setMinimumFractionDigits(minDigits);
         result.setMaximumFractionDigits(maxDigits);
         return result;
@@ -391,7 +399,41 @@ public final class DefaultConverterProvider implements IConverterProvider {
         final DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMinimumFractionDigits(minFractionDigits);
         decimalFormat.setMaximumFractionDigits(maxFractionDigits);
-        return new DefaultDoubleConverter(decimalFormat, MUST_BE_A_FLOATING_POINT_NUMBER.get());
+        return doubleNumber(minFractionDigits, maxFractionDigits, WARN_ON_ROUNDING_DEFAULT);
+    }
+
+    @Override
+    public IConverter<Double> doubleNumber(
+        final DecimalFormat decimalFormat,
+        final String formatHint,
+        final boolean warnOnRounding) {
+        return new DefaultDoubleConverter(decimalFormat, formatHint, warnOnRounding);
+    }
+
+    @Override
+    public IConverter<Double> doubleNumber(
+        final int minFractionDigits,
+        final int maxFractionDigits,
+        final boolean warnOnRounding) {
+        final DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMinimumFractionDigits(minFractionDigits);
+        decimalFormat.setMaximumFractionDigits(maxFractionDigits);
+        return new DefaultDoubleConverter(decimalFormat, MUST_BE_A_FLOATING_POINT_NUMBER.get(), warnOnRounding);
+    }
+
+    @Override
+    public IConverter<Double> doubleNumber(final Locale locale, final int minFractionDigits, final int maxFractionDigits) {
+        return doubleNumber(locale, minFractionDigits, maxFractionDigits, WARN_ON_ROUNDING_DEFAULT);
+    }
+
+    @Override
+    public IConverter<Double> doubleNumber(
+        final Locale locale,
+        final int minFractionDigits,
+        final int maxFractionDigits,
+        final boolean warnOnRounding) {
+        final DecimalFormat decimalFormat = createDecimalFormatForLocale(locale, minFractionDigits, maxFractionDigits);
+        return new DefaultDoubleConverter(decimalFormat, MUST_BE_A_FLOATING_POINT_NUMBER.get(), warnOnRounding);
     }
 
     @Override

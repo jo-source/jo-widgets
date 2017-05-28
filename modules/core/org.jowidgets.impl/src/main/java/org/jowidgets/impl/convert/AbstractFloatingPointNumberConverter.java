@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.converter.AbstractConverter;
 import org.jowidgets.util.Assert;
@@ -64,7 +65,7 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
     private final IValidator<String> stringValidator;
 
     AbstractFloatingPointNumberConverter(final DecimalFormat decimalFormat, final String formatHint) {
-        this(decimalFormat, formatHint, true);
+        this(decimalFormat, formatHint, IConverterProvider.WARN_ON_ROUNDING_DEFAULT);
     }
 
     AbstractFloatingPointNumberConverter(
