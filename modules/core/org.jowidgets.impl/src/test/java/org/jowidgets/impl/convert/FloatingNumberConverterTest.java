@@ -31,6 +31,8 @@ package org.jowidgets.impl.convert;
 import java.util.Locale;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.validation.IValidationResult;
+import org.jowidgets.validation.MessageType;
 import org.junit.Test;
 
 import junit.framework.Assert;
@@ -80,6 +82,61 @@ public class FloatingNumberConverterTest {
     }
 
     @Test
+    public void testDoubleNumberConverterRoundValidationGerman() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.getConverterFromLocale(Locale.GERMANY, Double.class);
+        Assert.assertTrue(converter.getStringValidator().validate("1,234567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12,34567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123,4567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234,567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345,67891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456,7891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567,891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678,91123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789,1123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891,123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911,23456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112,3456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891123,456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911234,56").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112345,6").isOk());
+
+        Assert.assertTrue(converter.getStringValidator().validate("1,2345678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12,345678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123,45678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234,5678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345,678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456,78911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567,8911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678,911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789,11234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891,1234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911,234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112,34560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891123,4560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911234,560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112345,60000").isOk());
+
+        assertWarning(converter.getStringValidator().validate("1,23456789112345678"));
+        assertWarning(converter.getStringValidator().validate("12,3456789112345678"));
+        assertWarning(converter.getStringValidator().validate("123,456789112345678"));
+        assertWarning(converter.getStringValidator().validate("1234,56789112345678"));
+        assertWarning(converter.getStringValidator().validate("12345,6789112345678"));
+        assertWarning(converter.getStringValidator().validate("123456,789112345678"));
+        assertWarning(converter.getStringValidator().validate("1234567,89112345678"));
+        assertWarning(converter.getStringValidator().validate("12345678,9112345678"));
+        assertWarning(converter.getStringValidator().validate("123456789,112345678"));
+        assertWarning(converter.getStringValidator().validate("1234567891,12345678"));
+        assertWarning(converter.getStringValidator().validate("12345678911,2345678"));
+        assertWarning(converter.getStringValidator().validate("123456789112,345678"));
+        assertWarning(converter.getStringValidator().validate("1234567891123,45678"));
+        assertWarning(converter.getStringValidator().validate("12345678911234,5678"));
+        assertWarning(converter.getStringValidator().validate("123456789112345,678"));
+        assertWarning(converter.getStringValidator().validate("1234567891123456,78"));
+        assertWarning(converter.getStringValidator().validate("12345678911234567,8"));
+        assertWarning(converter.getStringValidator().validate("123456789112345678"));
+    }
+
+    @Test
     public void testDoubleNumberConverterValidationUS() {
         final IConverter<Double> converter = CONVERTER_PROVIDER.getConverterFromLocale(Locale.US, Double.class);
         Assert.assertTrue(converter.getStringValidator().validate("13.1834").isValid());
@@ -89,6 +146,65 @@ public class FloatingNumberConverterTest {
         Assert.assertTrue(converter.getStringValidator().validate(".18").isValid());
         Assert.assertTrue(converter.getStringValidator().validate(",,.18,,56").isValid());
         Assert.assertFalse(converter.getStringValidator().validate("1.23E").isValid());
+    }
+
+    @Test
+    public void testDoubleNumberConverterRoundValidationUS() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.getConverterFromLocale(Locale.US, Double.class);
+        Assert.assertTrue(converter.getStringValidator().validate("1.234567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12.34567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123.4567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234.567891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345.67891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456.7891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567.891123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678.91123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789.1123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891.123456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911.23456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112.3456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891123.456").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911234.56").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112345.6").isOk());
+
+        Assert.assertTrue(converter.getStringValidator().validate("1.2345678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12.345678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123.45678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234.5678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345.678911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456.78911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567.8911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678.911234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789.11234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891.1234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911.234560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112.34560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("1234567891123.4560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("12345678911234.560000").isOk());
+        Assert.assertTrue(converter.getStringValidator().validate("123456789112345.60000").isOk());
+
+        assertWarning(converter.getStringValidator().validate("1.23456789112345678"));
+        assertWarning(converter.getStringValidator().validate("12.3456789112345678"));
+        assertWarning(converter.getStringValidator().validate("123.456789112345678"));
+        assertWarning(converter.getStringValidator().validate("1234.56789112345678"));
+        assertWarning(converter.getStringValidator().validate("12345.6789112345678"));
+        assertWarning(converter.getStringValidator().validate("123456.789112345678"));
+        assertWarning(converter.getStringValidator().validate("1234567.89112345678"));
+        assertWarning(converter.getStringValidator().validate("12345678.9112345678"));
+        assertWarning(converter.getStringValidator().validate("123456789.112345678"));
+        assertWarning(converter.getStringValidator().validate("1234567891.12345678"));
+        assertWarning(converter.getStringValidator().validate("12345678911.2345678"));
+        assertWarning(converter.getStringValidator().validate("123456789112.345678"));
+        assertWarning(converter.getStringValidator().validate("1234567891123.45678"));
+        assertWarning(converter.getStringValidator().validate("12345678911234.5678"));
+        assertWarning(converter.getStringValidator().validate("123456789112345.678"));
+        assertWarning(converter.getStringValidator().validate("1234567891123456.78"));
+        assertWarning(converter.getStringValidator().validate("12345678911234567.8"));
+        assertWarning(converter.getStringValidator().validate("123456789112345678"));
+    }
+
+    private void assertWarning(final IValidationResult validationResult) {
+        Assert.assertEquals(MessageType.WARNING, validationResult.getWorstFirst().getType());
     }
 
     @Test
@@ -121,6 +237,38 @@ public class FloatingNumberConverterTest {
         Assert.assertTrue("1.23E123".matches(acceptingRegExp));
 
         Assert.assertFalse("1.23e123".matches(acceptingRegExp));
+    }
+
+    @Test
+    public void testFractionsGerman() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.doubleNumber(Locale.GERMANY, 2, 4);
+        Assert.assertEquals("1,2345", converter.convertToString(Double.valueOf(1.2345d)));
+        Assert.assertEquals("1,2346", converter.convertToString(Double.valueOf(1.234567891234567d)));
+        Assert.assertEquals("1,00", converter.convertToString(Double.valueOf(1.0d)));
+    }
+
+    @Test
+    public void testFractionsUs() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.doubleNumber(Locale.US, 2, 4);
+        Assert.assertEquals("1.2345", converter.convertToString(Double.valueOf(1.2345d)));
+        Assert.assertEquals("1.2346", converter.convertToString(Double.valueOf(1.234567891234567d)));
+        Assert.assertEquals("1.00", converter.convertToString(Double.valueOf(1.0d)));
+    }
+
+    @Test
+    public void testDefaultFractionsGerman() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.getConverterFromLocale(Locale.GERMANY, Double.class);
+        Assert.assertEquals("1,234567891234567", converter.convertToString(Double.valueOf(1.234567891234567d)));
+        Assert.assertEquals("1,234567891234568", converter.convertToString(Double.valueOf(1.2345678912345678999d)));
+        Assert.assertEquals("1", converter.convertToString(Double.valueOf(1.0d)));
+    }
+
+    @Test
+    public void testDefaultFractionsUs() {
+        final IConverter<Double> converter = CONVERTER_PROVIDER.getConverterFromLocale(Locale.US, Double.class);
+        Assert.assertEquals("1.234567891234567", converter.convertToString(Double.valueOf(1.234567891234567d)));
+        Assert.assertEquals("1.234567891234568", converter.convertToString(Double.valueOf(1.2345678912345678999d)));
+        Assert.assertEquals("1", converter.convertToString(Double.valueOf(1.0d)));
     }
 
 }
