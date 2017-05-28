@@ -390,6 +390,11 @@ public final class DefaultConverterProvider implements IConverterProvider {
     }
 
     @Override
+    public IConverter<Double> doubleNumber(final Locale locale) {
+        return doubleNumber(locale, DOUBLE_MIN_FRACTION_DIGITS_DEFAULT, DOUBLE_MAX_FRACTION_DIGITS_DEFAULT);
+    }
+
+    @Override
     public IConverter<Double> doubleNumber(final DecimalFormat decimalFormat, final String formatHint) {
         return new DefaultDoubleConverter(decimalFormat, formatHint);
     }

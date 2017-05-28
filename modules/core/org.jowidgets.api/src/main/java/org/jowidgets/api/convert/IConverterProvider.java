@@ -99,6 +99,8 @@ public interface IConverterProvider {
 
     IConverter<Double> doubleNumber();
 
+    IConverter<Double> doubleNumber(Locale locale);
+
     IConverter<Double> doubleNumber(int minFractionDigits, int maxFractionDigits);
 
     IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);

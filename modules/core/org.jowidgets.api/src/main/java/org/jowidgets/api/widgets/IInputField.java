@@ -40,6 +40,18 @@ public interface IInputField<VALUE_TYPE> extends IObservableValueViewer<VALUE_TY
 
     int getCaretPosition();
 
+    /**
+     * Gets the text from the underlying text field
+     * 
+     * @return The text of the underlying text field, may be null
+     */
     String getText();
+
+    /**
+     * Sets the text into the underlying text field
+     * 
+     * @param text The text to set, may be null
+     */
+    void setText(String text);
 
 }

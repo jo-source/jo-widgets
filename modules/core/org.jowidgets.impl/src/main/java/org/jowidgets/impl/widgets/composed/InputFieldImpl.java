@@ -210,6 +210,11 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
     }
 
     @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
+
+    @Override
     public void addValidator(final IValidator<VALUE_TYPE> validator) {
         compoundValidator.addValidator(validator);
     }

@@ -135,6 +135,9 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
     }
 
     private NUMBER_TYPE convertToObjectWithoutGroupingSeparators(final String string) {
+        if (EmptyCheck.isEmpty(string)) {
+            return null;
+        }
         try {
             final ParsePosition pos = new ParsePosition(0);
             final Number result = decimalFormat.parse(string, pos);

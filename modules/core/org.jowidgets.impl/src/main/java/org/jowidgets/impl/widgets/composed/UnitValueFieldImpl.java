@@ -204,6 +204,26 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
     }
 
     @Override
+    public String getText() {
+        return valueField.getText();
+    }
+
+    @Override
+    public void setText(final String text) {
+        valueField.setText(text);
+    }
+
+    @Override
+    public IUnit getUnit() {
+        return unitCmb.getValue();
+    }
+
+    @Override
+    public void setUnit(final IUnit unit) {
+        unitCmb.setValue(unit);
+    }
+
+    @Override
     public boolean hasModifications() {
         return valueField.hasModifications() || unitCmb.hasModifications();
     }

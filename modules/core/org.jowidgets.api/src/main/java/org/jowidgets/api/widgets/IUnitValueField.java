@@ -29,12 +29,51 @@
 package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.ISelectable;
+import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitValue;
 
 public interface IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends IInputControl<BASE_VALUE_TYPE>, ISelectable {
 
+    /**
+     * Gets the current unit value, may be null
+     * 
+     * @return The current unit value
+     */
     IUnitValue<UNIT_VALUE_TYPE> getUnitValue();
 
+    /**
+     * Sets a new unit value
+     * 
+     * @param unitValue The value to set, may be null
+     */
     void setUnitValue(IUnitValue<UNIT_VALUE_TYPE> unitValue);
+
+    /**
+     * Gets the text from the underlying text field
+     * 
+     * @return The text of the underlying text field, may be null
+     */
+    String getText();
+
+    /**
+     * Sets the text into the underlying text field
+     * 
+     * @param text The text to set, may be null
+     */
+    void setText(String text);
+
+    /**
+     * Gets the currently selected unit
+     * 
+     * @return The selected unit, never null
+     */
+    IUnit getUnit();
+
+    /**
+     * Sets the unit
+     * 
+     * @param unit The unit to set, must not be null
+     */
+    void setUnit(IUnit unit);
 
 }
