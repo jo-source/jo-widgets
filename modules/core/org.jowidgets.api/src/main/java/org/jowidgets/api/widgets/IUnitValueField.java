@@ -65,14 +65,14 @@ public interface IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends IInpu
     /**
      * Gets the currently selected unit
      * 
-     * @return The selected unit, never null
+     * @return The selected unit, may be null
      */
     IUnit getUnit();
 
     /**
      * Sets the unit
      * 
-     * @param unit The unit to set, must not be null
+     * @param unit The unit to set, may be null
      */
     void setUnit(IUnit unit);
 
