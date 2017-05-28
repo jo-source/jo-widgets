@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, grossmann
+ * Copyright (c) 2017, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.convert;
+package org.jowidgets.unit.tools.converter;
 
 import org.jowidgets.unit.api.IUnitValue;
 import org.jowidgets.unit.tools.UnitValue;
-import org.jowidgets.unit.tools.converter.DoubleUnitConverter;
-import org.jowidgets.unit.tools.converter.LongDoubleUnitConverter;
 import org.jowidgets.unit.tools.units.HertzUnitSet;
-import org.junit.Assert;
 import org.junit.Test;
 
-public class UnitConverterTest {
+import junit.framework.Assert;
 
-    @Test
-    public void testLongDoubleUnitConverter() {
-        final LongDoubleUnitConverter converter = new LongDoubleUnitConverter(HertzUnitSet.GH);
-        final UnitValue<Double> unitValue = new UnitValue<Double>(1.005d, HertzUnitSet.GH);
-
-        final Long baseValueOfUnitValue = converter.toBaseValue(unitValue);
-        Assert.assertEquals(1005000000, baseValueOfUnitValue.longValue());
-
-        final IUnitValue<Double> unitValueConvertedBack = converter.toUnitValue(baseValueOfUnitValue);
-        Assert.assertEquals(unitValue, unitValueConvertedBack);
-    }
+public class DoubleUnitConverterTest {
 
     @Test
     public void testDoubleUnitConverter() {

@@ -45,6 +45,27 @@ public class LongDoubleUnitConverterTest {
     private static final BigDecimal NUMBER_10 = BigDecimal.valueOf(10);
 
     @Test
+    public void testLongDoubleUnitConverter() {
+        final LongDoubleUnitConverter converter = new LongDoubleUnitConverter(HertzUnitSet.GH);
+        final UnitValue<Double> unitValue = new UnitValue<Double>(1.005d, HertzUnitSet.GH);
+
+        final Long baseValueOfUnitValue = converter.toBaseValue(unitValue);
+        Assert.assertEquals(1005000000, baseValueOfUnitValue.longValue());
+
+        final IUnitValue<Double> unitValueConvertedBack = converter.toUnitValue(baseValueOfUnitValue);
+        Assert.assertEquals(unitValue, unitValueConvertedBack);
+    }
+
+    @Test
+    public void testDoubleUnitConverter() {
+        final DoubleUnitConverter converter = new DoubleUnitConverter(HertzUnitSet.GH);
+        final UnitValue<Double> unitValue = new UnitValue<Double>(1.005d, HertzUnitSet.GH);
+        final Double baseValueOfUnitValue = converter.toBaseValue(unitValue);
+        final IUnitValue<Double> unitValueConvertedBack = converter.toUnitValue(baseValueOfUnitValue);
+        Assert.assertEquals(unitValue, unitValueConvertedBack);
+    }
+
+    @Test
     public void testConvertGigaHerz() {
         final LongDoubleUnitConverter converter = new LongDoubleUnitConverter(HertzUnitSet.GH);
         final IValidator<IUnitValue<Double>> validator = converter.getValidator();
