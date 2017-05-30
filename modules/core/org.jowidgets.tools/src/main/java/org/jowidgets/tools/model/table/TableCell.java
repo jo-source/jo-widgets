@@ -101,6 +101,11 @@ public class TableCell implements ITableCell {
         return cell.isEditable();
     }
 
+    @Override
+    public String toString() {
+        return cell.toString();
+    }
+
     public static ITableCellBuilder builder() {
         return Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder();
     }
