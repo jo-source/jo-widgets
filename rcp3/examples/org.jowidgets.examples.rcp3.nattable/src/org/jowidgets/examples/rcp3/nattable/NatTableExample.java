@@ -193,11 +193,11 @@ public final class NatTableExample implements IApplication {
 		@Override
 		public ITableCell getCell(final int rowIndex, final int columnIndex) {
 			if (Boolean.TRUE.equals(cellOption.getValue())) {
-				return new TableCell(
+				return TableCell.builder(
 					"Cell Opt(" + rowIndex + "/" + columnIndex + ")",
-					"Tooltip (" + rowIndex + "/" + columnIndex + ")");
+					"Tooltip (" + rowIndex + "/" + columnIndex + ")").build();
 			}
-			return new TableCell("Cell (" + rowIndex + "/" + columnIndex + ")", "Tooltip (" + rowIndex + "/" + columnIndex + ")");
+			return TableCell.builder("Cell (" + rowIndex + "/" + columnIndex + ")", "Tooltip (" + rowIndex + "/" + columnIndex + ")").build();
 		}
 
 	}
