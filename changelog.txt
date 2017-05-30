@@ -212,5 +212,16 @@ Bugfixes:
 * Fixed issue #70 https://github.com/jo-source/jo-widgets/issues/70 AbstractFloatingPointNumberConverter should warn on rounding
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.72.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #71 https://github.com/jo-source/jo-widgets/issues/71 NatTable multi selection works not as expected 
+
 
 

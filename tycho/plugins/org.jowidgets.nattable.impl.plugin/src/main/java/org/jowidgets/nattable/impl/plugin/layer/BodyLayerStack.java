@@ -56,10 +56,10 @@ final class BodyLayerStack extends AbstractLayerTransform {
 
         this.columnReorderLayer = new JoColumnReorderLayer(dataLayer);
         if (columnsMoveable) {
-            this.selectionLayer = new SelectionLayer(columnReorderLayer);
+            this.selectionLayer = new JoSelectionLayer(columnReorderLayer);
         }
         else {
-            this.selectionLayer = new SelectionLayer(dataLayer);
+            this.selectionLayer = new JoSelectionLayer(dataLayer);
         }
 
         if (TableSelectionPolicy.NO_SELECTION.equals(selectionPolicy)) {
