@@ -17,17 +17,17 @@
 <repository location="http://download.eclipse.org/releases/helios"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.jowidgets.addons.silkicons.feature.feature.group" version="0.65.0"/>
-<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.65.0"/>
-<unit id="org.jowidgets.workbench.feature.feature.group" version="0.65.0"/>
-<unit id="org.jowidgets.addons.logging.slf4j161.feature.feature.group" version="0.65.0"/>
+<unit id="org.jowidgets.addons.silkicons.feature.feature.group" version="0.71.0"/>
+<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.71.0"/>
+<unit id="org.jowidgets.workbench.feature.feature.group" version="0.71.0"/>
+<unit id="org.jowidgets.addons.logging.slf4j161.feature.feature.group" version="0.71.0"/>
 <repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.jowidgets.cap.remoting.client.starter.feature.feature.group" version="0.59.0"/>
-<unit id="org.jowidgets.cap.security.ui.feature.feature.group" version="0.59.0"/>
-<unit id="org.jowidgets.cap.core.ui.feature.feature.group" version="0.59.0"/>
-<unit id="org.jowidgets.cap.service.repository.feature.feature.group" version="0.59.0"/>
+<unit id="org.jowidgets.cap.remoting.client.starter.feature.feature.group" version="0.67.0"/>
+<unit id="org.jowidgets.cap.security.ui.feature.feature.group" version="0.67.0"/>
+<unit id="org.jowidgets.cap.core.ui.feature.feature.group" version="0.67.0"/>
+<unit id="org.jowidgets.cap.service.repository.feature.feature.group" version="0.67.0"/>
 <repository location="http://www.jowidgets.org/p2/jo-client-platform/releases/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">

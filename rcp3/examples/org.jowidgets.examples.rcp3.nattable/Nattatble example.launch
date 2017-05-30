@@ -22,5 +22,5 @@
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.jowidgets.classloading.weaving.plugin@2:true,org.jowidgets.examples.rcp3.nattable@default:true,org.jowidgets.nattable.plugin@default:default,org.jowidgets.tools.starter.application.osgi.plugin@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.jowidgets.classloading.weaving.plugin@2:true,org.jowidgets.examples.rcp3.nattable@default:true,org.jowidgets.nattable.api.plugin@default:default,org.jowidgets.nattable.decoration.plugin@default:default,org.jowidgets.nattable.impl.plugin@default:default,org.jowidgets.tools.starter.application.osgi.plugin@default:default"/>
 </launchConfiguration>
