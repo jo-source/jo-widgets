@@ -47,6 +47,7 @@ import org.jowidgets.spi.impl.dummy.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.dummy.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.TabFolderImpl;
+import org.jowidgets.spi.impl.dummy.widgets.TableImpl;
 import org.jowidgets.spi.impl.dummy.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.dummy.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ToggleButtonImpl;
@@ -271,8 +272,8 @@ public class DummyWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ITableSetupSpi setup) {
-        // TODO must be implemented
-        return null;
+
+        return new TableImpl(setup);
     }
 
     @Override

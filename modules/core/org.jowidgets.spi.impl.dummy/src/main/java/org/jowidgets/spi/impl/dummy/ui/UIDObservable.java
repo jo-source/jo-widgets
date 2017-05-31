@@ -28,11 +28,9 @@
 
 package org.jowidgets.spi.impl.dummy.ui;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
+import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IActionObservable;
 import org.jowidgets.common.widgets.controller.IComponentListener;
@@ -43,6 +41,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IInputObservable;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.controller.IItemStateObservable;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IKeyObservable;
 import org.jowidgets.common.widgets.controller.IMenuListener;
@@ -57,10 +56,14 @@ import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.controller.IWindowObservable;
+import org.jowidgets.spi.impl.dummy.tools.DummyKeyEvent;
 import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
 import org.jowidgets.spi.widgets.controller.ITabItemObservableSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class UIDObservable implements
         IActionObservable,
@@ -78,37 +81,37 @@ public class UIDObservable implements
         IMouseMotionObservable,
         IComponentObservable {
 
-    private final Set<IInputListener> inputListeners;
-    private final Set<IActionListener> actionListeners;
-    private final Set<IWindowListener> windowListeners;
-    private final Set<IItemStateListener> itemStateListeners;
-    private final Set<IMenuListener> menuListeners;
-    private final Set<IPopupDetectionListener> popupListeners;
-    private final Set<ITabItemListenerSpi> tabItemListeners;
-    private final Set<ITreeNodeListener> treeNodeListeners;
-    private final Set<ITreeSelectionListenerSpi> treeSelectionListeners;
-    private final Set<IFocusListener> focusListeners;
-    private final Set<IKeyListener> keyListeners;
-    private final Set<IMouseListener> mouseListeners;
-    private final Set<IMouseMotionListener> mouseMotionListeners;
-    private final Set<IComponentListener> componentListeners;
+    private final IObserverSet<IInputListener> inputListeners;
+    private final IObserverSet<IActionListener> actionListeners;
+    private final IObserverSet<IWindowListener> windowListeners;
+    private final IObserverSet<IItemStateListener> itemStateListeners;
+    private final IObserverSet<IMenuListener> menuListeners;
+    private final IObserverSet<IPopupDetectionListener> popupListeners;
+    private final IObserverSet<ITabItemListenerSpi> tabItemListeners;
+    private final IObserverSet<ITreeNodeListener> treeNodeListeners;
+    private final IObserverSet<ITreeSelectionListenerSpi> treeSelectionListeners;
+    private final IObserverSet<IFocusListener> focusListeners;
+    private final IObserverSet<IKeyListener> keyListeners;
+    private final IObserverSet<IMouseListener> mouseListeners;
+    private final IObserverSet<IMouseMotionListener> mouseMotionListeners;
+    private final IObserverSet<IComponentListener> componentListeners;
 
     public UIDObservable() {
         super();
-        this.inputListeners = new HashSet<IInputListener>();
-        this.actionListeners = new HashSet<IActionListener>();
-        this.windowListeners = new HashSet<IWindowListener>();
-        this.itemStateListeners = new HashSet<IItemStateListener>();
-        this.menuListeners = new HashSet<IMenuListener>();
-        this.popupListeners = new HashSet<IPopupDetectionListener>();
-        this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
-        this.treeNodeListeners = new HashSet<ITreeNodeListener>();
-        this.treeSelectionListeners = new HashSet<ITreeSelectionListenerSpi>();
-        this.focusListeners = new HashSet<IFocusListener>();
-        this.keyListeners = new HashSet<IKeyListener>();
-        this.mouseListeners = new HashSet<IMouseListener>();
-        this.mouseMotionListeners = new HashSet<IMouseMotionListener>();
-        this.componentListeners = new HashSet<IComponentListener>();
+        this.inputListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.actionListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.windowListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.itemStateListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.menuListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.popupListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.tabItemListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.treeNodeListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.treeSelectionListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.focusListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.keyListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.mouseListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.mouseMotionListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+        this.componentListeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
     }
 
     @Override
@@ -252,7 +255,7 @@ public class UIDObservable implements
     }
 
     public void fireTabItemSelected() {
-        for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(tabItemListeners)) {
+        for (final ITabItemListenerSpi listener : tabItemListeners) {
             listener.selected();
         }
     }
@@ -352,4 +355,31 @@ public class UIDObservable implements
             listener.focusLost();
         }
     }
+
+    public void keyPressed(final VirtualKey vk, final Modifier... modifier) {
+        final IKeyEvent keyEvent = new DummyKeyEvent(vk, modifier);
+        for (final IKeyListener listener : keyListeners) {
+            listener.keyPressed(keyEvent);
+        }
+    }
+
+    public void keyPressed(final IKeyEvent event) {
+        for (final IKeyListener listener : keyListeners) {
+            listener.keyPressed(event);
+        }
+    }
+
+    public void keyReleased(final IKeyEvent event) {
+        for (final IKeyListener listener : keyListeners) {
+            listener.keyReleased(event);
+        }
+    }
+
+    public void keyReleased(final VirtualKey vk, final Modifier... modifier) {
+        final IKeyEvent keyEvent = new DummyKeyEvent(vk, modifier);
+        for (final IKeyListener listener : keyListeners) {
+            listener.keyReleased(keyEvent);
+        }
+    }
+
 }

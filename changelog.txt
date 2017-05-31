@@ -218,6 +218,8 @@ Bugfixes:
 
 Features:
 
+* Added TableImpl for Dummy SPI and allow KeyEvents for UIDContainer (no productive code change)
+
 
 Bugfixes:
 
