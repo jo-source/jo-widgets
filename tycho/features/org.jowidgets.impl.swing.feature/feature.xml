@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.impl.swing.feature"
     label="jowidgets swing implementation feature"
-    version="0.72.0">
+    version="0.72.1.qualifier">
 
 	<description url="http://www.example.com/description">
 		Holds the implementation bundles including the swing implementation
