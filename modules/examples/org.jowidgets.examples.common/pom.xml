@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.72.0-SNAPSHOT</version>
+		<version>0.73.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -14,12 +14,12 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.logging.api</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.logging.slf4j161</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -29,58 +29,58 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.tools</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.map.common</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.download.api</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.ole.api</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.office.api</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.office.impl.ole</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.tools</artifactId>
-			<version>0.72.0-SNAPSHOT</version>
+			<version>0.73.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
