@@ -324,7 +324,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
     }
 
     ArrayList<Integer> getCurrentPermutation() {
-        return currentColumnPermutation;
+        return new ArrayList<Integer>(currentColumnPermutation);
     }
 
     private void insertColumnToModel(final int index, final int value) {
