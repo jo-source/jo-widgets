@@ -449,7 +449,7 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
     public ArrayList<Integer> getColumnPermutation() {
         final ColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
         final ArrayList<Integer> result = new ArrayList<Integer>();
-        for (int position = 0; position < table.getColumnCount(); position++) {
+        for (int position = 0; position < reorderLayer.getColumnCount(); position++) {
             result.add(Integer.valueOf(reorderLayer.getColumnIndexByPosition(position)));
         }
         return result;
