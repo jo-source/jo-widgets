@@ -226,4 +226,16 @@ Bugfixes:
 * Fixed issue #71 https://github.com/jo-source/jo-widgets/issues/71 NatTable multi selection works not as expected 
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.73.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #72 https://github.com/jo-source/jo-widgets/issues/72 ColumnPermutation getter and setter in TableImpl (org.jowidgets.impl.widgets.basic) are inconsistent
+
+
 
