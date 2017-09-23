@@ -34,11 +34,14 @@ import java.util.Set;
 
 import org.eclipse.nebula.widgets.nattable.NatTable;
 import org.eclipse.nebula.widgets.nattable.command.VisualRefreshCommand;
+import org.eclipse.nebula.widgets.nattable.coordinate.Range;
 import org.eclipse.nebula.widgets.nattable.grid.GridRegion;
 import org.eclipse.nebula.widgets.nattable.layer.DataLayer;
 import org.eclipse.nebula.widgets.nattable.layer.ILayerListener;
 import org.eclipse.nebula.widgets.nattable.layer.LabelStack;
 import org.eclipse.nebula.widgets.nattable.layer.cell.AggregateConfigLabelAccumulator;
+import org.eclipse.nebula.widgets.nattable.layer.event.ColumnDeleteEvent;
+import org.eclipse.nebula.widgets.nattable.layer.event.ColumnInsertEvent;
 import org.eclipse.nebula.widgets.nattable.layer.event.ILayerEvent;
 import org.eclipse.nebula.widgets.nattable.painter.layer.NatGridLayerPainter;
 import org.eclipse.nebula.widgets.nattable.reorder.ColumnReorderLayer;
@@ -801,13 +804,30 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
         @Override
         public void columnsAdded(final int[] columnIndices) {
             stopEditing();
+
+            final JoColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
+            reorderLayer.handleLayerEvent(new ColumnInsertEvent(reorderLayer, toRanges(columnIndices)));
+
             table.refresh(false);
         }
 
         @Override
         public void columnsRemoved(final int[] columnIndices) {
             stopEditing();
+
+            final JoColumnReorderLayer reorderLayer = tableLayers.getColumnReorderLayer();
+            reorderLayer.handleLayerEvent(new ColumnDeleteEvent(reorderLayer, toRanges(columnIndices)));
+
             table.refresh(false);
+        }
+
+        private Range[] toRanges(final int[] columnIndices) {
+            final Range[] ranges = new Range[columnIndices.length];
+            for (int i = 0; i < columnIndices.length; i++) {
+                final int columnIndex = columnIndices[i];
+                ranges[i] = new Range(columnIndex, columnIndex + 1);
+            }
+            return ranges;
         }
 
         @Override
@@ -820,7 +840,6 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
                 table.refresh(false);
             }
         }
-
     }
 
     private final class ColumnLayerListener implements ILayerListener {
