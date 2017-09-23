@@ -2,7 +2,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jowidgets.tycho.parent</artifactId>
-	<version>0.74.0</version>
+	<version>0.74.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
