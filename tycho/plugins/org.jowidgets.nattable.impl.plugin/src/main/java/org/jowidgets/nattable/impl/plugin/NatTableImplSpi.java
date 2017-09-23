@@ -747,11 +747,14 @@ class NatTableImplSpi extends SwtControl implements ITableSpi {
             final int rowIndex = table.getRowIndexByPosition(rowPositionByY);
             final int columnIndex = table.getColumnIndexByPosition(columnPositionByX);
 
-            if (rowPositionByY == 0) {
+            if (rowPositionByY == 0 && columnIndex != -1) {
                 tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(columnIndex, position));
             }
-            else {
+            else if (rowIndex != -1 && columnIndex != -1) {
                 tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(rowIndex, columnIndex, position));
+            }
+            else {
+                getPopupDetectionObservable().firePopupDetected(position);
             }
         }
 

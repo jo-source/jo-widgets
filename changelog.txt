@@ -247,6 +247,7 @@ Features:
 Bugfixes:
 
 * Fixed issue #75 https://github.com/jo-source/jo-widgets/issues/75 NatTable based table breaks with ArrayIndexOutOfBounds when reordering and hiding columns
+* Fixed issue #74 https://github.com/jo-source/jo-widgets/issues/74 After hiding all columns in a NatTable based table, the context menu to show them again is not accessible
 
 
 
