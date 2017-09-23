@@ -237,5 +237,16 @@ Bugfixes:
 
 * Fixed issue #72 https://github.com/jo-source/jo-widgets/issues/72 ColumnPermutation getter and setter in TableImpl (org.jowidgets.impl.widgets.basic) are inconsistent
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.74.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #75 https://github.com/jo-source/jo-widgets/issues/75 NatTable based table breaks with ArrayIndexOutOfBounds when reordering and hiding columns
+
 
 
