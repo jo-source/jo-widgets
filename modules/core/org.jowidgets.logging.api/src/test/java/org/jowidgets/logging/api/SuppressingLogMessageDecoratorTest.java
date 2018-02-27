@@ -31,15 +31,15 @@ package org.jowidgets.logging.api;
 import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Assert;
-
-import org.jowidgets.logging.tools.LoggerMock;
+import org.jowidgets.logging.tools.JUnitLogger;
+import org.jowidgets.logging.tools.JUnitLoggerComposite;
+import org.jowidgets.logging.tools.JUnitLoggerProvider;
 import org.jowidgets.util.DummySystemTimeProvider;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class SuppressingLogMessageDecoratorTest {
 
@@ -48,27 +48,18 @@ public class SuppressingLogMessageDecoratorTest {
 
     private DummySystemTimeProvider systemTimeProvider;
 
-    private static LoggerMock LOGGER;
-
-    @BeforeClass
-    public static void setUpLogger() {
-        LOGGER = new LoggerMock();
-        TestLoggerProvider.setLoggerForCurrentThread(LOGGER);
-    }
+    private static JUnitLogger globalLogger;
 
     @Before
     public void setUp() {
+        JUnitLoggerProvider.reset();
+        globalLogger = JUnitLoggerProvider.getGlobalLogger();
         this.systemTimeProvider = new DummySystemTimeProvider(SYSTEM_TIME_PERIOD);
     }
 
     @After
     public void tearDown() {
-        LOGGER.reset();
-    }
-
-    @AfterClass
-    public static void tearDownLogger() {
-        TestLoggerProvider.clearLoggerForCurrentThread();
+        JUnitLoggerProvider.reset();
     }
 
     private ILogMessageDecorator createLogMessageDecorator(final long maxPeriod) {
@@ -85,28 +76,26 @@ public class SuppressingLogMessageDecoratorTest {
 
         final IDecoratingLogger logger = LoggerProvider.getDecoratingLogger("Foo");
 
-        final String expextedSupressMessage = MessageFormat.format(
-                SuppressingLogMessageDecorators.DEFAULT_SUPPRESS_MESSAGE_TEXT,
-                maxPeriod,
-                TimeUnit.MILLISECONDS);
+        final String expextedSupressMessage = MessageFormat
+                .format(SuppressingLogMessageDecorators.DEFAULT_SUPPRESS_MESSAGE_TEXT, maxPeriod, TimeUnit.MILLISECONDS);
 
         //first message will be unsupressed
         logger.error(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        String message = LOGGER.popLastMessage().getMessage();
+        Assert.assertTrue(globalLogger.hasMessage());
+        String message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.error(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //first message will be unsupressed
         logger.warn(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        message = LOGGER.popLastMessage().getMessage();
+        Assert.assertTrue(globalLogger.hasMessage());
+        message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
         assertSuppressedMessageContained(message, 9);
@@ -114,13 +103,13 @@ public class SuppressingLogMessageDecoratorTest {
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.warn(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //first message will be unsupressed
         logger.info(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        message = LOGGER.popLastMessage().getMessage();
+        Assert.assertTrue(globalLogger.hasMessage());
+        message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
         assertSuppressedMessageContained(message, 9);
@@ -128,13 +117,13 @@ public class SuppressingLogMessageDecoratorTest {
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.info(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //first message will be unsupressed
         logger.debug(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        message = LOGGER.popLastMessage().getMessage();
+        Assert.assertTrue(globalLogger.hasMessage());
+        message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
         assertSuppressedMessageContained(message, 9);
@@ -142,12 +131,12 @@ public class SuppressingLogMessageDecoratorTest {
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.debug(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //first message will be unsupressed
         logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-        message = LOGGER.popLastMessage().getMessage();
+        message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
         assertSuppressedMessageContained(message, 9);
@@ -155,21 +144,20 @@ public class SuppressingLogMessageDecoratorTest {
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //Message 10 will be unsupressed
         logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-        message = LOGGER.popLastMessage().getMessage();
+        message = globalLogger.popLastMessage().getMessage();
         Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
         Assert.assertTrue(message.contains(expextedSupressMessage));
         assertSuppressedMessageContained(message, 9);
     }
 
     private void assertSuppressedMessageContained(final String message, final int expectedSupressedMessages) {
-        final String expextedSupressedMessage = MessageFormat.format(
-                SuppressingLogMessageDecorators.DEFAULT_SUPPRESSED_MESSAGE_TEXT,
-                expectedSupressedMessages);
+        final String expextedSupressedMessage = MessageFormat
+                .format(SuppressingLogMessageDecorators.DEFAULT_SUPPRESSED_MESSAGE_TEXT, expectedSupressedMessages);
 
         Assert.assertTrue(message.contains(expextedSupressedMessage));
     }
@@ -179,31 +167,34 @@ public class SuppressingLogMessageDecoratorTest {
         final long maxPeriod = 1000;
         final ILogMessageDecorator suppressDecorator = createLogMessageDecorator(maxPeriod);
 
-        final IDecoratingLogger logger = LoggerProvider.getDecoratingLogger("Foo");
+        final IDecoratingLogger logger = LoggerProvider.getDecoratingLogger("FooLoggerName");
 
-        LOGGER.setEnabled(false);
+        final JUnitLoggerComposite original = JUnitLoggerProvider
+                .getLoggerComposite("FooLoggerName", "org.jowidgets.logging.api.LoggerProvider$DecoratingLoggerImpl");
+
+        original.setEnabled(false);
 
         logger.error(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertFalse(LOGGER.hasMessage());
+        Assert.assertFalse(globalLogger.hasMessage());
         Assert.assertEquals(0, systemTimeProvider.getLastCurrentTime());
 
         logger.warn(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertFalse(LOGGER.hasMessage());
+        Assert.assertFalse(globalLogger.hasMessage());
         Assert.assertEquals(0, systemTimeProvider.getLastCurrentTime());
 
         logger.info(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertFalse(LOGGER.hasMessage());
+        Assert.assertFalse(globalLogger.hasMessage());
         Assert.assertEquals(0, systemTimeProvider.getLastCurrentTime());
 
         logger.debug(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertFalse(LOGGER.hasMessage());
+        Assert.assertFalse(globalLogger.hasMessage());
         Assert.assertEquals(0, systemTimeProvider.getLastCurrentTime());
 
         logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertFalse(LOGGER.hasMessage());
+        Assert.assertFalse(globalLogger.hasMessage());
         Assert.assertEquals(0, systemTimeProvider.getLastCurrentTime());
 
-        LOGGER.setErrorEnabled(true);
+        original.setErrorEnabled(true);
         //now log on some disabled levels
         logger.warn(suppressDecorator, DEFAULT_MESSAGE);
         logger.info(suppressDecorator, DEFAULT_MESSAGE);
@@ -212,19 +203,19 @@ public class SuppressingLogMessageDecoratorTest {
 
         //first message will be unsupressed
         logger.error(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        Assert.assertTrue(LOGGER.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(globalLogger.hasMessage());
+        Assert.assertTrue(globalLogger.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
             logger.error(suppressDecorator, DEFAULT_MESSAGE);
-            Assert.assertFalse(LOGGER.hasMessage());
+            Assert.assertFalse(globalLogger.hasMessage());
         }
 
         //first message will be unsupressed
         logger.error(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(LOGGER.hasMessage());
-        Assert.assertTrue(LOGGER.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(globalLogger.hasMessage());
+        Assert.assertTrue(globalLogger.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
     }
 
 }

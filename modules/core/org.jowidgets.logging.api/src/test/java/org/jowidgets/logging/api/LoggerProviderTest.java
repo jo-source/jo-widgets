@@ -34,10 +34,10 @@ import java.io.UnsupportedEncodingException;
 
 import org.jowidgets.logging.tools.DefaultLoggerProvider;
 import org.jowidgets.logging.tools.ILoggerFactory;
+import org.jowidgets.logging.tools.JUnitLogger;
 import org.jowidgets.logging.tools.LogLevel;
+import org.jowidgets.logging.tools.LogMessage;
 import org.jowidgets.logging.tools.LoggerComposite;
-import org.jowidgets.logging.tools.LoggerMock;
-import org.jowidgets.logging.tools.LoggerMockMessage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -236,8 +236,8 @@ public class LoggerProviderTest {
     @Test
     public void testLoggerComposite() {
 
-        final LoggerMock logger1 = new LoggerMock();
-        final LoggerMock logger2 = new LoggerMock();
+        final JUnitLogger logger1 = new JUnitLogger();
+        final JUnitLogger logger2 = new JUnitLogger();
 
         final ILoggerProvider loggerProvider2 = createLoggerProviderMockForLogger(logger2);
         final ILoggerProvider loggerProvider1 = createLoggerProviderMockForLogger(logger1);
@@ -253,8 +253,8 @@ public class LoggerProviderTest {
         Assert.assertTrue(compositeLogger.isTraceEnabled());
 
         compositeLogger.error("FOO");
-        LoggerMockMessage message1 = logger1.popLastMessage();
-        LoggerMockMessage message2 = logger2.popLastMessage();
+        LogMessage message1 = logger1.popLastMessage();
+        LogMessage message2 = logger2.popLastMessage();
         Assert.assertEquals(LogLevel.ERROR, message1.getLevel());
         Assert.assertEquals(LogLevel.ERROR, message2.getLevel());
         Assert.assertEquals("FOO", message1.getMessage());

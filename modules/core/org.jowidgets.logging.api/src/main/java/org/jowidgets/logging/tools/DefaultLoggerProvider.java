@@ -28,6 +28,7 @@
 
 package org.jowidgets.logging.tools;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -69,6 +70,10 @@ public final class DefaultLoggerProvider implements ILoggerProvider {
             final ILogger oldLogger = loggers.putIfAbsent(key, newLogger);
             return oldLogger == null ? newLogger : oldLogger;
         }
+    }
+
+    Collection<ILogger> getLoggers() {
+        return loggers.values();
     }
 
     private static final class LoggerKey {

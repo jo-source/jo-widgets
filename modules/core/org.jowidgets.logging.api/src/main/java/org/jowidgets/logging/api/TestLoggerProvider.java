@@ -30,27 +30,14 @@ package org.jowidgets.logging.api;
 
 import org.jowidgets.logging.tools.ConsoleLoggerProvider;
 import org.jowidgets.logging.tools.ILoggerFactory;
+import org.jowidgets.logging.tools.JUnitLoggerProvider;
 import org.jowidgets.logging.tools.NopLoggerProvider;
 import org.jowidgets.logging.tools.ThreadLocalLoggerProvider;
 
 /**
- * Logger provider access for unit tests.
- * 
- * This access initializes a {@link ThreadLocalLoggerProvider} that provides different {@link ILoggerProvider} instances
- * for each thread was is good in junit tests where each test may be run in an separate thread when tests run in parallel.
- * 
- * If u set a LoggerMock for example for the test running thread, the LoggerMock can be used to verify if logging
- * has been done as wanted. Of course any other Mock can also be used for the interface {@link ILogger}.
- * 
- * It is recommended to set a logger provider or logger for the current thread in a method annotated with "BeforeClass" (and clear
- * in "AfterClass") to ensure that static loggers will be initialized as wanted. For non static logger, the initialization may
- * also be done in the "Before" annotated class.
- * 
- * Do not forget to clear the logger for the current thread, e.g. in an "After" or "AfterClass" annotated method after test
- * finished to avoid memory leak or side effects in other tests.
- * 
- * Important: Use this class for all junit test you run or for no one.
+ * @deprecated use {@link JUnitLoggerProvider} instead
  */
+@Deprecated
 public final class TestLoggerProvider {
 
     private TestLoggerProvider() {}

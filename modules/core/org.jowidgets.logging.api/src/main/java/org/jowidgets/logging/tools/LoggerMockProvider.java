@@ -31,6 +31,10 @@ package org.jowidgets.logging.tools;
 import org.jowidgets.logging.api.ILoggerProvider;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated use {@link JUnitLoggerProvider} instead
+ */
+@Deprecated
 public final class LoggerMockProvider implements ILoggerProvider {
 
     private final LoggerMock logger;

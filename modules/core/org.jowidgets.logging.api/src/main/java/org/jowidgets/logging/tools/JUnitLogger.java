@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, Michael
+ * Copyright (c) 2018, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,13 +28,17 @@
 
 package org.jowidgets.logging.tools;
 
+import java.util.LinkedList;
+
 import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.util.IFactory;
 
 /**
- * @deprecated use {@link JUnitLogger} instead
+ * Logger that can be used for JUnit tests to verify logging aspects
  */
-@Deprecated
-public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
+public final class JUnitLogger extends AbstractLoggerAdapter implements ILogger {
+
+    private static final Factory FACTORY = new Factory();
 
     private boolean traceEnabled;
     private boolean debugEnabled;
@@ -42,17 +46,27 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
     private boolean warnEnabled;
     private boolean errorEnabled;
 
-    private LoggerMockMessage lastMessage;
+    private final LinkedList<LogMessage> messages;
 
     /**
      * Creates a new logger that have all log levels enabled
      */
-    public LoggerMock() {
+    public JUnitLogger() {
         this.traceEnabled = true;
         this.debugEnabled = true;
         this.infoEnabled = true;
         this.warnEnabled = true;
         this.errorEnabled = true;
+        this.messages = new LinkedList<LogMessage>();
+    }
+
+    /**
+     * Gets a factory that creates instances of this class
+     * 
+     * @return A factory, never null
+     */
+    public static IFactory<JUnitLogger> factory() {
+        return FACTORY;
     }
 
     /**
@@ -60,8 +74,8 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
      * 
      * @return The last logged message, may be null
      */
-    public LoggerMockMessage peekLastMessage() {
-        return lastMessage;
+    public synchronized LogMessage peekLastMessage() {
+        return messages.peekLast();
     }
 
     /**
@@ -69,17 +83,24 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
      * 
      * @return The last logged message, may be null
      */
-    public LoggerMockMessage popLastMessage() {
-        final LoggerMockMessage result = lastMessage;
-        lastMessage = null;
-        return result;
+    public synchronized LogMessage popLastMessage() {
+        return messages.pollLast();
     }
 
     /**
-     * Resets the logger mock
+     * Get's the number of logged messages
+     * 
+     * @return The number of logged messages
      */
-    public void reset() {
-        popLastMessage();
+    public synchronized int getMessageCount() {
+        return messages.size();
+    }
+
+    /**
+     * Resets the logger
+     */
+    public synchronized void reset() {
+        messages.clear();
         setEnabled(true);
     }
 
@@ -87,7 +108,7 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
      * @return True if a message is available
      */
     public boolean hasMessage() {
-        return lastMessage != null;
+        return getMessageCount() > 0;
     }
 
     /**
@@ -108,8 +129,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         return traceEnabled;
     }
 
-    public void setTraceEnabled(final boolean traceEnabled) {
-        this.traceEnabled = traceEnabled;
+    /**
+     * Sets the enabled state for trace logs
+     * 
+     * @param enabled The state to set
+     */
+    public void setTraceEnabled(final boolean enabled) {
+        this.traceEnabled = enabled;
     }
 
     @Override
@@ -117,8 +143,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         return debugEnabled;
     }
 
-    public void setDebugEnabled(final boolean debugEnabled) {
-        this.debugEnabled = debugEnabled;
+    /**
+     * Sets the enabled state for debug logs
+     * 
+     * @param enabled The state to set
+     */
+    public void setDebugEnabled(final boolean enabled) {
+        this.debugEnabled = enabled;
     }
 
     @Override
@@ -126,8 +157,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         return infoEnabled;
     }
 
-    public void setInfoEnabled(final boolean infoEnabled) {
-        this.infoEnabled = infoEnabled;
+    /**
+     * Sets the enabled state for info logs
+     * 
+     * @param enabled The state to set
+     */
+    public void setInfoEnabled(final boolean enabled) {
+        this.infoEnabled = enabled;
     }
 
     @Override
@@ -135,8 +171,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         return warnEnabled;
     }
 
-    public void setWarnEnabled(final boolean warnEnabled) {
-        this.warnEnabled = warnEnabled;
+    /**
+     * Sets the enabled state for warn logs
+     * 
+     * @param enabled The state to set
+     */
+    public void setWarnEnabled(final boolean enabled) {
+        this.warnEnabled = enabled;
     }
 
     @Override
@@ -144,8 +185,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         return errorEnabled;
     }
 
-    public void setErrorEnabled(final boolean errorEnabled) {
-        this.errorEnabled = errorEnabled;
+    /**
+     * Sets the enabled state for error logs
+     * 
+     * @param enabled The state to set
+     */
+    public void setErrorEnabled(final boolean enabled) {
+        this.errorEnabled = enabled;
     }
 
     @Override
@@ -173,6 +219,10 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
         logMessage(LogLevel.TRACE, message, throwable);
     }
 
+    private synchronized void addMessage(final LogMessage message) {
+        messages.add(message);
+    }
+
     private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
         if (LogLevel.ERROR.equals(level) && !isErrorEnabled()) {
             return;
@@ -190,7 +240,16 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
             return;
         }
         else {
-            lastMessage = new LoggerMockMessage(level, message, throwable);
+            addMessage(new LogMessage(level, message, throwable));
+        }
+
+    }
+
+    private static class Factory implements IFactory<JUnitLogger> {
+
+        @Override
+        public JUnitLogger create() {
+            return new JUnitLogger();
         }
 
     }

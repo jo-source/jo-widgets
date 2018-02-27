@@ -33,10 +33,9 @@ import org.jowidgets.logging.api.ILoggerProvider;
 import org.jowidgets.util.Assert;
 
 /**
- * Logger Provider that can be used in JUnit tests.
- * 
- * Each thread can have its own ILoggerProvider
+ * @deprecated use {@link JUnitLoggerProvider} instead that uses {@link JUnitThreadLocalLogger}
  */
+@Deprecated
 public final class ThreadLocalLoggerProvider implements ILoggerProvider {
 
     private final ThreadLocal<ILoggerProvider> threadLocalProvider;

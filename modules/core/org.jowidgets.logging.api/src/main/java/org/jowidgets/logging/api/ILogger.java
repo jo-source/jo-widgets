@@ -89,9 +89,7 @@ package org.jowidgets.logging.api;
  * Documentation of each single methods was omitted with purpose to enhance the readability of the interface:-)
  * If it is not clear what the contract of a single method is, please let me know (mail@herr-grossmann.de)
  */
-public interface ILogger {
-
-    boolean isErrorEnabled();
+public interface ILogger extends ILoggerEnablement {
 
     void error(String message);
 
@@ -99,15 +97,11 @@ public interface ILogger {
 
     void error(String message, Throwable throwable);
 
-    boolean isWarnEnabled();
-
     void warn(String message);
 
     void warn(Throwable throwable);
 
     void warn(String message, Throwable throwable);
-
-    boolean isInfoEnabled();
 
     void info(String message);
 
@@ -115,15 +109,11 @@ public interface ILogger {
 
     void info(String message, Throwable throwable);
 
-    boolean isDebugEnabled();
-
     void debug(String message);
 
     void debug(Throwable throwable);
 
     void debug(String message, Throwable throwable);
-
-    boolean isTraceEnabled();
 
     void trace(String message);
 

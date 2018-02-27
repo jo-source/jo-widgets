@@ -28,13 +28,13 @@
 
 package org.jowidgets.logging.tools;
 
+import org.jowidgets.logging.tools.LogLevel;
 import org.jowidgets.util.Assert;
 
 /**
- * @deprecated use {@link LogMessage} instead
+ * LogMessage message used by {@link JUnitLogger}
  */
-@Deprecated
-public final class LoggerMockMessage {
+public final class LogMessage {
 
     private final LogLevel level;
     private final String message;
@@ -47,7 +47,7 @@ public final class LoggerMockMessage {
      * @param message The message
      * @param throwable The throwable
      */
-    public LoggerMockMessage(final LogLevel level, final String message, final Throwable throwable) {
+    LogMessage(final LogLevel level, final String message, final Throwable throwable) {
         Assert.paramNotNull(level, "level");
         this.level = level;
         this.message = message;
@@ -68,7 +68,7 @@ public final class LoggerMockMessage {
 
     @Override
     public String toString() {
-        return "LoggerMockMessage [level=" + level + ", message=" + message + ", throwable=" + throwable + "]";
+        return "LogMessage [level=" + level + ", message=" + message + ", throwable=" + throwable + "]";
     }
 
     @Override
@@ -89,10 +89,10 @@ public final class LoggerMockMessage {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof LoggerMockMessage)) {
+        if (!(obj instanceof LogMessage)) {
             return false;
         }
-        final LoggerMockMessage other = (LoggerMockMessage) obj;
+        final LogMessage other = (LogMessage) obj;
         if (level != other.level) {
             return false;
         }
