@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.addons.logging.jul.feature"
     label="Java util logging implementation for jowidgets logging api"
-    version="0.69.1">
+    version="0.69.2.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds the Java util logging implementation for jowidgets logging api
