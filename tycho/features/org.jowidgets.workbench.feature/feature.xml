@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.workbench.feature"
     label="jowidgets workbench feature"
-    version="0.69.1.qualifier">
+    version="0.69.1">
 
 	<description url="http://www.example.com/description">
 		Holds the bundles for using the jowidgets workbench
