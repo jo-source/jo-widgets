@@ -248,9 +248,11 @@ public class ScheduledFutureMock<V> implements ScheduledFuture<V> {
     }
 
     private void interruptExecutingThread() {
-        final Thread executingThread = executingThreadReference.get();
-        if (executingThread != null) {
-            executingThread.interrupt();
+        synchronized (executingThreadReference) {
+            final Thread executingThread = executingThreadReference.get();
+            if (executingThread != null) {
+                executingThread.interrupt();
+            }
         }
     }
 
@@ -275,14 +277,20 @@ public class ScheduledFutureMock<V> implements ScheduledFuture<V> {
         public void run() {
             if (!canceled.get() && !done.get()) {
                 try {
-                    executingThreadReference.set(Thread.currentThread());
-                    result = callable.call();
+                    synchronized (executingThreadReference) {
+                        executingThreadReference.set(Thread.currentThread());
+                    }
+                    if (!canceled.get()) {
+                        result = callable.call();
+                    }
                 }
                 catch (final Exception e) {
                     exception = e;
                 }
                 finally {
-                    executingThreadReference.set(null);
+                    synchronized (executingThreadReference) {
+                        executingThreadReference.set(null);
+                    }
                     if (oneShot || exception != null) {
                         executorService.removeEvent(ScheduledFutureMock.this);
                         done.set(true);
