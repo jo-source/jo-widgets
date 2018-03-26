@@ -1432,8 +1432,8 @@ public class ScheduledExecutorServiceMockTest {
     public void testInvokeAny() throws InterruptedException, ExecutionException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
-        final int taskCount = 100;
-        final int dispatcherCount = 50;
+        final int taskCount = 10;
+        final int dispatcherCount = 5;
 
         final ArrayList<Callable<Integer>> tasks = new ArrayList<Callable<Integer>>(taskCount);
 
@@ -1503,8 +1503,8 @@ public class ScheduledExecutorServiceMockTest {
     public void testInvokeAnyWithTimeout() throws InterruptedException, ExecutionException, TimeoutException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
-        final int taskCount = 100;
-        final int dispatcherCount = 50;
+        final int taskCount = 10;
+        final int dispatcherCount = 5;
 
         final ArrayList<Callable<Integer>> tasks = new ArrayList<Callable<Integer>>(taskCount);
 
@@ -1571,7 +1571,7 @@ public class ScheduledExecutorServiceMockTest {
     public void testInvokeAnyWithInterrupt() throws InterruptedException, ExecutionException, TimeoutException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
-        final int taskCount = 50;
+        final int taskCount = 5;
 
         final ArrayList<Callable<Integer>> tasks = new ArrayList<Callable<Integer>>(taskCount);
 
