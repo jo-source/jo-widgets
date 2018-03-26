@@ -1270,7 +1270,7 @@ public class ScheduledExecutorServiceMockTest {
         Assert.assertEquals(
                 messageCount,
                 messageDispatcher1.getCount() + messageDispatcher2.getCount() + messageDispatcher3.getCount());
-        Mockito.verify(message, Mockito.times(messageCount));
+        Mockito.verify(message, Mockito.times(messageCount)).run();
     }
 
     @Test
