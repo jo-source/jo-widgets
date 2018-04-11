@@ -38,7 +38,14 @@ public final class ThreadLocalLocaleHolder implements ILocaleHolder {
 
     @Override
     public Locale getUserLocale() {
-        return locale.get();
+        final Locale userLocale = locale.get();
+        if (userLocale != null) {
+            return userLocale;
+        }
+        else {
+            return Locale.getDefault();
+        }
+
     }
 
     @Override

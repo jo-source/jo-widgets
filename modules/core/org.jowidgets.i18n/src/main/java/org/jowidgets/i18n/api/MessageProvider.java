@@ -29,12 +29,15 @@
 package org.jowidgets.i18n.api;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.jowidgets.i18n.api.LocaleLocal.IValueFactory;
 
 public final class MessageProvider {
+
+    private static final ResourceBundle.Control ROOT_LOCALE_FALLBACK_CONTROL = new RootLocaleFallbackControl();
 
     private MessageProvider() {}
 
@@ -148,10 +151,14 @@ public final class MessageProvider {
             if (classLoaderProvider != null) {
                 final ClassLoader classLoader = classLoaderProvider.get();
                 if (classLoader != null) {
-                    return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale(), classLoader);
+                    return ResourceBundle.getBundle(
+                            resourceBundleName,
+                            LocaleHolder.getUserLocale(),
+                            classLoader,
+                            ROOT_LOCALE_FALLBACK_CONTROL);
                 }
             }
-            return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+            return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale(), ROOT_LOCALE_FALLBACK_CONTROL);
         }
 
     }
@@ -196,6 +203,15 @@ public final class MessageProvider {
         @Override
         public ClassLoader get() {
             return clazz.getClassLoader();
+        }
+
+    }
+
+    private static final class RootLocaleFallbackControl extends ResourceBundle.Control {
+
+        @Override
+        public Locale getFallbackLocale(final String baseName, final Locale locale) {
+            return Locale.ROOT;
         }
 
     }

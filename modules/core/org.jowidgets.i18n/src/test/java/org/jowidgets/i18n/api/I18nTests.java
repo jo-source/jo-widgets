@@ -34,11 +34,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Locale;
 
-import junit.framework.Assert;
-
 import org.jowidgets.i18n.api.LocaleLocal.IValueFactory;
 import org.junit.After;
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class I18nTests {
 
@@ -131,6 +131,10 @@ public class I18nTests {
         LocaleHolder.setUserLocale(Locale.GERMAN);
         Assert.assertEquals("Meldung1", Messages.getString("I18nTests.message1"));
         Assert.assertEquals("Meldung2", Messages.getString("I18nTests.message2"));
+
+        LocaleHolder.setUserLocale(Locale.FRENCH);
+        Assert.assertEquals("defaultMessage1", Messages.getString("I18nTests.message1"));
+        Assert.assertEquals("defaultMessage2", Messages.getString("I18nTests.message2"));
     }
 
     @Test
@@ -145,6 +149,10 @@ public class I18nTests {
         LocaleHolder.setUserLocale(Locale.GERMAN);
         Assert.assertEquals("Meldung1", message1.get());
         Assert.assertEquals("Meldung2", message2.get());
+
+        LocaleHolder.setUserLocale(Locale.FRENCH);
+        Assert.assertEquals("defaultMessage1", message1.get());
+        Assert.assertEquals("defaultMessage2", message2.get());
     }
 
     @Test
@@ -175,6 +183,10 @@ public class I18nTests {
             LocaleHolder.setUserLocale(Locale.GERMAN);
             Assert.assertEquals("Meldung1", message1FromStream.get());
             Assert.assertEquals("Meldung2", message2FromStream.get());
+
+            LocaleHolder.setUserLocale(Locale.FRENCH);
+            Assert.assertEquals("defaultMessage1", message1FromStream.get());
+            Assert.assertEquals("defaultMessage2", message2FromStream.get());
         }
         catch (final Exception e) {
             throw new RuntimeException(e);

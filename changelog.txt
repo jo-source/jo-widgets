@@ -255,10 +255,14 @@ Bugfixes:
 
 Features:
 
+* Implements issue #79 https://github.com/jo-source/jo-widgets/issues/80 Add utils to observe interrupt state of a thread to impelement jo-client-platform issue 77
+* Implements issue #80 https://github.com/jo-source/jo-widgets/issues/80 Add IUserCapableMessageException 
+
 
 Bugfixes:
 
 * Fixed issue #77 https://github.com/jo-source/jo-widgets/issues/77 Make TestLoggerProvider deprecated and add alternative provider
+* Fixed issue #81 https://github.com/jo-source/jo-widgets/issues/81 MessageProvider should use Locale.ROOT as fallback instead of Locale.getDefault
 
 
 
