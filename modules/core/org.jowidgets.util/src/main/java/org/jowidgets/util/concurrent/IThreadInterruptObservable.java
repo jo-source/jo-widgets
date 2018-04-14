@@ -33,7 +33,9 @@ package org.jowidgets.util.concurrent;
  * 
  * Remark: Because java threads does not support listeners for thread interrupts, the interrupted state
  * must be polled by implementations. Due to this fact, the interrupt events invoked on the {@link IThreadInterruptListener}
- * may be invoked delayed depending on the implementation.
+ * may be invoked delayed. Until the interrupt state of the thread will not be cleared, the listener fires continual with the
+ * delay that can be requested from the method {@link #getDelayMillis()} until the listener will be removed or the interrupted
+ * state will be cleared.
  */
 public interface IThreadInterruptObservable {
 
@@ -70,5 +72,19 @@ public interface IThreadInterruptObservable {
      * @return True if the listener was removed, false if the listener was not registered
      */
     boolean removeInterruptListener(Thread thread, IThreadInterruptListener listener);
+
+    /**
+     * Get's the possible delay from interrupt happened to interrupted event.
+     * 
+     * Because java threads does not support listeners for thread interrupts, the interrupted state must be polled by
+     * implementations. Due to this fact, the interrupt events invoked on the {@link IThreadInterruptListener} will be invoked
+     * delayed.
+     * 
+     * Remark: If listeners do time consuming operations, the resulting delay may be higher then the value returned by this
+     * method.
+     * 
+     * @return The delay in milliseconds
+     */
+    long getDelayMillis();
 
 }

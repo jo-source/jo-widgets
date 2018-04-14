@@ -69,13 +69,13 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
     @Override
     public IAnimationRunnerBuilder setExecutor(final IFactory<String> threadNameFactory) {
         Assert.paramNotNull(threadNameFactory, "threadNameFactory");
-        return setExecutor(new DaemonThreadFactory(threadNameFactory));
+        return setExecutor(DaemonThreadFactory.create(threadNameFactory));
     }
 
     @Override
-    public IAnimationRunnerBuilder setExecutor(final String threadPrefix) {
-        Assert.paramNotNull(threadPrefix, "threadPrefix");
-        return setExecutor(new DaemonThreadFactory(threadPrefix));
+    public IAnimationRunnerBuilder setExecutor(final String threadName) {
+        Assert.paramNotNull(threadName, "threadName");
+        return setExecutor(DaemonThreadFactory.create(threadName));
     }
 
     @Override
@@ -99,7 +99,8 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
         else {
             ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
             if (executorService == null) {
-                executorService = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+                executorService = Executors.newSingleThreadScheduledExecutor(
+                        DaemonThreadFactory.create(AnimationRunnerImpl.class.getName() + "@" + hashCode()));
                 Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
             }
             return executorService;

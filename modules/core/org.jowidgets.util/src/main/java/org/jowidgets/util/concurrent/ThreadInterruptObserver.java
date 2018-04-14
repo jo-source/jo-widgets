@@ -32,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -79,7 +80,24 @@ public final class ThreadInterruptObserver implements IThreadInterruptObservable
      * @param period The period threads should be watched in millis
      */
     public ThreadInterruptObserver(final String threadNamePrefix, final IExceptionHandler exceptionHandler, final long period) {
-        this(Executors.newScheduledThreadPool(1, new DaemonThreadFactory(threadNamePrefix)), exceptionHandler, period);
+        this(DaemonThreadFactory.create(Assert.getParamNotNull(threadNamePrefix, "threadNamePrefix")), exceptionHandler, period);
+    }
+
+    /**
+     * Creates a new instance
+     * 
+     * @param threadFactory The thread factory to use for the name of the observation thread
+     * @param exceptionHandler The exception used when exception occurs inside the onException runnables
+     * @param period The period threads should be watched in millis
+     */
+    public ThreadInterruptObserver(
+        final ThreadFactory threadFactory,
+        final IExceptionHandler exceptionHandler,
+        final long period) {
+        this(
+            Executors.newSingleThreadScheduledExecutor(Assert.getParamNotNull(threadFactory, "threadFactory")),
+            exceptionHandler,
+            period);
     }
 
     /**
@@ -140,6 +158,11 @@ public final class ThreadInterruptObserver implements IThreadInterruptObservable
      */
     public boolean isRunning() {
         return scheduledFutureReference.get() != null;
+    }
+
+    @Override
+    public long getDelayMillis() {
+        return period;
     }
 
     @Override

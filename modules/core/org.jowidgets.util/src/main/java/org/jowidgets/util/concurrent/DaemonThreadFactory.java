@@ -36,20 +36,212 @@ import org.jowidgets.util.IFactory;
 
 public final class DaemonThreadFactory implements ThreadFactory {
 
+    private static final String DEFAULT_SEPARATOR = "-#";
+    private static final int DEFAULT_START_INDEX = 1;
+
     private final IFactory<String> threadNameFactory;
     private final ThreadFactory defaultThreadFactory;
 
+    /**
+     * @deprecated Do not use threads without names because they are inexpressive, use {@link #create(IFactory)} or
+     *             {@link #create(String) or #create(String, String, int) or #multi(String) or #multi(String, String, int)
+     *             instead
+     */
+    @Deprecated
     public DaemonThreadFactory() {
         this((IFactory<String>) null);
     }
 
-    public DaemonThreadFactory(final String threadNamePrefix) {
-        this(new DefaultThreadNameFactory(threadNamePrefix));
-    }
-
+    /**
+     * @deprecated This constructor allows that the given threadNameFactory parameter is null which may lead to inexpressive
+     *             thread names. Use {@link #create(IFactory)} instead be ensure that the given factory is not null
+     */
+    @Deprecated
     public DaemonThreadFactory(final IFactory<String> threadNameFactory) {
         this.threadNameFactory = threadNameFactory;
         this.defaultThreadFactory = Executors.defaultThreadFactory();
+    }
+
+    /**
+     * Creates a new instance with a given thread name prefix.
+     * 
+     * The separator will set to an empty string so the given threadNamePrefix may already contain an separator or no separator is
+     * used. The thread count will start at index=1.
+     * 
+     * Example:
+     * 
+     * threadNameOrPrefix: myClassName.fooExecutor-#
+     * 
+     * Will produce the following thread names:
+     * 
+     * myClassName.fooExecutor-#1
+     * myClassName.fooExecutor-#2
+     * ...
+     * myClassName.fooExecutor-#n
+     *
+     * @param threadNamePrefix The thread name prefix to use
+     */
+    public DaemonThreadFactory(final String threadNamePrefix) {
+        this(new DefaultThreadNamesFactory(threadNamePrefix, "", 1, false));
+    }
+
+    /**
+     * Create a new {@link DaemonThreadFactory} instance.
+     * 
+     * Each created thread is a daemon thread and will be named with the given threadNameFactory.
+     * 
+     * @param threadNameFactory The thread name to use, must not be null
+     * 
+     * @return A new {@link DaemonThreadFactory} instance
+     */
+    public static ThreadFactory create(final IFactory<String> threadNameFactory) {
+        return new DaemonThreadFactory(threadNameFactory);
+    }
+
+    /**
+     * Create a new {@link DaemonThreadFactory} instance.
+     * 
+     * Each created thread is a daemon thread.
+     * 
+     * The first created thread will be named with the given threadNameOrPrefix parameter.
+     * 
+     * If more than one thread will be created, following threads will be named with the following pattern:
+     * 
+     * threadNamePrefix-#threadNr
+     * 
+     * Example:
+     * 
+     * threadNameOrPrefix: myClassName.fooExecutor
+     * 
+     * Will produce the following thread names:
+     * 
+     * myClassName.fooExecutor
+     * myClassName.fooExecutor-#2
+     * ...
+     * myClassName.fooExecutor-#n
+     * 
+     * 
+     * @param threadNameOrPrefix The thread name to use for the first created thread and the prefix to use for the following
+     *            thread, must not be null or empty
+     * 
+     * @param separator The separator to use if more than one thread will be created
+     * 
+     * @param startIndex The start index for the second created thread
+     * 
+     * @return A new {@link DaemonThreadFactory} instance
+     */
+    public static ThreadFactory create(final String threadNameOrPrefix) {
+        return create(threadNameOrPrefix, DEFAULT_SEPARATOR, DEFAULT_START_INDEX + 1);
+    }
+
+    /**
+     * Create a new {@link DaemonThreadFactory} instance.
+     * 
+     * Each created thread is a daemon thread.
+     * 
+     * The first created thread will be named with the given threadNameOrPrefix parameter.
+     * 
+     * If more than one thread will be created, following threads will be named with the following pattern:
+     * 
+     * threadNamePrefix+separator+threadNr
+     * 
+     * Example:
+     * 
+     * threadNameOrPrefix: myClassName.fooExecutor
+     * separator = -#
+     * startIndex = 2
+     * 
+     * 
+     * Will produce the following thread names:
+     * 
+     * myClassName.fooExecutor
+     * myClassName.fooExecutor-#2
+     * ...
+     * myClassName.fooExecutor-#n
+     * 
+     * 
+     * @param threadNameOrPrefix The thread name to use for the first created thread and the prefix to use for the following
+     *            thread, must not be null or empty
+     * 
+     * @param separator The separator to use if more than one thread will be created
+     * 
+     * @param startIndex The start index for the second created thread
+     * 
+     * @return A new {@link DaemonThreadFactory} instance
+     */
+    public static ThreadFactory create(final String threadNameOrPrefix, final String separator, final int startIndex) {
+        return create(new DefaultThreadNamesFactory(threadNameOrPrefix, separator, startIndex, true));
+    }
+
+    /**
+     * Create a new {@link DaemonThreadFactory} for multiple threads with the following defaults:
+     * 
+     * separator = -#
+     * startIndex = 1
+     * 
+     * Use this method if it is sure that more than one thread will be created by the returned factory to ensure all threads
+     * have the same naming pattern.
+     * 
+     * Each created thread is a daemon thread and will be named with the following pattern:
+     * 
+     * threadNamePrefix-#threadNr
+     * 
+     * The first created thread gets the threadNr=0 that will be increased after each thread creation, example:
+     * 
+     * threadNamePrefix: myClassName.fooExecutor
+     * 
+     * Will produce the following thread names:
+     * 
+     * myClassName.fooExecutor-#0
+     * myClassName.fooExecutor-#1
+     * ...
+     * myClassName.fooExecutor-#n
+     * 
+     * 
+     * @param threadNamePrefix The thread name prefix to use, must neither be null nor be empty
+     * @param separator The separator to use, may be null if no separator should be used
+     * 
+     * @return A new {@link DaemonThreadFactory} instance
+     */
+    public static ThreadFactory multi(final String threadNamePrefix) {
+        return multi(threadNamePrefix, DEFAULT_SEPARATOR, DEFAULT_START_INDEX);
+    }
+
+    /**
+     * Create a new {@link DaemonThreadFactory} for multiple threads.
+     * 
+     * Use this method if it is sure that more than one thread will be created by the returned factory to ensure all threads
+     * have the same naming pattern.
+     * 
+     * Each created thread is a daemon thread and will be named with the following pattern:
+     * 
+     * threadNamePrefix+separator+threadNr
+     * 
+     * If separator is null, it will be omitted:
+     * 
+     * threadNamePrefix+threadNr
+     * 
+     * The first created thread gets the threadNr=startIndex that will be increased after each thread creation, example:
+     * 
+     * threadNamePrefix: myClassName.fooExecutor
+     * separator: -#
+     * startIndex: 1
+     * 
+     * Will produce the following thread names:
+     * 
+     * myClassName.fooExecutor-#1
+     * myClassName.fooExecutor-#2
+     * ...
+     * myClassName.fooExecutor-#n
+     * 
+     * 
+     * @param threadNamePrefix The thread name prefix to use, must neither be null nor be empty
+     * @param separator The separator to use, may be null if no separator should be used
+     * 
+     * @return A new {@link DaemonThreadFactory} instance
+     */
+    public static ThreadFactory multi(final String threadNamePrefix, final String separator, final int startIndex) {
+        return create(new DefaultThreadNamesFactory(threadNamePrefix, separator, startIndex, false));
     }
 
     @Override
@@ -62,21 +254,40 @@ public final class DaemonThreadFactory implements ThreadFactory {
         return result;
     }
 
-    private static final class DefaultThreadNameFactory implements IFactory<String> {
+    private static final class DefaultThreadNamesFactory implements IFactory<String> {
 
         private final String prefix;
-        private long count;
+        private final String separator;
+        private int count;
+        private final boolean omitCountForFirst;
 
-        private DefaultThreadNameFactory(final String prefix) {
-            Assert.paramNotNull(prefix, "prefix");
+        private final boolean createdAtLeastOne;
+
+        private DefaultThreadNamesFactory(
+            final String prefix,
+            final String separator,
+            final int startIndex,
+            final boolean omitCountForFirst) {
+            Assert.paramNotEmpty(prefix, "prefix");
+
             this.prefix = prefix;
-            this.count = 0;
+            this.separator = separator != null ? separator : "";
+            this.count = startIndex;
+            this.omitCountForFirst = omitCountForFirst;
+
+            this.createdAtLeastOne = false;
         }
 
         @Override
         public String create() {
-            return prefix + count++;
+            if (!createdAtLeastOne && omitCountForFirst) {
+                return prefix;
+            }
+            else {
+                return prefix + separator + count++;
+            }
         }
 
     }
+
 }

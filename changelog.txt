@@ -264,6 +264,17 @@ Bugfixes:
 * Fixed issue #77 https://github.com/jo-source/jo-widgets/issues/77 Make TestLoggerProvider deprecated and add alternative provider
 * Fixed issue #81 https://github.com/jo-source/jo-widgets/issues/81 MessageProvider should use Locale.ROOT as fallback instead of Locale.getDefault
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.76.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #82 https://github.com/jo-source/jo-widgets/issues/82 Inexpressive thread names
+
 
 
 

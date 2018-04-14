@@ -50,6 +50,11 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
     private Thread singleThread;
     private UncaughtExceptionHandler uncaughtExceptionHandler;
 
+    /**
+     * @deprecated do not use unnamed threads cause they are inexpressive. Use {@link #SingleThreadAccess(IFactory)} or
+     *             {@link #SingleThreadAccess(String)} or {@link #SingleThreadAccess(ThreadFactory)} instead
+     */
+    @Deprecated
     public SingleThreadAccess() {
         this(new DaemonThreadFactory());
     }
@@ -60,7 +65,7 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
      * @param threadNameFactory The thread name factory to use
      */
     public SingleThreadAccess(final IFactory<String> threadNameFactory) {
-        this(new DaemonThreadFactory(Assert.getParamNotNull(threadNameFactory, "threadNameFactory")));
+        this(DaemonThreadFactory.create(Assert.getParamNotNull(threadNameFactory, "threadNameFactory")));
     }
 
     /**
@@ -69,7 +74,7 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
      * @param threadPrefix The thread name prefix to use
      */
     public SingleThreadAccess(final String threadPrefix) {
-        this(new DaemonThreadFactory(Assert.getParamNotNull(threadPrefix, "threadPrefix")));
+        this(DaemonThreadFactory.create((Assert.getParamNotNull(threadPrefix, "threadPrefix"))));
     }
 
     /**

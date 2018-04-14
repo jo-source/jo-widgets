@@ -88,7 +88,8 @@ final class DelayedEventRunnerBuilderImpl implements IDelayedEventRunnerBuilder 
         else {
             ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
             if (executorService == null) {
-                executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+                executorService = Executors.newSingleThreadScheduledExecutor(
+                        DaemonThreadFactory.create(DelayedEventRunnerImpl.class.getName() + "#" + hashCode()));
                 Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
             }
             return executorService;

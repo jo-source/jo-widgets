@@ -26,27 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.concurrent;
+package org.jowidgets.util;
 
 /**
- * Can be used to observe interrupts on threads.
- * 
- * Remark: Because java threads does not support listeners for thread interrupts, the interrupted state
- * must be polled by implementations. Due to this fact, the interrupt events invoked on the {@link IThreadInterruptListener}
- * may be invoked delayed.
+ * Adapter to use where a value is available but a {@link IFactory} is needed.
+ *
+ * @param <VALUE_TYPE> The type of the value
  */
-public interface IThreadInterruptListener {
+public final class ValueFactoryAdapter<VALUE_TYPE> implements IFactory<VALUE_TYPE> {
+
+    private final VALUE_TYPE value;
 
     /**
-     * Will be invoked if the given thread was interrupted.
+     * Creates a new instance
      * 
-     * Remark: The interrupted state will remain unchanged when this method was invoked. Until the interrupt state of the thread
-     * will not be cleared, the listener fires continual with the delay that can be requested from the method
-     * {@link IThreadInterruptObservable#getDelayMillis()} until the listener will be removed or the interrupted state will be
-     * cleared.
-     * 
-     * @param thread The thread that was interrupted
+     * @param value The value to return on {@link #create()}, may be null
      */
-    void interrupted(Thread thread);
+    public ValueFactoryAdapter(final VALUE_TYPE value) {
+        this.value = value;
+    }
+
+    @Override
+    public VALUE_TYPE create() {
+        return value;
+    }
 
 }

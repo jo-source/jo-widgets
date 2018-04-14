@@ -64,10 +64,12 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
         super(oleDocument);
 
         this.dirtyStateChangeObservable = new ChangeObservable();
-        this.executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+
         this.toolbarVisible = setup.getToolbarVisible();
         this.dirtyCheckInterval = setup.getDirtyCheckIntervalMs();
         this.dirtyCheckRunnable = new DirtyCheckRunnable();
+        this.executorService = Executors.newSingleThreadScheduledExecutor(
+                DaemonThreadFactory.create(DirtyCheckRunnable.class.getName() + "@" + dirtyCheckRunnable.hashCode()));
 
         oleDocument.addDocumentChangeListener(new DocumenChangetListener());
         oleDocument.getOleControl().addFocusListener(new DirtyListener());
@@ -119,11 +121,8 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 
     private void startDirtyChecking() {
         if (dirtyCheckSchedule == null) {
-            dirtyCheckSchedule = executorService.scheduleAtFixedRate(
-                    dirtyCheckRunnable,
-                    0,
-                    dirtyCheckInterval,
-                    TimeUnit.MILLISECONDS);
+            dirtyCheckSchedule = executorService
+                    .scheduleAtFixedRate(dirtyCheckRunnable, 0, dirtyCheckInterval, TimeUnit.MILLISECONDS);
         }
     }
 

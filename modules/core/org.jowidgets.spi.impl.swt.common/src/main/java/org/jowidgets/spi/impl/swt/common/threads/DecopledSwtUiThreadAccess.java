@@ -43,7 +43,7 @@ public class DecopledSwtUiThreadAccess implements ISwtUiThreadAccess {
 
     public DecopledSwtUiThreadAccess(final Display display) {
         this.display = display;
-        this.singleThreadAccess = new SingleThreadAccess("Decopled swt ui thread");
+        this.singleThreadAccess = new SingleThreadAccess("Decoupled swt ui thread");
         singleThreadAccess.start();
     }
 

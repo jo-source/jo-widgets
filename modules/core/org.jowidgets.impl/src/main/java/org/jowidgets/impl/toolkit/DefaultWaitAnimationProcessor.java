@@ -62,9 +62,9 @@ final class DefaultWaitAnimationProcessor implements IWaitAnimationProcessor {
     private String text;
 
     DefaultWaitAnimationProcessor() {
-        super();
         this.uiThreadAccess = Toolkit.getUiThreadAccess();
-        this.threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory("WaitAnimationProcessor"));
+        this.threadPool = Executors
+                .newSingleThreadScheduledExecutor(DaemonThreadFactory.create(DefaultWaitAnimationProcessor.class.getName()));
         this.changeListeners = new HashSet<IChangeListener>();
         this.animationState = 0;
         this.icon = IconsSmall.WAIT_1;

@@ -59,7 +59,8 @@ public class DemoLevelMeterFrame extends Frame {
             add(BPF.levelMeter(models[i]).setLetteringVisible(true), "growx, w 70!, growy, h 0::");
         }
 
-        final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+        final ScheduledExecutorService threadPool = Executors.newSingleThreadScheduledExecutor(
+                DaemonThreadFactory.create(DemoLevelMeterFrame.class.getName() + ".ModelModifier"));
 
         final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
         final Runnable modelChangeRunnable = new Runnable() {

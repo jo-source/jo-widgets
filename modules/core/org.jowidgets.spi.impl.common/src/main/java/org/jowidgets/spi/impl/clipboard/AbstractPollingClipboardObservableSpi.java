@@ -51,7 +51,8 @@ public abstract class AbstractPollingClipboardObservableSpi extends ClipboardObs
     protected AbstractPollingClipboardObservableSpi(final Long delay) {
         this.delay = delay;
         if (delay != null) {
-            this.scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+            this.scheduledExecutor = Executors
+                    .newSingleThreadScheduledExecutor(DaemonThreadFactory.create(PollingExecutor.class.getName()));
             this.pollingExecutor = new PollingExecutor();
         }
         else {

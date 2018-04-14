@@ -26,27 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.concurrent;
+package org.jowidgets.util;
 
 /**
- * Can be used to observe interrupts on threads.
+ * Default implementation that uses a {@link IFactory} to create the value on first invocation of the {@link #get()} method or
+ * uses a value, e.g. if a value is available but a IProvider interface is necessary.
  * 
- * Remark: Because java threads does not support listeners for thread interrupts, the interrupted state
- * must be polled by implementations. Due to this fact, the interrupt events invoked on the {@link IThreadInterruptListener}
- * may be invoked delayed.
+ * @param <VALUE_TYPE> The value type
  */
-public interface IThreadInterruptListener {
+public final class DefaultProvider<VALUE_TYPE> implements IProvider<VALUE_TYPE> {
+
+    private final IFactory<VALUE_TYPE> factory;
+
+    private VALUE_TYPE value;
 
     /**
-     * Will be invoked if the given thread was interrupted.
+     * Creates a new instance with a given value
      * 
-     * Remark: The interrupted state will remain unchanged when this method was invoked. Until the interrupt state of the thread
-     * will not be cleared, the listener fires continual with the delay that can be requested from the method
-     * {@link IThreadInterruptObservable#getDelayMillis()} until the listener will be removed or the interrupted state will be
-     * cleared.
-     * 
-     * @param thread The thread that was interrupted
+     * @param value The value to return on get, may be null
      */
-    void interrupted(Thread thread);
+    public DefaultProvider(final VALUE_TYPE value) {
+        this(new ValueFactoryAdapter<VALUE_TYPE>(value));
+    }
+
+    /**
+     * Creates a new instance with a given factory
+     * 
+     * @param factory The factory to use, must not be null
+     */
+    public DefaultProvider(final IFactory<VALUE_TYPE> factory) {
+        Assert.paramNotNull(factory, "factory");
+        this.factory = factory;
+    }
+
+    @Override
+    public synchronized VALUE_TYPE get() {
+        if (value == null) {
+            value = factory.create();
+        }
+        return value;
+    }
 
 }
