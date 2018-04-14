@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.nattable.impl.plugin
 Bundle-SymbolicName: org.jowidgets.nattable.impl.plugin;singleton:=true
-Bundle-Version: 0.76.0.qualifier
+Bundle-Version: 0.77.0.qualifier
 Bundle-Vendor: jowidgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
