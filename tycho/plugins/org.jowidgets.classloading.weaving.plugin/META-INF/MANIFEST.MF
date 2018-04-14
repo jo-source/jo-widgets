@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.classloading.weaving.plugin
 Bundle-SymbolicName: org.jowidgets.classloading.weaving.plugin;singleton:=true
-Bundle-Version: 0.75.0
+Bundle-Version: 0.75.1.qualifier
 Bundle-Vendor: jowidgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
