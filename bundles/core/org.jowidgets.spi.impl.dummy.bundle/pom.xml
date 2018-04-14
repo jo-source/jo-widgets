@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.bundles.core.parent</artifactId>
-		<version>0.76.0</version>
+		<version>0.76.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -16,12 +16,12 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-			<version>0.76.0</version>
+			<version>0.76.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-			<version>0.76.0</version>
+			<version>0.76.1-SNAPSHOT</version>
 			<type>jar</type>
 			<classifier>sources</classifier>
 		</dependency>
