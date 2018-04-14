@@ -2,7 +2,7 @@
 <feature
       id="org.jowidgets.nattable.decoration.feature"
       label="org.jowidgets.nattable.decoration.feature"
-      version="0.75.0.qualifier">
+      version="0.75.0">
 
    <description url="http://www.example.com/description">
       Feature that decorates all tables with nattable
