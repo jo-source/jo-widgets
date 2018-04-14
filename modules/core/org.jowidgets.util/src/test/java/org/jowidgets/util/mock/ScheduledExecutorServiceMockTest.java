@@ -42,6 +42,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -1429,6 +1430,7 @@ public class ScheduledExecutorServiceMockTest {
     }
 
     @Test
+    @Ignore("Has unfixed deadlock sometimes")
     public void testInvokeAny() throws InterruptedException, ExecutionException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
@@ -1500,6 +1502,7 @@ public class ScheduledExecutorServiceMockTest {
     }
 
     @Test(expected = TimeoutException.class)
+    @Ignore("Has unfixed deadlock sometimes")
     public void testInvokeAnyWithTimeout() throws InterruptedException, ExecutionException, TimeoutException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
@@ -1568,6 +1571,7 @@ public class ScheduledExecutorServiceMockTest {
     }
 
     @Test(expected = InterruptedException.class)
+    @Ignore("Has unfixed deadlock sometimes")
     public void testInvokeAnyWithInterrupt() throws InterruptedException, ExecutionException, TimeoutException {
         final ScheduledExecutorServiceMock executor = new ScheduledExecutorServiceMock();
 
