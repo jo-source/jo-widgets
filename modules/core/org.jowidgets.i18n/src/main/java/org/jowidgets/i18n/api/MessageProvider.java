@@ -207,7 +207,9 @@ public final class MessageProvider {
 
     }
 
-    private static final class RootLocaleFallbackControl extends ResourceBundle.Control {
+    private static final class RootLocaleFallbackControl extends ResourceBundle.Control implements Serializable {
+
+        private static final long serialVersionUID = 235793306640902023L;
 
         @Override
         public Locale getFallbackLocale(final String baseName, final Locale locale) {
