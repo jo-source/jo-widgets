@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.bundles.addons.parent</artifactId>
-		<version>0.77.0-SNAPSHOT</version>
+		<version>0.77.0</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -16,13 +16,13 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.browser.impl.swing</artifactId>
-			<version>0.77.0-SNAPSHOT</version>
+			<version>0.77.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.browser.impl.swing</artifactId>
-			<version>0.77.0-SNAPSHOT</version>
+			<version>0.77.0</version>
 			<type>jar</type>
 			<classifier>sources</classifier>
 		</dependency>
