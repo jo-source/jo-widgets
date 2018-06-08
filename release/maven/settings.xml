@@ -2,8 +2,21 @@
 	<servers>
 		<server>
 			<id>jowidgets-ftp-repository</id>
-			<username>u60392418-mvn</username>
-			<password>XXXXXX</password>
+			<username>jo-mvn@jowidgets.com</username>
+			<!--Add your secret pwd here-->
+			<password>XXXXXXXXXXX</password>
 		</server>
 	</servers>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<!--Add your release jdk here defined in your toolchains.xml-->
+				<jowidgets.build.jdk>1.6.0_45</jowidgets.build.jdk>
+			</properties>
+		</profile>
+	</profiles>
+	<activeProfiles>
+		<activeProfile>release</activeProfile>
+	</activeProfiles>
 </settings>

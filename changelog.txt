@@ -286,6 +286,17 @@ Bugfixes:
 
 * Fixed issue #81 https://github.com/jo-source/jo-widgets/issues/81 MessageProvider should use Locale.ROOT as fallback instead of Locale.getDefault, fixed problem that message provider is not serializable
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.78.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixed issue #83 https://github.com/jo-source/jo-widgets/issues/83 Release must be java 6 compatible
+
 
 
 
